@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>DSAlgoVisualizer</title>
+	<style>
+		html, * {
+			margin: 0px;
+			padding: 0px;
+			box-sizing: border-box;
+		}
+
+		#main {
+			min-height: 100vh;
+			background: wheat;
+			overflow: hidden;
+		}
+
+		.main__heading {
+			background: blue;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 30px;
+			margin: auto;
+			display: flex;
+			justify-content: center;
+			padding: 20px 0px ;
+		}	
+
+		.heading__text {
+			font-family: serif;
+			color: darkgray;
+			font-weight: bolder;
+			font-size: 34px;
+		}
+
+		.section {
+			overflow-y: scroll;
+		}
+
+
+		.info__box:hover {
+			transform: translateY(-10px);
+			transition:  100ms linear;
+		}
+
+		.popup__heading {
+			font-family: ubuntu;
+			font-weight: bold;
+			font-size: 23px;
+		}
+
+		.popup__sub__heading {
+			text-align: left;
+			font-weight: bold;
+			text-transform: capitalize;
+		}
+
+		.popup__sub__heading > b {
+			color: gray;
+			font-weight: bolder;
+			font-size: 23px;
+		}
+
+		.popup__sub__heading__details {
+
+		}
+
+	</style>
+</head>
+<body>
+     <div id='main'>
+     	<div class="main__heading">
+			<b class='heading__text'>DSALGO</b>  &nbsp;&nbsp; <span>let's make ds algo fun</span>     		
+     	</div>
+     	<div class="section">
+     		
+     	</div>
+     </div>
+
+     <script>
+     	let sec = document.querySelector('.section');
+     	let heading = document.querySelector('.main__heading');
+
+     	if(+localStorage.getItem('first_time') === 1) {
+     		    let cross;
+				let slider;
+				let info;
+				cross = document.createElement("span");
+				cross.innerText = "X";
+				cross.style.position = 'absolute';
+				cross.style.top = '10px';
+				cross.style.right = '10px';
+				cross.style.borderRadius = "50%";
+				cross.style.boxShadow = '-5px 5px 6px rgba(0, 0, 0, .5)'
+				cross.style.padding = '15px 18px';
+				cross.style.cursor = 'pointer';
+				slider = document.createElement("div");
+				slider.style.width = '100vw';
+				slider.style.height = '100vh';
+				slider.style.overflow = 'scroll';
+				slider.style.background = 'rgba(0, 0, 255, .8)';
+				slider.style.position = 'absolute';
+				slider.style.top = '0px';
+				slider.style.left = '0px';
+				slider.style.zIndex = '20';
+				debugger
+
+				// Info
+
+				let html = `
+
+					<div class="popup__heading">DSALGO</div>
+					<div class="popup__sub__heading">what is <b>DSALGO</b> ?</div>
+					<blockquote class="popup__sub__heading__details"> </blockquote>
+				`
+				info = document.createElement("div");
+				info.innerHTML = html;
+				info.style.maxWidth = '600px';
+				info.style.textAlign = 'center';
+				info.style.margin = '30px'
+				info.style.transform = 'translateY(100px)';
+				info.style.background = 'white';
+				info.style.borderRadius = '10px'
+				info.classList.add("info__box");
+				info.style.boxShadow = '20px 20px 30px rgba(0, 0, 0, .3)'
+				info.style.padding = '20px'
+				info.style.border = '1px solid black';
+				info.style.margin = 'auto';
+				slider.appendChild(cross);
+				slider.appendChild(info);
+				slider.style.textAlign = 'center';
+				document.querySelector('body').appendChild(slider);
+
+     		localStorage.setItem('first_time', 1)
+     	}else {
+     		debugger;
+     	}
+     </script>
+</body>
+</html>
