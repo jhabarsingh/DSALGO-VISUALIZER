@@ -1,19 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Array</title>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <style>
-    	
-    </style>
-</head>
-<body>
-
-	<!DOCTYPE html>
-<html>
-<head>
-	<title>Back tracking (N queen problem)</title>
+	<title>Queue</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -21,12 +9,8 @@
 			padding: 0;
 		}
 
-		body {
-			text-align: center;
-		}
-
 		.grid {
-			width: 1000px;
+			width: 400px;
 			position: relative;
 			height: 400px;
 			background: black;
@@ -36,7 +20,7 @@
 			outline: 2px solid black;
 		}
 
-		p, p:nth-child(1) {
+		p:nth-child(1) {
 			padding: 20px;
 			text-align: center;
 			font-family: ubuntu;
@@ -50,7 +34,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p> ARRAY [ ADT ]</p>
+	<p> Queue </p>
 	<div class='grid'>
 		
 
@@ -58,73 +42,14 @@
 
 	<script>
 
-	</script>
-</body>
-</html>
+	// Main
+	// {
 
-
-	<script>
-	// MAIN
-
-		arr = [];
-		var size = 10;
-		time_delay = 1000;
-		var max = 100;
-		randomize_an_array();
-		createArray(arr);
-
-
-	// ARRAY ADT
 		
-		async function createArray(arr) {
-			let grid = document.querySelector('.grid');
-			for(let e in arr) {
-				await sleep(time_delay).then(() => {
-					insertIntoArray(grid, e)
-				});
-			}
-		}
-
-		async function insertIntoArray(grid, element) {
-				await sleep(time_delay).then(() => {
-					let grid_child = document.createElement('span');
-					grid_child.style.display = 'flex';
-					grid_child.style.justifyContent = 'flex-start'
-					grid_child.style.alignSelf = 'center';
-					grid_child.style.background = 'white';
-					grid_child.style.border = '1px solid black';
-					grid_child.style.borderRadius = '3px';
-					grid_child.innerText = element;
-					grid_child.style.fontFamily = 'ubuntu';
-					grid_child.style.fontWeight = 'bolder';
-					grid_child.style.fontSize = '20px';
-					grid_child.style.padding = '25px';
-					grid_child.style.fontSize = '20px';
-
-					grid.appendChild(grid_child);
-
-				})
-		}
-
-		function deleteArrayElemet() {
-			
-		}
 
 
-	// Utility function
 
-		function randomize_an_array() {
-			arr = [];
-			for(let i=0; i<size; i++) {
-				arr.push(Math.floor(Math.random() * max + 1));
-			}
-		}
-
-		function sleep(ms) {
-			return new Promise(resolve => setTimeout(resolve, ms));
-		}
-
-
+	// }
 
 	</script>
 </body>
