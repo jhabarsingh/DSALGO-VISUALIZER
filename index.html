@@ -23,6 +23,9 @@
 			margin: auto;
 			display: flex;
 			justify-content: center;
+			display: flex;
+			flex-wrap: wrap;
+			text-align: center;
 			padding: 20px 0px ;
 		}	
 
@@ -35,6 +38,9 @@
 
 		.section {
 			overflow-y: scroll;
+			display: flex;
+			margin: auto;
+			text-align: center;
 		}
 
 
@@ -65,23 +71,142 @@
 
 		}
 
+		.card-body {
+			display: flex;
+			justify-content: flex-start;
+			box-shadow: 10px 10px 10px rgba(0, 0, 0, .2);
+			background: lightgreen;
+		}
+
+		.card {
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			transform: scale(.9);
+			box-shadow: -5px -5px 10px rgba(0, 0, 0, .3);
+			transition: 100ms linear;
+		}
+
+		.card:hover {
+			transform: scale(.9) translateY(-5px);
+			transition: 100ms linear;
+		}
+
+		.card-img-top-parent {
+			overflow: hidden;
+			transition: 200ms linear;
+			height: 350px;
+		}
+
+		.card-img-top:hover {
+			transition: 200ms linear;
+			transform: scale(1.1);
+		}
+
 	</style>
+	 <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
 </head>
 <body>
      <div id='main'>
      	<div class="main__heading">
 			<b class='heading__text'>DSALGO</b>  &nbsp;&nbsp; <span>let's make ds algo fun</span>     		
      	</div>
-     	<div class="section">
+     	<div class="section row">
      		
      	</div>
      </div>
 
      <script>
+
+     	// Initialization 
+
      	let sec = document.querySelector('.section');
      	let heading = document.querySelector('.main__heading');
+     	let details = [
+     		{
+     			heading: 'Array',
+     			image: `images/array.png`,
+     			link: 'https://robohash.org/',
+     			sub_topics: [
+     				"sort",
+     				"heaps"
 
-     	if(+localStorage.getItem('first_time') === 1) {
+     			]
+     		},
+     		{
+     			heading: 'Array',
+     			image: `images/array.png`,
+     			link: 'https://robohash.org/',
+     			sub_topics: [
+     				"sort",
+     				"heaps"
+
+     			]
+     		},
+     		{
+     			heading: 'Array',
+     			image: 'https://robohash.org/1',
+     			link: 'https://robohash.org/',
+     			sub_topics: [
+     				"sort",
+     				"heaps"
+
+     			]
+     		},
+     		{
+     			heading: 'Array',
+     			image: 'https://robohash.org/1',
+     			link: 'https://robohash.org/',
+     			sub_topics: [
+     				"sort",
+     				"heaps"
+
+     			]
+     		}
+
+
+     	]
+
+
+
+
+
+     	// cards 
+     	
+     	function add_card(details, index) {
+     		let card = document.createElement('div');
+			['col', 'col-12', 'col-md-6', 'col-lg-4'].forEach((el) => card.classList.add(el));
+			card.style.borderRadius = '10px';
+			card.style.transform = 'scale(.9)';
+			let card_html = `
+				<div class="card" style="">
+				  <a href="${details.link}" target="_self" class="card-img-top-parent">
+				   	<img src="${details.image}" class="card-img-top" alt="${details.heading}">
+				  </a>
+				  <div class="card-body">
+				  </div>
+				</div>
+     		`	     		
+     		card.innerHTML = card_html;
+     		sec.appendChild(card);
+
+     		details.sub_topics.forEach((e) => {
+	     		let card_span = document.createElement('button');
+	     		card_span.classList.add('badge');
+	     		card_span.classList.add('badge-primary');
+	     		card_span.innerText = e;
+
+	     		document.querySelectorAll('.card-body')[index].appendChild(card_span);
+     		})
+     	}
+
+
+
+     	// POP UP
+     	if(!+localStorage.getItem('first_time') === 1) {
      		    let cross;
 				let slider;
 				let info;
@@ -135,6 +260,16 @@
      	}else {
      		debugger;
      	}
+
+
+
+     	// Main
+
+     	details.forEach((detail, index) => {
+     		add_card(detail, index);
+     	})
+
+
      </script>
 </body>
 </html>

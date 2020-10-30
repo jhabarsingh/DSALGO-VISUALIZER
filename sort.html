@@ -92,6 +92,8 @@
 		}
 
 	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
 	<p class='heading'> BUBBLE SORT </p>
@@ -213,40 +215,51 @@
 
 
 		// Menu driven
+
 		function menu(option) {
 			switch(option) {
 				case 1: document.querySelector('.heading').innerText = 'Bubble Sort';
 						bubble_sort();
 						break;
+
 				case 2: document.querySelector('.heading').innerText = 'Selection Sort';
 						selection_sort();
 						break;
+
 				case 3: document.querySelector('.heading').innerText = 'Insertion Sort';
 						insertion_sort();
 						break;
+
 				case 4: document.querySelector('.heading').innerText = 'Merge Sort';
 						merge_sort();
 						break;
+
 				case 5: document.querySelector('.heading').innerText = 'Quick Sort';
 						quick_sort();
 						break;
+
 				case 6: document.querySelector('.heading').innerText = 'Radix Sort';
 						radix_sort();
 						break;
+
 				case 7: document.querySelector('.heading').innerText = 'Shell Sort';
 						shell_sort();
 						break;
+
 				case 8: document.querySelector('.heading').innerText = 'Counting Sort';
 						counting_sort();
 						break;
+
 				case 9: document.querySelector('.heading').innerText = 'Heap Sort';
 						heap_sort();
 						break;
+
 				default: merge_sort();
 			}
 		}
 
 		// Sorting functions 
+
 
 		async function bubble_sort() {
 			for(let i=size-1; i > 0; --i) {
@@ -333,6 +346,13 @@
 		}
 
 		function counting_sort() {
+			let arbit_arr = [];
+			for(let i=0; i<max+1; i++) {
+				arbit_arr.push(0);
+			}
+			arr.forEach((e) => {
+				arbit_arr[e] += 1;
+			})
 
 		}
 
