@@ -1,0 +1,24 @@
+{
+  "name": "dsalgo-vis",
+  "version": "1.0.0",
+  "description": "visualise data structure and algorithm",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "google-chrome index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jhabarsingh/DSALGO-Visualizer.git"
+  },
+  "keywords": [
+    "datastructure",
+    "algorithm"
+  ],
+  "author": "jhabar singh bhati",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jhabarsingh/DSALGO-Visualizer/issues"
+  },
+  "homepage": "https://github.com/jhabarsingh/DSALGO-Visualizer#readme"
+}
