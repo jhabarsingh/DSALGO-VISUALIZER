@@ -274,6 +274,16 @@
 
      			]
      		},
+     		{
+     			heading: 'Questions',
+     			image: 'images/question.jpeg',
+     			link: 'templates/questions.html',
+     			sub_topics: [
+     				"Data Structure",
+     				"Algorithm"
+
+     			]
+     		},
      	]
 
       	details.forEach((detail, index) => {
@@ -319,70 +329,68 @@
  
      	function pop_up() {
      		if(+localStorage.getItem('first_time') === 1 && false) {
-	     		    let cross;
-					let slider;
-					let info;
-					cross = document.createElement("span");
-					cross.innerText = "X";
-					cross.style.position = 'absolute';
-					cross.style.top = '10px';
-					cross.style.right = '10px';
-					cross.style.borderRadius = "10px";
-					cross.style.color = 'white';
-					cross.style.boxShadow = '1px 1px 10px rgba(255, 255, 255, .5)'
-					cross.style.padding = '15px 20px';
-					cross.style.cursor = 'pointer';
-					cross.classList.add('cross')
-					slider = document.createElement("div");
-					slider.style.width = '100vw';
-					slider.style.height = '100vh';
-					slider.style.overflow = 'scroll';
-					slider.style.background = 'rgba(0, 0, 0, .9)';
-					slider.style.position = 'fixed';
-					slider.style.top = '0px';
-					slider.style.left = '0px';
-					slider.style.zIndex = '20';
-					// debugger
+     		    let cross;
+				let slider;
+				let info;
+				cross = document.createElement("span");
+				cross.innerText = "X";
+				cross.style.position = 'absolute';
+				cross.style.top = '10px';
+				cross.style.right = '10px';
+				cross.style.borderRadius = "10px";
+				cross.style.color = 'white';
+				cross.style.boxShadow = '1px 1px 10px rgba(255, 255, 255, .5)'
+				cross.style.padding = '15px 20px';
+				cross.style.cursor = 'pointer';
+				cross.classList.add('cross')
+				slider = document.createElement("div");
+				slider.style.width = '100vw';
+				slider.style.height = '100vh';
+				slider.style.overflow = 'scroll';
+				slider.style.background = 'rgba(0, 0, 0, .9)';
+				slider.style.position = 'fixed';
+				slider.style.top = '0px';
+				slider.style.left = '0px';
+				slider.style.zIndex = '20';
+				// debugger
 
-					// POPUP Info
+				// POPUP Info
 
-					let html = `
+				let html = `
 
-						<div class="popup__heading">DSALGO</div>
-						<div class="popup__sub__heading">what is <b>DSALGO</b> ?</div>
-						<blockquote class="popup__sub__heading__details"> </blockquote>
-					`
-					info = document.createElement("div");
-					info.innerHTML = html;
-					info.style.maxWidth = '600px';
-					info.style.textAlign = 'center';
-					info.style.margin = '30px'
-					info.style.transform = 'translateY(100px)';
-					info.style.background = 'white';
-					info.style.borderRadius = '10px'
-					info.classList.add("info__box");
-					info.style.boxShadow = '20px 20px 30px rgba(0, 0, 0, .3)'
-					info.style.padding = '20px'
-					info.style.border = '1px solid black';
-					info.style.margin = 'auto';
-					slider.appendChild(cross);
-					slider.appendChild(info);
-					slider.style.textAlign = 'center';
-					document.querySelector('.body__bin').appendChild(slider);
+					<div class="popup__heading">DSALGO</div>
+					<div class="popup__sub__heading">what is <b>DSALGO</b> ?</div>
+					<blockquote class="popup__sub__heading__details"> </blockquote>
+				
+				`
+				info = document.createElement("div");
+				info.innerHTML = html;
+				info.style.maxWidth = '600px';
+				info.style.textAlign = 'center';
+				info.style.margin = '30px'
+				info.style.transform = 'translateY(100px)';
+				info.style.background = 'white';
+				info.style.borderRadius = '10px'
+				info.classList.add("info__box");
+				info.style.boxShadow = '20px 20px 30px rgba(0, 0, 0, .3)'
+				info.style.padding = '20px'
+				info.style.border = '1px solid black';
+				info.style.margin = 'auto';
+				slider.appendChild(cross);
+				slider.appendChild(info);
+				slider.style.textAlign = 'center';
 
+				document.querySelector('.body__bin').appendChild(slider);
 	     		localStorage.setItem('first_time', 1)
-
 	     		document.querySelector('.cross').addEventListener("click", () => {
 	     			document.querySelector('.body__bin').innerHTML = '';
 	     		})
-	     	}else {
+
+	     	}
+	     	else {
 	     		debugger;
 	     	}
      	}
-
-
-
-
 
      </script>
 </body>
