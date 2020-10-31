@@ -86,7 +86,7 @@
 			display: flex;
 			justify-content: center;
 			transform: scale(.9);
-			box-shadow: -5px -5px 10px rgba(0, 0, 0, .3);
+			box-shadow: 5px -5px 5px rgba(0, 0, 0, .3);
 			transition: 100ms linear;
 		}
 
@@ -140,6 +140,17 @@
      	let sec = document.querySelector('.section');
      	let heading = document.querySelector('.main__heading');
      	let details = [
+     		{
+     			heading: 'Time Complexity',
+     			image: `images/time_complexity.png`,
+     			link: 'templates/time_complexity.html',
+     			sub_topics: [
+     				"Big Oh",
+     				"Big Omega",
+     				"Big Theta"
+
+     			]
+     		},
      		{
      			heading: 'Array',
      			image: `images/array.png`,

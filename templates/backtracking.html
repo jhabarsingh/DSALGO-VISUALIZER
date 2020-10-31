@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Back tracking (N queen problem)</title>
+	<title>Back tracking</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -34,7 +34,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p> N-QUEEN PROBLEM [ Backtracking ]</p>
+	<p>N-QUEEN PROBLEM</p>
 	<div class='grid'>
 		
 
@@ -48,26 +48,9 @@
 		var no_of_squares = 8;
 		var grid = document.querySelector(".grid");
 		var x_length = 400/no_of_squares;
-
-		for(let i=0; i< no_of_squares; i++) {
-			for(let j=0; j< no_of_squares; j++) {
-				create_grid(i, j);
-			}
-		}
-
 		var all_queens = document.querySelectorAll('.queens');
 
-		for(let i=0 ;i< no_of_squares; i++) {
-			for(let j=0; i<no_of_squares; j++) {
-				if(check_some(i, j)) {
-					arr.push([i, j])
-					all_queens[i * no_of_squares + j].style.background = 'red';
-				}
-				else {
-					all_queens[i * no_of_squares + j].style.background = 'red';
-				}
-			}
-		}
+		initiate_grid();
 		
 
 	// N-Queens algorithm 
@@ -75,10 +58,6 @@
 
 
 	// utility funtions
-
-		function get_i_j_from_n(n, max) {
-			return [Math.floor(n / max), n % max];
-		}
 
 		function create_grid(i, j) {
 			let innerSquare = document.createElement('div');
@@ -103,6 +82,31 @@
 			console.log(innerSquare.style.left);
 			grid.appendChild(innerSquare);
 			grid.appendChild(p);
+		}
+		
+		function initiate_grid() {
+			for(let i=0; i< no_of_squares; i++) {
+				for(let j=0; j< no_of_squares; j++) {
+					create_grid(i, j);
+				}
+			}
+
+
+			for(let i=0 ;i< no_of_squares; i++) {
+				for(let j=0; i<no_of_squares; j++) {
+					if(check_some(i, j)) {
+						arr.push([i, j])
+						all_queens[i * no_of_squares + j].style.background = 'red';
+					}
+					else {
+						all_queens[i * no_of_squares + j].style.background = 'red';
+					}
+				}
+			}
+		}
+
+		function get_i_j_from_n(n, max) {
+			return [Math.floor(n / max), n % max];
 		}
 
 

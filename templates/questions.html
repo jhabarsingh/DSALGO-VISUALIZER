@@ -2,6 +2,9 @@
 <html>
 <head>
 	<title>Questions</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -95,22 +98,46 @@
 			margin-left: 20px;
 			position: relative;
 			bottom: 5px;
+		}	
+
+		.head__pointer {
+			position: fixed;
+			z-index: 3;
+			padding: 25px;
+			bottom: 20px;
+			left: 20px;			
+			background: black;
+			color: white;
+			border-radius: 50%;
+			cursor: pointer;
+			animation: 200ms scale__up linear;
+		}
+
+		@keyframes scale__up {
+			from {
+				transform: scale(.5);
+				opacity: 0;
+			}
+			to {
+				transform: scale(1);
+				opacity: 1;
+			}
 		}
 
 	</style>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p class='heading'> Questions </p>
+	<p class='heading' id="head"> Questions </p>
 	<div class='grid'>
 		
 
 	</div>
-
+	<span class="head__pointer material-icons">
+		arrow_circle_up
+	</span>
 	<script>
 
-	// Main
+// Main
 
 		var grid = document.querySelector('.grid');
 		let ques = [
@@ -386,8 +413,8 @@
 			"Print all possible paths from top left to bottom right of a mXn matrix",
 			"Partition of a set intoK subsets with equal sum",
 			"Find the K-th Permutation Sequence of first N natural numbers",
-			" Implement Stack from Scratch",
-			" Implement Queue from Scratch",
+			"Implement Stack from Scratch",
+			"Implement Queue from Scratch",
 			"Implement 2 stack in an array",
 			"find the middle element of a stack",
 			"Implement \"N\" stacks in an Array",
@@ -600,8 +627,7 @@
 			`https://practice.geeksforgeeks.org/problems/minimum-swaps-required-to-bring-all-elements-less-than-or-equal-to-k-together/0`,
 			`https://practice.geeksforgeeks.org/problems/palindromic-array/0`,
 			`https://practice.geeksforgeeks.org/problems/find-the-median0527/1`,
-			`https://www.geeksforgeeks.org/median-of-two-sorted-arrays-of-different-sizes/`,
-			
+			`https://www.geeksforgeeks.org/median-of-two-sorted-arrays-of-different-sizes/`,		
 			`https://practice.geeksforgeeks.org/problems/spirally-traversing-a-matrix/0`,
 			`https://leetcode.com/problems/search-a-2d-matrix/`,
 			`https://practice.geeksforgeeks.org/problems/median-in-a-row-wise-sorted-matrix1527/1`,
@@ -611,8 +637,7 @@
 			`https://www.geeksforgeeks.org/find-a-specific-pair-in-matrix/`,
 			`https://www.geeksforgeeks.org/rotate-a-matrix-by-90-degree-in-clockwise-direction-without-using-any-extra-space/`,
 			`https://practice.geeksforgeeks.org/problems/kth-element-in-matrix/1`,
-			`https://www.geeksforgeeks.org/common-elements-in-all-rows-of-a-given-matrix/`,
- 
+			`https://www.geeksforgeeks.org/common-elements-in-all-rows-of-a-given-matrix/`, 
 			`https://leetcode.com/problems/reverse-string/`,
 			`https://practice.geeksforgeeks.org/problems/palindrome-string0817/1`,
 			`https://www.geeksforgeeks.org/print-all-the-duplicates-in-the-input-string/`,
@@ -656,7 +681,6 @@
 			`https://www.geeksforgeeks.org/transform-one-string-to-another-using-minimum-number-of-given-operation/`,
 			`https://practice.geeksforgeeks.org/problems/isomorphic-strings/0`,
 			`https://www.geeksforgeeks.org/recursively-print-all-sentences-that-can-be-formed-from-list-of-word-lists/`,
-			
 			`https://practice.geeksforgeeks.org/problems/first-and-last-occurrences-of-x/0`,
 			`https://practice.geeksforgeeks.org/problems/value-equal-to-index-value1330/1`,
 			`https://leetcode.com/problems/search-in-rotated-sorted-array/`,
@@ -693,8 +717,6 @@
 			`https://practice.geeksforgeeks.org/problems/inversion-of-array/0`,
 			`https://www.geeksforgeeks.org/in-place-merge-sort/`,
 			`https://www.baeldung.com/java-sorting-arrays-with-repeated-entries`,
-			
-
 			`https://www.geeksforgeeks.org/reverse-a-linked-list/`,
 			`https://practice.geeksforgeeks.org/problems/reverse-a-linked-list-in-groups-of-given-size/1`,
 			`https://practice.geeksforgeeks.org/problems/detect-loop-in-linked-list/1`,
@@ -731,8 +753,6 @@
 			`https://practice.geeksforgeeks.org/problems/segregate-even-and-odd-nodes-in-a-linked-list/0`,
 			`https://practice.geeksforgeeks.org/problems/nth-node-from-end-of-linked-list/1`,
 			`https://practice.geeksforgeeks.org/problems/first-non-repeating-character-in-a-stream/0`,
-
-
 			`https://practice.geeksforgeeks.org/problems/level-order-traversal/1`,
 			`https://practice.geeksforgeeks.org/problems/reverse-level-order-traversal/1`,
 			`https://practice.geeksforgeeks.org/problems/height-of-binary-tree/1`,
@@ -767,8 +787,7 @@
 			`https://practice.geeksforgeeks.org/problems/min-distance-between-two-given-nodes-of-a-binary-tree/1`,
 			`https://www.geeksforgeeks.org/kth-ancestor-node-binary-tree-set-2/`,
 			`https://practice.geeksforgeeks.org/problems/duplicate-subtrees/1`,
-			`https://practice.geeksforgeeks.org/problems/check-if-tree-is-isomorphic/1`,
-		
+			`https://practice.geeksforgeeks.org/problems/check-if-tree-is-isomorphic/1`,		
 			`https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/`,
 			`https://leetcode.com/problems/delete-node-in-a-bst/`,
 			`https://practice.geeksforgeeks.org/problems/minimum-element-in-bst/1`,
@@ -791,8 +810,6 @@
 			`https://practice.geeksforgeeks.org/problems/check-whether-bst-contains-dead-end/1`,
 			`https://practice.geeksforgeeks.org/problems/largest-bst/1`,
 			`https://www.geeksforgeeks.org/flatten-bst-to-sorted-list-increasing-order/`,
-
-
 			`https://practice.geeksforgeeks.org/problems/n-meetings-in-one-room/0`,
 			`https://practice.geeksforgeeks.org/problems/job-sequencing-problem/0`,
 			`https://practice.geeksforgeeks.org/problems/huffman-encoding/0`,
@@ -828,8 +845,6 @@
 			`https://practice.geeksforgeeks.org/problems/smallest-number5829/1`,
 			`https://practice.geeksforgeeks.org/problems/rearrange-characters/0`,
 			`https://www.geeksforgeeks.org/find-maximum-sum-possible-equal-sum-three-stacks/`,
-	
-
 			`https://practice.geeksforgeeks.org/problems/rat-in-a-maze-problem/1`,
 			`https://www.geeksforgeeks.org/printing-solutions-n-queen-problem/`,
 			`https://practice.geeksforgeeks.org/problems/word-break-part-2/0`,
@@ -849,8 +864,6 @@
 			`https://www.geeksforgeeks.org/print-all-possible-paths-from-top-left-to-bottom-right-of-a-mxn-matrix/`,
 			`https://practice.geeksforgeeks.org/problems/partition-array-to-k-subsets/1`,
 			`https://www.geeksforgeeks.org/find-the-k-th-permutation-sequence-of-first-n-natural-numbers/`,
-	
-
 			`https://www.tutorialspoint.com/javaexamples/data_stack.htm`,
 			`https://www.geeksforgeeks.org/queue-set-1introduction-and-array-implementation/`,
 			`https://practice.geeksforgeeks.org/problems/implement-two-stacks-in-an-array/1`,
@@ -889,8 +902,6 @@
 			`https://practice.geeksforgeeks.org/problems/game-with-string/0`,
 			`https://practice.geeksforgeeks.org/problems/first-non-repeating-character-in-a-stream/0`,
 			`https://www.geeksforgeeks.org/next-smaller-element/`,
-	
-
 			`https://www.geeksforgeeks.org/building-heap-from-array/`,
 			`https://www.geeksforgeeks.org/heap-sort/`,
 			`https://www.geeksforgeeks.org/sliding-window-maximum-maximum-of-all-subarrays-of-size-k/`,
@@ -909,8 +920,6 @@
 			`https://www.geeksforgeeks.org/convert-min-heap-to-max-heap/`,
 			`https://practice.geeksforgeeks.org/problems/rearrange-characters/0`,
 			`https://practice.geeksforgeeks.org/problems/minimum-sum4058/1`,
-	
-
 			`https://1drv.ms/t/s!AqTOHFO77CqEiRua06v1PATyiFg5`,
 			`https://practice.geeksforgeeks.org/problems/bfs-traversal-of-graph/1`,
 			`https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/`,
@@ -955,8 +964,6 @@
 			`https://www.geeksforgeeks.org/number-of-triangles-in-directed-and-undirected-graphs/`,
 			`https://www.geeksforgeeks.org/minimize-cash-flow-among-given-set-friends-borrowed-money/`,
 			`https://www.geeksforgeeks.org/two-clique-problem-check-graph-can-divided-two-cliques/`,
-
-
 			`https://www.geeksforgeeks.org/trie-insert-and-search/`,
 			`https://www.geeksforgeeks.org/find-all-shortest-unique-prefixes-to-represent-each-word-in-a-given-list/`,
 			`https://www.geeksforgeeks.org/word-break-problem-trie-solution/`,
@@ -1033,7 +1040,6 @@
 			`https://www.geeksforgeeks.org/divide-two-integers-without-using-multiplication-division-mod-operator/`,
 			`https://www.geeksforgeeks.org/calculate-square-of-a-number-without-using-and-pow/`,
 			`https://practice.geeksforgeeks.org/problems/power-set4302/1`,
-
 		]
 
 		let frequency = [
@@ -1112,7 +1118,7 @@
 				pre: 372
 			},
 			{
-				topic: "Bit Manipulation",
+				topic: "Dynamic Programming",
 				frequency: 60,
 				pre: 378
 			},
@@ -1128,9 +1134,7 @@
 		create_selector();
 		create_grid();
 		const limit = total_questions();
-
 		checkLocalExist();
-
 		add_listeners();
 
 	// Utility funtion
@@ -1185,8 +1189,7 @@
 								<span class="question__markers">
 									<span class="question__mark__1 q__m"></span>
 								</span>
-							</span>
-							
+							</span>	
 						</div>
 					`
 					let a = document.createElement('div');
@@ -1200,7 +1203,11 @@
 			})
 		}
 
-		function add_listeners() {
+		function add_listeners() {	
+
+			document.querySelector(".head__pointer").addEventListener("click", () => {
+				location.href = "#head";
+			})
 
 			document.querySelector('.heading__select').addEventListener("click", (e) => {
 				let val = e.target.value;
@@ -1227,10 +1234,9 @@
 
 		function checkLocalExist() {
 			if(!localStorage.getItem("counter")) {
-					for(let i=0; i<limit; i++) {
-						counter.push(0);
-					}
-
+				for(let i=0; i<limit; i++) {
+					counter.push(0);
+				}
 				localStorage.setItem("counter", counter);
 			} else {
 				let g = localStorage.getItem("counter").split(",");
