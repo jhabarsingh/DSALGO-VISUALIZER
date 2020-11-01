@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<titleLinked List/title>
+	<title>Linked List</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
+			position: relative;
+			overflow: hidden;
 		}
 
-	.grid {
-			width: 400px;
+		body {
+			min-height: 100vh;
+		}
+		.grid {
+			max-width: 600px;
 			position: relative;
-			height: 400px;
-			background: black;
-			margin: 40px auto;
-			display: flex;
-			flex-wrap: wrap;
-			outline: 2px solid black;
+			padding: 10px;
+			margin: 50px auto;
+			outline: 2px solid green;
 		}
 
 		p:nth-child(1) {
@@ -28,23 +30,80 @@
 			font-size: 20px;
 		}
 
+		.algo {
+			display: block;
+			padding: 10px;
+			background: lightgreen;
+			margin: 10px;
+			box-shadow: -5px 10px 5px rgba(0, 0, 0, .2);
+		}
+
+		.algo__link {
+			text-decoration: none;
+			color: purple;
+			font-size: 20px;
+			font-weight: bolder;
+			text-shadow: 10px 10px 10px rgba(0, 0, 0, .3);
+		}
 
 	</style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p>Linked List</p>
-	<div class='grid'>
-		
+	<p class='heading'>Linked List</p>
+	<div class='grid'></div>
 
 	</div>
 
+	<div class="circular__read">
+		
+	</div>
 	<script>
 
 // Main
+		let grid = document.querySelector('.grid');
+		let algo = [
+			{
+				name: 'Singly Linked List',
+				link: `linked_list/singly.html`
+			},
+			{
+				name: 'Doubly Linked List',
+				link: `linked_list/doubly.html`
+			},
+			{
+				name: 'Circular Singly Linked List',
+				link: `linked_list/circular_singly.html`
+			},
+			{
+				name: 'Circular Doubly Linked List',
+				link: `linked_list/circular_doubly.html`
+			},
+			{
+				name: 'Stack Using Linked List',
+				link: `linked_list/linked_stack.html`
+			},
+			{
+				name: 'Queue Using Linked List',
+				link: `linked_list/linked_queue.html`
+			},
+		]
+		init();
 
+// Utility function 
 
+		function init() {
+			algo.forEach((e, i) => {
+				let html = `
+						<a href="${e.link}" class="algo__link">${e.name}</a>
+				`
+				let algo = document.createElement('div');
+				algo.classList.add('algo');
+				algo.innerHTML = html;
+				grid.appendChild(algo);
+			})
+		}
 	</script>
 </body>
 </html>

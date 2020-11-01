@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Array</title>
+	<title>Binary Search</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
-	
 		}
 
 		body {
@@ -78,15 +77,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p>Array</p>
+	<p>Binary Search</p>
 	<canvas class='grid' width='1000',height='400px'>
 		
 	</canvas>
 
 	<div class="stack__controllers">
 		<div>
-			<button class="stack__peek">Insert</button>
-			<button class="stack__peek">Delete</button>
+			<input type="number" class="stack__peek__input" placeholder="Peek Value" value="0" name="peek">
 			<button class="stack__peek">Search</button>
 		</div>		
 	</div>
@@ -154,10 +152,7 @@
 	async function peek(val) {
 		for(let i=0; i< arr.length; i++) {
 			let mid = Math.floor(arr.length / 2);
-			
-			// glitter mid
-
-			// 
+			animate();
 		}
 	}
 
