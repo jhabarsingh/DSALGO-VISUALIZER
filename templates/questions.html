@@ -124,10 +124,26 @@
 			}
 		}
 
+		.total_questions_done {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			padding: 10px;
+			width: 100px;
+			height: 100px;
+			text-align: center;
+			z-index: 10;
+			/*box-shadow: 10px 5px 10px rgba(0, 0, 0, .4);*/
+			color: white;
+			font-weight: bolder;
+			font-size: 25px;
+			border-radius: 50%;
+		}
 	</style>
 </head>
 <body>
 	<p class='heading' id="head"> Questions </p>
+	<div class="total_questions_done"></div>
 	<div class='grid'>
 		
 
@@ -1204,7 +1220,6 @@
 		}
 
 		function add_listeners() {	
-
 			document.querySelector(".head__pointer").addEventListener("click", () => {
 				location.href = "#head";
 			})
@@ -1216,15 +1231,23 @@
 
 			document.querySelectorAll('.question__mark__1').forEach((element, index) => {
 				element.addEventListener("click", (el) => {
-					console.log(index);
+					let g = localStorage.getItem("counter").split(",");
+					let count = 0;
+					g.map((el) => {
+						count += +el;
+						return +el;
+					})
 					let p = element.style.background;
 					if( p == 'white'){
 						element.style.background = 'red';
 						counter[index] = 1;
+						document.querySelector(".total_questions_done").innerText = `${count + 1}/448`;
+					
 					}
 					else{
 						element.style.background = 'white';
-						counter[index] = 0;	
+						counter[index] = 0;
+						document.querySelector(".total_questions_done").innerText = `${count - 1}/448`;	
 					}
 					localStorage.setItem("counter", counter)
 				})
@@ -1240,9 +1263,12 @@
 				localStorage.setItem("counter", counter);
 			} else {
 				let g = localStorage.getItem("counter").split(",");
+				let count = 0;
 				g.map((el) => {
+					count += +el;
 					return +el;
 				})
+				document.querySelector(".total_questions_done").innerText = `${count}/448`;
 				counter = g;	
 				let all_checkbox = document.querySelectorAll('.question__mark__1')
 				for(let j=0; j< g.length; j++) {

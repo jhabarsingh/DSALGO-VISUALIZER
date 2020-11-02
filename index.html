@@ -282,7 +282,9 @@
      			link: 'templates/recursion.html',
      			sub_topics: [
      				"fibonacci",
-     				"factorial"
+     				"factorial",
+     				"permutations",
+     				"subset"
 
      			]
      		},
@@ -329,7 +331,7 @@
 	     		let card_span = document.createElement('button');
 	     		card_span.classList.add('badge');
 	     		card_span.classList.add('badge-primary');
-	     		card_span.innerText = e;
+	     		card_span.innerText = e.toUpperCase();
 
 	     		document.querySelectorAll('.card-body')[index].appendChild(card_span);
      		})
