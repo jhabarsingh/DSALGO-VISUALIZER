@@ -65,8 +65,8 @@
 	<p class='heading'>Sorting Algorithm</p>
 	<div class="visualise">
 		<select name="type" class="visualise__array">
-			<option value="visualize">Visualize</option>
-			<option value="use_array">Use Array</option>
+			<option value="sort_algorithms">Visualize</option>
+			<option value="sort_array">Use Array</option>
 		</select>
 	</div>
 	<div class='grid'></div>
@@ -85,50 +85,65 @@
 		let algo = [
 			{
 				name: 'bubble sort',
-				link: `${dir_name}/bubble.html`
+				link: `bubble.html`
 			},
 			{
 				name: 'selection sort',
-				link: `${dir_name}/selection.html`
+				link: `selection.html`
 			},
 			{
 				name: 'insertion sort',
-				link: `${dir_name}/insertion.html`
+				link: `insertion.html`
 			},
 			{
 				name: 'merge sort',
-				link: `${dir_name}/merge.html`
+				link: `merge.html`
 			},
 			{
 				name: 'quick sort',
-				link: `${dir_name}/quick.html`
+				link: `quick.html`
 			},
 			{
 				name: 'radix sort',
-				link: `${dir_name}/radix.html`
+				link: `radix.html`
 			},
 			{
 				name: 'shell sort',
-				link: `${dir_name}/shell.html`
+				link: `shell.html`
 			},
 			{
 				name: 'counting sort',
-				link: `${dir_name}/counting.html`
+				link: `counting.html`
 			},
 		]
 		init();
 
 // Utility function 
 
-		function init() {
+		function create_link() {
 			algo.forEach((e, i) => {
 				let html = `
-						<a href="${e.link}" class="algo__link">${e.name}</a>
+						<a href="${dir_name}/${e.link}" class="algo__link">${e.name}</a>
 				`
 				let algo = document.createElement('div');
 				algo.classList.add('algo');
 				algo.innerHTML = html;
 				grid.appendChild(algo);
+			})
+		}
+
+		function init() {
+			if(localStorage.getItem("dirname")) {
+				dir_name = localStorage.getItem("dirname");
+				console.log(dir_name)
+			}
+			create_link();
+			document.querySelector(".visualise__array").addEventListener("click",(e) => {
+				let p = document.querySelector(".visualise__array").value;
+				dir_name = p;
+				localStorage.setItem("dirname", p);
+				document.querySelector(".grid").innerHTML = "";
+				create_link();
 			})
 		}
 	</script>
