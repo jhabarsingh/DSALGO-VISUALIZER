@@ -143,14 +143,16 @@
 // utility
 	function randomize_an_array() {
 		arr = [];
-
+		copy = [];
 
 		for(let i=0; i<size; i++) {
 			arr.push("\\0");
+			copy.push("\\0")
 		}
 
 		for(let i=0; i<size - no_of_null; i++) {
 			arr[i] = Math.floor(Math.random() * max + 1);
+			copy[i] = (arr[i]);
 		}
 	}
 
@@ -263,16 +265,33 @@
 
 	function animate(glit_color=-1) {
 		clear(0, 0, max_width, max_height);
-		arr.forEach((e, i) => {
+		copy.forEach((e, i) => {
 			ctx.fillStyle = "black";
-			if(i == glit_color) {
-				ctx.fillStyle = "red";
-
-			}	
-			ctx.fillRect(i * rect.width + i + 10, max_height/2, rect.width, rect.height);
+			lit = 0
+			ctx.fillRect(i * rect.width + i + 10, 30, rect.width, rect.height);
 			ctx.fillStyle = 'white';
 			ctx.font = 'bold 15px ubuntu'
-			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4))
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10 , 16 + 30)
+			ctx.fillStyle = 'blue';
+		})
+		ctx.font = 'normal 12px monospace'
+		ctx.fillText("Original Array", max_width - 130, 14)
+		ctx.fillStyle = 'black';
+
+		arr.forEach((e, i) => {
+			ctx.fillStyle = "black";
+			lit = 0;
+			if(i == glit_color) {
+				ctx.fillStyle = "red";
+				ctx.fillRect(i * rect.width + i + 10, max_height/2 - 6, rect.width, rect.height);
+				lit = 10;
+			}
+			else {
+				ctx.fillRect(i * rect.width + i + 10, max_height/2, rect.width, rect.height);
+			}	
+			ctx.fillStyle = 'white';
+			ctx.font = 'bold 15px ubuntu'
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4) - lit)
 			ctx.fillStyle = 'black';
 		})
 
@@ -289,11 +308,8 @@
 			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4) + (7.5 / 4) * rect.height)
 			ctx.fillStyle = 'black';
 		})
-		ctx.fillStyle = "red";
-		ctx.font = "bolder 15px monospace";
-		ctx.fillText("Array", 10, max_height/2 - 5)
 		ctx.fillStyle = "darkblue";
-		ctx.font = "bolder 15px monospace";
+		ctx.font = "bolder 12px monospace";
 		ctx.fillText("Index", 10, max_height/2 + 45)
 
 	}
@@ -316,6 +332,7 @@
 					ctx.fillStyle = "yellow";
 					ctx.fillText(value, rect.width / 2 - 2, rect.height / 2 + 10);
 					ctx.fillStyle = "black";
+					ctx.fillText("Temp value", rect.width / 2 + 50, rect.height / 2 + 10)
 				}
 			}
 			arr[index] = value;

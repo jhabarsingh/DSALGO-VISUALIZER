@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Tree</title>
+	<title>	Binary Search Tree</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -9,23 +9,23 @@
 			padding: 0;
 		}
 
+		body {
+			text-align: center;
+		}
+
 		.grid {
-			width: 400px;
-			position: relative;
-			height: 400px;
-			background: black;
-			margin: 40px auto;
-			display: flex;
-			flex-wrap: wrap;
-			outline: 2px solid black;
+			background: lightgreen;
+			margin: auto;
 		}
 
 		p:nth-child(1) {
-			padding: 20px;
+			padding: 10px;
 			text-align: center;
 			font-family: ubuntu;
 			font-weight: bolder;
-			font-size: 20px;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
 		}
 
 
@@ -34,16 +34,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p> Tree </p>
-	<div class='grid'>
+	<p> Binary Search Tree </p>
+	<canvas class='grid' width="900" height="500">
 		
-
-	</div>
+	</canvas>
 
 	<script>
 
 // Main
+	
+	arr = []
+	size = 10;
+	max = 100;
+	width = 20;
+	x = 10;
+	y = 6;
+	ctx = document.querySelector("canvas").getContext("2d");
+	max_width = ctx.canvas.width;
+	max_height = ctx.canvas.height;
+	
+	init();
 
+// Utility
+	
+	class Node {
+		value;
+
+	}
+
+	function init() {
+		randomize_an_array();
+		// create_tree(ctx.canvas.width / 2, width + 5, 0, 70, 80);
+		create_grid();
+	}
+
+	function add_listeners() {
+
+	}
+
+	function create_grid(width=5) {
+		document.querySelector("canvas").addEventListener("click", (e) => {
+			x = e.offsetX;
+			y = e.offsetY;
+			xx = Math.floor(x / width);
+			yy = Math.floor(y / width);
+			ctx.moveTo(xx * width + width / 2, yy * width + width / 2);
+			ctx.arc(xx * width + width / 2, yy * width + width / 2, width / 2, 0, Math.PI * 2, true);
+			ctx.fill();
+		})
+	}
+
+	function create_tree(x, y, num, dx, dy) {
+		ctx.fillStyle = "red";
+		ctx.moveTo(x, y);
+		ctx.arc(x, y, width, 0, Math.PI * 2, true);
+		ctx.fill();
+			// ctx.fillStyle="white";
+			// ctx.fillText(1, x + width / 2, y + width / 2);
+		ctx.fillStyle = "black";
+		if(num == 4) {
+			return;
+		}	
+		create_tree(x - dx, y + dy, num + 1, dx, dy);
+
+	}	
+
+	function insert_tree() {
+
+	}
+
+	function delete_tree() {
+
+	}
+
+	function search_tree() {
+
+	}
+
+	function randomize_an_array() {
+		for(let i=0; i<size; i++) {
+			arr.push(Math.floor(Math.random() * max + 1));
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	
 	</script>
 </body>
 </html>

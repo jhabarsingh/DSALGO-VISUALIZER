@@ -104,14 +104,6 @@
 				link: `quick.html`
 			},
 			{
-				name: 'radix sort',
-				link: `radix.html`
-			},
-			{
-				name: 'shell sort',
-				link: `shell.html`
-			},
-			{
 				name: 'counting sort',
 				link: `counting.html`
 			},
@@ -135,7 +127,9 @@
 		function init() {
 			if(localStorage.getItem("dirname")) {
 				dir_name = localStorage.getItem("dirname");
+				document.querySelector(".visualise__array").value = dir_name;
 				console.log(dir_name)
+				
 			}
 			create_link();
 			document.querySelector(".visualise__array").addEventListener("click",(e) => {
@@ -149,3 +143,4 @@
 	</script>
 </body>
 </html>
+
