@@ -135,7 +135,7 @@
 
      <script>
 
-     	// Main
+// Main
 
      	let sec = document.querySelector('.section');
      	let heading = document.querySelector('.main__heading');
@@ -195,11 +195,10 @@
      				"insertion",
      				"merge",
      				"quick",
-     				"radix",
-     				"heap",
-     				"shell",
+     				// "radix",
+     				// "heap",
+     				// "shell",
      				"counting"
-
      			]
      		},
      		{
@@ -209,7 +208,6 @@
      			sub_topics: [
      				"linear",
      				"binary"
-
      			]
      		},
      		     		{
@@ -221,7 +219,6 @@
      				"delete",
      				"insert",
      				"heapify"
-
      			]
      		},
      		{
@@ -234,7 +231,6 @@
      				"circular",
      				"stack",
      				"queue"
-
      			]
      		},
      		     		{
@@ -246,9 +242,6 @@
      				"insert",
      				"delete",
      				"find",
-     				"traversal"
-
-
      			]
      		},
      		{
@@ -263,7 +256,6 @@
      				"kruskals",
      				"prims",
      				"djstras"
-
      			]
      		},
      		{
@@ -300,14 +292,13 @@
      		},
      	]
 
+          pop_up();
+
+// Utility
+
       	details.forEach((detail, index) => {
      		add_card(detail, index);
      	}) 
-
-      	pop_up();
-
-
-     	// cards 
      	
      	function add_card(details, index) {
      		let card = document.createElement('div');
