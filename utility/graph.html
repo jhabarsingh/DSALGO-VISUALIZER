@@ -14,7 +14,9 @@
 			background: lightgreen;
 			margin: 10px auto;
 			display: flex;
+			padding: 10px;
 			flex-wrap: wrap;
+			outline: 2px solid black;
 		}
 
 		p:nth-child(1) {
@@ -41,14 +43,14 @@
 
 // Main
 
-	arr = ['a', 'b', 'c', 'd', 'e', 'f'];
+	arr = ['a', 'b', 'c', 'd', 'e'];
 	each = []
 	size = arr.length;
 	edge = [];
 	dimension = 30;
-	rel = 15;
+	rel = 0;
 	ctx = document.querySelector("canvas").getContext("2d");
-	time_delay = 1000;
+
 	dx = ctx.canvas.width / size;
 	dy = ctx.canvas.height / size;
 	create_edges();
@@ -73,78 +75,56 @@
 		}
 
 		for(let i=0; i< size; i++) {
-			
+			if(count >= 10) {
+				break
+			}
 			for(let j=0; j< size; j++) {
-				let p = Math.floor(Math.random()*2 + 1) - 1;
-				edge[i][j] = p;
-				count ++;
+				if(count >= 20) {
+					break
+				}
+				else {
+					let p = Math.floor(Math.random()*6 + 1) - 1;
+					if(p == 0) {
+
+					} else if(p == 1) {
+						console.log(p)
+						edge[i][j] = 1;
+						count ++;
+					}
+				}
 			}	
 		}
 	}
 
 
-	async function create_graph() {
+	function create_graph() {
 
 		for(let i=0; i< size; i++) {
 			for(let j=0; j< size; j++) {
 				if(+edge[i][j] == 1) {
+					console.log(edge[i][j])
 					ctx.strokeStyle = "black";
+					
 					let x = each[i] * dx + dimension / 2 + rel;
 					let y = i * dy + dimension / 2 + rel;
+					console.log(x, y);
 					ctx.moveTo(x, y);
-					ctx.lineWidth = 4;
 					x = each[j] * dx + dimension / 2 + rel;
-					y = j * dy + dimension / 2 + rel;
+					y = j * dx + dimension / 2 + rel;
 					ctx.lineTo(x, y);
 					ctx.stroke();
 				}
 			}	
 		}
 		for(let i=0; i< size; i++) {
-			ctx.fillStyle = "red"
+			ctx.fillStyle = "red";
 			ctx.moveTo(each[i] * dx, i* dy);
 			let x = each[i] * dx + (dimension / 2) + rel;
 			let y = i * dy + dimension / 2 + rel;
-			ctx.arc(x , y , dimension ,0 , Math.PI * 2);
+			console.log(x, y);
+			ctx.arc(x , y , dimension ,0 , Math.PI * 2, true);
 			ctx.fill();
-			ctx.fillStyle = 'white';
-			ctx.font = 'bolder 25px ubuntu'
-			ctx.moveTo(each[i] * dx, i* dy);	
-			ctx.fillText(arr[i],x, y);
-		
 		}
-
-		for(let i=0; i< size; i++) {
-			ctx.moveTo(each[i] * dx, i* dy);
-			let x = each[i] * dx + (dimension / 2) + rel;
-			let y = i * dy + dimension / 2 + rel;
-			ctx.fillStyle = 'white';
-			ctx.font = 'bolder 25px ubuntu'
-			ctx.moveTo(each[i] * dx, i* dy);	
-			ctx.fillText(arr[i],x, y);
-	
-		}
-	}
-
-
-	function dfs() {
-		visited = [];
-		stack = [];
-		for(let i=0; i<size; i++) {
-			visited.push(0);
-		}
-
-		for(let i=0; i<size; i++) {
-			for(j=0; j<size; j++) {
-				if(edge[i][j] == 1) {
-					stack.push(i);
-				}
-			}
-		}
-	}
-
-	function sleep(ms) {
-		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
 	</script>

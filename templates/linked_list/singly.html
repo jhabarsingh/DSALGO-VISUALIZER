@@ -206,7 +206,7 @@
 			black_tik = 5;
 			let count = 0;	
 			for(let i=0; i<size; i++) {
-				await sleep(time_delay / 32).then(() => {
+				await sleep(0).then(() => {
 					count = i;
 					ctx.fillRect(x + width * count + count * gap, y, width, height);
 					ctx.beginPath();
