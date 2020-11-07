@@ -48,10 +48,10 @@
 		width: 100,
 		height: 100
 	}
-	time_delay = 1000;
+	time_delay = 100;
 	width = ctx.canvas.width;
 	height = ctx.canvas.height;
-	let size = 4;
+	let size = 8;
 	let queenImage = new Image();
 	queenImage.src = "../../images/queen.png"
 	let arr = [];
@@ -68,13 +68,13 @@
 			}
 			set_queen();		
 			back_track(0);
-			set_queen();
 		};	
-		let t = [];
+		
 		for(let i=0; i<size; i++) {
-			t.push(0);
-		}
-		for(let i=0; i<size; i++) {
+			let t = [];
+			for(let i=0; i<size; i++) {
+				t.push(0);
+			}
 			arr.push(t);
 		}
 	}
@@ -95,8 +95,8 @@
 	    let i, j; 
 	  
 	    /* Check this row on left side */
-	    for (i = 0; i < col; i++) 
-	        if (arr[row][i]) 
+	    for (i = 0; i < row; i++) 
+	        if (arr[i][col]) 
 	            return false; 
 	  
 	    /* Check upper diagonal on left side */
@@ -105,7 +105,7 @@
 	            return false; 
 	  
 	    /* Check lower diagonal on left side */
-	    for (i = row, j = col; j >= 0 && i < size; i++, j--) 
+	    for (i = row, j = col; i >= 0 && j < size; i--, j++) 
 	        if (arr[i][j]) 
 	            return false; 
 	  
@@ -113,28 +113,29 @@
 	}
 
 	async function back_track(current) {
+		// console.log(current)
 		if(current == size) {
+			console.log(queen);
 			return true;
 		}
 		for(let i=0; i< size; i++) {
-				await sleep(time_delay).then(() => {
-					if(check(current, i)) {
-						console.log(current);
-						arr[current][i] = 1;
-						queen[current] = i;
+				if(check(current, i)) {	
+					arr[current][i] = 1;
+					queen[current] = i;
+					await sleep(time_delay).then(() => {
 						create_grid();
 						set_queen();
-						p = back_track(current + 1)
-						if(p) {
-							return true;
-						} 
+					})
+					let p = await back_track(current + 1);
+					if(p) {
+						// console.log(current, i)
+						return true;
+					} else {
 						arr[current][i] = 0;
 						queen[current] = -1;	
-						
-					}
-				})
 
-			
+					} 
+				}
 		}
 		return false
 	}
