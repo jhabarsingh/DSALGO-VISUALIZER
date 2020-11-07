@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Flood Fill</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+			border: 2px solid black;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p> Flood Fill </p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	size = 100;
+	time_delay = 10;
+	arr =[];
+	each_width = ctx.canvas.width / size;
+	each_height = ctx.canvas.height / size;
+	let start = {
+		x: 0,
+		y: 0
+	}
+	let end = {
+		x: 0,
+		y: 0
+	}
+
+	init();
+
+// Utility
+	
+	function init() {
+		init_array();
+		draw_grid();
+		flood_fill(start.y, start.x);
+	}
+
+	function init_array() {
+		for(let i=0; i<size; i++) {
+			let temp = [];
+			for(let i=0; i<size; i++) {
+				temp.push(0)
+			}
+			arr.push(temp)
+		}
+
+
+		let width = 1;
+		let height = 20;
+
+		// rand * (max - min + 1) - min;
+
+		let x = Math.floor(Math.random() * (size - 5 * width - 5 * width) + 5 *  width);
+		let y = Math.floor(Math.random() * (size - height - 0) + 0);
+		start.x = Math.floor(Math.random() * (x - 5 - 0));
+		start.y = Math.floor(Math.random() * (size));
+		end.x = Math.floor(Math.random() * (size - ( x + width + 5)) + x + width + 5);
+		end.y = Math.floor(Math.random() * size);
+
+		console.log(x, y, start, end)
+		for(let i=x ; i < (x + width); i++) {
+			for(let j=y ; j < (y + height); j++) {
+					arr[j][i] = 1
+			}	
+		}
+
+		arr[start.y][start.x] = 2;
+		arr[end.y][end.x] = 3;
+		
+	}
+
+	async function draw_grid() {
+		for(let i=0; i<size; i++) {
+			for(let j=0; j<size; j++) {
+				// Obstacle 
+				if(arr[i][j] == 1) {
+					ctx.fillStyle = "black";
+					ctx.fillRect(j * each_width, i * each_height, each_width, each_height)
+				} 
+				// Start
+				else if(arr[i][j] == 2) {
+					ctx.fillStyle = "red";
+					ctx.fillRect(j * each_width, i * each_height, each_width, each_height)
+				}
+
+				// End
+				else if(arr[i][j] == 3) {
+					ctx.fillStyle = "yellow";
+					ctx.fillRect(j * each_width, i * each_height, each_width, each_height)
+				}
+				//coloring
+				else if(arr[i][j] == 4) {
+					ctx.fillStyle = "white";
+					ctx.fillRect(j * each_width, i * each_height, each_width, each_height)
+				}
+				ctx.fillStyle="lightgreen";
+			}	
+		}
+	}
+
+
+	async function flood_fill(x, y) {
+		if(x < 0 || x >= size || y < 0 || y >= size) {
+			return;
+		}
+		if(arr[x][y] == 3 || arr[x][y]==1 || arr[x][y] == 4) {
+			return;
+		}	
+		console.log(x, y)
+		
+		if(x == start.y && y == start.x) {
+
+		}
+		else {
+			await sleep(time_delay).then(() => {
+				arr[y][x] = 4;
+				ctx.fillStyle = "white";
+				ctx.fillRect(y * each_width, x * each_height, each_width, each_height)	
+			
+			})
+		}
+
+		flood_fill(x - 1, y);
+		flood_fill(x, y + 1);
+		flood_fill(x + 1, y);
+		flood_fill(x, y + 1);
+	
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>

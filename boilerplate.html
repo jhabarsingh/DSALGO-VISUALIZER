@@ -42,7 +42,12 @@
 	<script>
 
 // Main
-
+	let ctx = document.querySelector("canvas").getContext("2d");
+	
+// Utility
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
 
 	</script>
 </body>

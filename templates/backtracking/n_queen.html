@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>N Queen</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+			border: 2px solid black;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p> N Queen </p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let rect = {
+		width: 100,
+		height: 100
+	}
+	time_delay = 1000;
+	width = ctx.canvas.width;
+	height = ctx.canvas.height;
+	let size = 4;
+	let queenImage = new Image();
+	queenImage.src = "../../images/queen.png"
+	let arr = [];
+	let queen = [];
+	init();		
+	
+// Utility
+
+	function init() {
+		queenImage.onload = function () {
+			create_grid();
+			for(let i=0; i< size ;i++) {
+				queen.push(-1);
+			}
+			set_queen();		
+			back_track(0);
+			set_queen();
+		};	
+		let t = [];
+		for(let i=0; i<size; i++) {
+			t.push(0);
+		}
+		for(let i=0; i<size; i++) {
+			arr.push(t);
+		}
+	}
+
+	function create_grid() {
+		let x = width / size ;
+		let y = height / size;	
+		for(let i=0; i< size; i++) {
+			ctx.drawImage(queenImage, 1 * x + 30, y * i, 60, 50);
+			for(let j=0; j< size + 1; j++) {
+				ctx.fillStyle = (i + j) % 2 ? "white" : "black";
+				ctx.fillRect(j * x, y * i, x, y);
+			}
+		}
+	}
+
+	function check(row, col) {
+	    let i, j; 
+	  
+	    /* Check this row on left side */
+	    for (i = 0; i < col; i++) 
+	        if (arr[row][i]) 
+	            return false; 
+	  
+	    /* Check upper diagonal on left side */
+	    for (i = row, j = col; i >= 0 && j >= 0; i--, j--) 
+	        if (arr[i][j]) 
+	            return false; 
+	  
+	    /* Check lower diagonal on left side */
+	    for (i = row, j = col; j >= 0 && i < size; i++, j--) 
+	        if (arr[i][j]) 
+	            return false; 
+	  
+    	return true; 
+	}
+
+	async function back_track(current) {
+		if(current == size) {
+			return true;
+		}
+		for(let i=0; i< size; i++) {
+				await sleep(time_delay).then(() => {
+					if(check(current, i)) {
+						console.log(current);
+						arr[current][i] = 1;
+						queen[current] = i;
+						create_grid();
+						set_queen();
+						p = back_track(current + 1)
+						if(p) {
+							return true;
+						} 
+						arr[current][i] = 0;
+						queen[current] = -1;	
+						
+					}
+				})
+
+			
+		}
+		return false
+	}
+
+	function set_queen() {
+		let x = width / size
+		let y = height / size;
+		for(let i=0; i<size; i++) {
+			ctx.drawImage(queenImage, x * queen[i] , i * y , width / size, height / size);
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
