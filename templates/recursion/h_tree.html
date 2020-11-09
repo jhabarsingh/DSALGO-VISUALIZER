@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>H Tree</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: black;
+			height: 550px;
+			margin: auto;
+			display: flex;
+		}
+
+		p:nth-child(1) {
+			padding: 5px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		button {
+			margin: 20px 0px 10px 0px;
+			padding: 15px 20px;
+			border-radius: 3px;
+		}
+
+		.how {
+			position: absolute;
+			background: rgba(0, 0, 0, .8);
+			top: 0px;
+			left: 0px;
+			width: 100%;
+			height: 100vh;
+		}
+		.demo {
+			margin-left: 10px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>H Tree</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<button class="btn_generate">
+		GenerateTree
+	</button>
+
+	<div class=" last">
+		
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	btn = document.querySelector(".btn_generate");
+	time_delay = 1;
+	init();
+	
+// Utility
+	function init() {
+		drawTree(ctx.canvas.width / 2, 
+				 ctx.canvas.height - 20, 
+				 120,
+				 0,
+				 Math.floor(Math.random() * 20),
+				 `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random()*255)})`,
+				 `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random()*255)})` 
+	    );
+
+	    btn.addEventListener("click", () => {
+			ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	    	drawTree(ctx.canvas.width / 2, 
+					 ctx.canvas.height - 20, 
+					 120,
+					 0,
+					 Math.floor(Math.random() * 20),
+					 `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random()*255)})`,
+					 `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random()*255)})` 
+		    );
+
+	    })
+
+	}
+
+	function drawTree(startX, startY, len, angle, brachWidth, branch_color, leaf_color, slow=false) {
+		ctx.beginPath();
+		ctx.save();
+		ctx.strokeStyle = branch_color;
+		ctx.fillStyle = leaf_color;
+		ctx.lineWidth = brachWidth;
+		ctx.translate(startX, startY);
+		ctx.rotate(angle * Math.PI / 180);
+		ctx.moveTo(0, 0);
+		ctx.bezierCurveTo(10, -len / 2, 10, -len, -4, -len)
+		ctx.stroke();
+		if(len < 6) {
+			ctx.beginPath();
+			ctx.arc(0, len, 10, 0, Math.PI / 2);
+			ctx.fill();
+			ctx.restore();
+			return;
+		}
+		a = Math.floor(Math.random() * 40);
+		b = Math.floor(Math.random() * 30);
+		c = Math.floor(Math.random() * (75 - 70) + 70) / 100;
+		d = Math.floor(Math.random() * (75 - 70) + 70) / 100;
+		drawTree(0, -len, len * c, angle + a, brachWidth * 0.5, branch_color, leaf_color);
+		drawTree(0, -len, len * d, angle - b, brachWidth * 0.7, branch_color, leaf_color);
+		ctx.restore();
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
