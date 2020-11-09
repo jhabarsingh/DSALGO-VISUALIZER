@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Queue Using Linked List</title>
+	<title>Queue using Linked List</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -16,7 +16,7 @@
 		.grid {
 			width: 1000px;
 			position: relative;
-			height: 400px;
+			height: 500px;
 			background: lightgreen;
 			margin: 40px auto;
 			display: flex;
@@ -25,7 +25,7 @@
 		}
 
 		p, p:nth-child(1) {
-			padding: 20px;
+			padding: 5px 20px;
 			text-align: center;
 			font-family: ubuntu;
 			font-weight: bolder;
@@ -89,7 +89,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p>Queue Using Linked List</p>
+	<p>Queue using Linked List</p>
 	<canvas class='grid' width='1000',height='400px'>
 		
 	</canvas>
@@ -127,7 +127,7 @@
 
 	queue_width = 200;
 	ctx = canvas.getContext("2d");
-	size = 10;
+	size = 7;
 	rect = {
 		width: 60,
 		height: 24
@@ -163,8 +163,8 @@
 		ctx.fillStyle = 'black';
 		ctx.fillRect(max_width - queue_width, 0, queue_width, max_height)
 		ctx.fillStyle = 'white';
-		ctx.fillRect(max_width - queue_width, max_height - rect.height / 2 - 3, queue_width, 1)
-		ctx.font = 'bold 15px ubuntu'	
+		ctx.fillRect(max_width - queue_width, max_height - rect.height / 2 + 1, queue_width, 1)
+		ctx.font = 'bold 10px ubuntu'	
 		ctx.fillText("QUEUE", max_width - queue_width / 2 - 15, max_height - 1);
 	}
 
@@ -175,6 +175,8 @@
 	}
 
 	function animate() {
+		y_gap = 7;
+		let p;
 		clear(0, 0, max_width, max_height);
 		create_queue();
 		arr.forEach((e, i) => {
@@ -187,17 +189,18 @@
 		})	
 		queue.forEach((e, i) => {
 			if(queue.length == 1) {
-				let h = max_height - rect.height - i*(rect.height/2) - i -4;
+				let h = max_height - rect.height - i*(rect.height/2) - i - i*y_gap -4;
 				ctx.fillStyle = "lightgreen";
 				ctx.fillRect(max_width - queue_width + 5, h, queue_width / 2 - 5, rect.height / 2);
 				ctx.fillStyle = "lightblue";
 				ctx.fillRect(max_width - queue_width + 5 + queue_width / 2 - 5, h, queue_width / 2 - 5, rect.height / 2);
 				ctx.fillStyle = 'red';
-				ctx.font = 'bold 12px ubuntu'
-				ctx.fillText(`${e}`, max_width - queue_width / 2, h + rect.height/2 - 1)
+				ctx.font = 'bolder 10px ubuntu'
+				ctx.fillText(`${e}`, max_width - queue_width / 2, h + rect.height/2 - 3)
 				ctx.fillStyle = 'black';
 				return
 			}
+			
 			if(i == queue.length - 1) {
 				ctx.fillStyle = "lightgreen";					
 			}
@@ -208,13 +211,31 @@
 				ctx.fillStyle = "white";	
 
 			}
-			let h = max_height - rect.height - i*(rect.height/2) - i -4;
+			let h = max_height - rect.height - i*(rect.height/2) - i -4 - i*y_gap;
+			p = h;
+			if(i != 0 && i != size) {
+				ctx.strokeStyle="yellow";
+				ctx.lineWidth = 2;
+				start_y = 13;
+				ctx.moveTo(max_width - queue_width / 2 + 5, h + start_y);
+				ctx.lineTo(max_width - queue_width / 2 + 5 - 5, h + 15);
+
+				ctx.moveTo(max_width - queue_width / 2 + 5, h + start_y);
+				ctx.lineTo(max_width - queue_width / 2 + 5 + 5, h + 15);
+				ctx.moveTo(max_width - queue_width / 2 + 5, h + start_y);				
+				ctx.lineTo(max_width - queue_width / 2 + 5, h + 19 + 1);
+				
+				ctx.stroke();
+				ctx.strokeStyle="black";					
+			}
 			ctx.fillRect(max_width - queue_width + 5, h, queue_width - 10, rect.height / 2);
 			ctx.fillStyle = 'red';
-			ctx.font = 'bold 12px ubuntu'
-			ctx.fillText(`${e}`, max_width - queue_width / 2, h + rect.height/2 - 1)
+			ctx.font = 'bolder 10px ubuntu'
+			ctx.fillText(`${e}`, max_width - queue_width / 2, h + rect.height/2 - 3)
 			ctx.fillStyle = 'black';
 		});
+		ctx.fillStyle = "black";
+		ctx.fillRect(max_width - queue_width, 0, queue_width, p)
 	}
 
 	function enqueue() {

@@ -247,9 +247,11 @@
 	async function peek(val) {
 		y_gap = 8;
 		
-		if(stack.includes(val)){
-			let i = stack.indexOf(val);
-			let h = max_height - rect.height - i*(rect.height/2) - i*y_gap -i;
+
+
+		if(val < stack.length) {
+			let i = stack.length - val - 1;
+			let h = max_height - rect.height - i*(rect.height/2) - i*y_gap -i - 1;
 			await sleep(time_delay).then(() => {
 				glitter(h, stack[i], "red", "white");
 			})
@@ -263,7 +265,7 @@
 			})
 		}
 		else {
-			alert("Element not present in stack")
+			alert("Peek value should be less than the stack size")
 		}
 	}
 
