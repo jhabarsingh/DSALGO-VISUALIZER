@@ -25,13 +25,65 @@
 			font-weight: bolder;
 			font-size:40px;
 			color: white;
-			font-family: monospace;
 			font-weight: bolder;
 			text-shadow: -2px 5px 3px rgba(0, 0, 0, .2);
 			text-transform: uppercase;
 		}
 
+		.blog {
+			margin: 10px auto;
+			max-width: 800px;
+			/*background: white;*/
+			text-align: center;
+		}
 
+		.blog__heading {
+			text-align: left;
+			font-size: 29px;
+			text-transform: capitalize;
+			font-weight: bolder;
+			color: #444;
+			padding: 5px;
+		}
+		.blog .survey__image {
+			width: 700px;
+			margin: 15px auto;
+		}
+
+		.survey_explain{
+			text-align: justify;
+			margin: 30px auto;
+			padding: 5px;
+			font-size: 24px;
+			color: #555;
+			font-weight: normal;
+			line-height: 30px;
+		}
+
+		.each_header{
+			text-transform: capitalize;
+			font-size: 28px;
+		}
+
+		.o_notations {
+			margin: 20px auto;
+		}
+
+		.o_notations > div {
+			margin: 30px auto;
+		}
+
+		.o_notations > div > .head {
+			color: #444;
+			font-size: 25px;
+			font-weight: bolder;
+		}
+
+		.big__each__explaination {
+
+
+		}
+		
 	</style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -39,7 +91,53 @@
 <body>
 	<p> Time Complexity </p>
 	<div class='grid'>
-			
+			<div class="blog">
+				<h3 class="blog__heading"> What's Time Complexity And Why Do We Need It ?</h3>	
+				<div class="blog_why">
+					<img class="survey__image" alt="survey" src="../images/survey.gif">
+					<div class="survey_explain">
+						Let's try to understand this by taking an example of a civil engineer. When 
+						a civil engineer do a survey he needs to take care of certain standard parameters
+						like suppose he or she is asked to tell weather the given <b>cement mixture</b> being used at the construction site is good or not. So he will take care of parameters like <b>water ratio, aggregates ratio, sands ratio</b>, etc But when we talk about a <b>Computer Science Engineer</b> his job would be to do survey on the code, so suppose if a software engineer is asked weather the given piece of code is good or not how would he tell. So the answer of this question is 
+						<b>
+							Time and space complexity
+						</b>.
+
+					</div>
+					<img class="survey__image" alt="time_space_complexity" src="../images/time_space_complexity.png">
+					<div class="survey_explain">
+						<b>Definition: </b> &nbsp; Time complexity of an algorithm quantifies the amount of time taken by an algorithm to run as a function of the length of the input. Similarly, Space complexity of an algorithm quantifies the amount of space or memory taken by an algorithm to run as a function of the length of the input.
+
+					</div>
+
+					<div class="survey_explain">
+						<b class="each_header">We Have three Asymptotic notations to calculate the time complexity</b>
+						<div class="o_notations">
+							<div class="big_θ_notation">
+								<b class="head">Big-θ (Big-Theta) notation</b>
+								<div class="big__each__explaination">
+									
+								</div>
+							</div>
+
+							<div class="big_o_notation">
+								<b class="head">Big-O (Big-Oh) Notation</b>
+								<div class="big__each__explaination">
+									
+								</div>
+							</div>
+
+							<div class="big_om_notation">
+								<b class="head">Big-Ω (Big-Omega) notation</b>
+								<div class="big__each__explaination">
+									
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
 	</div>
 
 	<script>
