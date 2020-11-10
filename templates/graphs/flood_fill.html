@@ -45,8 +45,9 @@
 // Main
 	let ctx = document.querySelector("canvas").getContext("2d");
 	size = 100;
-	time_delay = 10;
+	time_delay = 100;
 	arr =[];
+	parent = [];
 	each_width = ctx.canvas.width / size;
 	each_height = ctx.canvas.height / size;
 	let start = {
@@ -58,14 +59,15 @@
 		y: 0
 	}
 
+    let flag = 1;
 	init();
 
 // Utility
 	
-	function init() {
+	async function init() {
 		init_array();
 		draw_grid();
-		flood_fill(start.y, start.x);
+		flood_fill(start.y, start.x, start.y, start.x);
 	}
 
 	function init_array() {
@@ -75,6 +77,14 @@
 				temp.push(0)
 			}
 			arr.push(temp)
+		}
+
+		for(let i=0; i<size; i++) {
+			let temp = [];
+			for(let i=0; i<size; i++) {
+				temp.push([-1, -1])
+			}
+			parent.push(temp)
 		}
 
 
@@ -132,32 +142,57 @@
 	}
 
 
-	async function flood_fill(x, y) {
+	async function flood_fill(x, y, xx, yy) {
 		if(x < 0 || x >= size || y < 0 || y >= size) {
 			return;
 		}
 		if(arr[x][y] == 3 || arr[x][y]==1 || arr[x][y] == 4) {
+			if(arr[x][y] == 3){
+				flag = 0;
+				parent[x][y] = [xx, yy]
+				createPath(start.y, start.x, end.y, end.x);
+			}
 			return;
 		}	
-		console.log(x, y)
-		
+
+		if(!flag) {
+			return;
+		}
 		if(x == start.y && y == start.x) {
 
 		}
 		else {
+			arr[x][y] = 4;
+			parent[x][y] = [xx, yy]
 			await sleep(time_delay).then(() => {
-				arr[y][x] = 4;
-				ctx.fillStyle = "white";
+				ctx.fillStyle = "orange";
 				ctx.fillRect(y * each_width, x * each_height, each_width, each_height)	
 			
 			})
 		}
 
-		flood_fill(x - 1, y);
-		flood_fill(x, y + 1);
-		flood_fill(x + 1, y);
-		flood_fill(x, y + 1);
+		flood_fill(x - 1, y, x, y);
+		flood_fill(x, y + 1, x, y);
+		flood_fill(x + 1, y, x, y);
+		flood_fill(x, y - 1, x, y);
 	
+	}
+
+	async function createPath(x1, y1, x2, y2) {
+		[x, y] = parent[x2][y2];
+		console.log(x, y)
+		while( x != -1 && y != 1) {
+			await sleep(time_delay).then(() => {
+				if(x  == x1 && y == y1){
+				}
+				else {
+					ctx.fillStyle = "white";
+					ctx.fillRect(y * each_width, x * each_height, each_width, each_height);
+					[x, y] = parent[x][y];					
+				}
+
+			})
+		}
 	}
 
 	function sleep(ms) {
