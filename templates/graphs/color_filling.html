@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Color Filling</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Color Filling</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	create_grid();
+// Utility
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	function create_grid(width=5) {
+			document.querySelector("canvas").addEventListener("click", (e) => {
+				x = e.offsetX;
+				y = e.offsetY;
+				xx = Math.floor(x / width);
+				yy = Math.floor(y / width);
+				ctx.moveTo(xx * width + width / 2, yy * width + width / 2);
+				ctx.arc(xx * width + width / 2, yy * width + width / 2, width / 2, 0, Math.PI * 2, true);
+				ctx.fill();
+				removeEventListener(a);
+			})
+	}
+
+	</script>
+</body>
+</html>
