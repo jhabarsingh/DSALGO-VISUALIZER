@@ -60,6 +60,9 @@
 	<button class="btn_generate">
 		GenerateTree
 	</button>
+	<button class="btn_generate_simple">
+		Generate Simple Tree
+	</button>
 
 	<div class=" last">
 		
@@ -96,9 +99,21 @@
 
 	    })
 
+	    document.querySelector(".btn_generate_simple").addEventListener("click", () => {
+	    	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+	    	drawSimpleTree(ctx.canvas.width / 2, 
+					 ctx.canvas.height - 20,
+					 120,
+					 0,
+					 10,
+					 'white',
+					 'black'
+			);
+	    })
+
 	}
 
-	function drawTree(startX, startY, len, angle, brachWidth, branch_color, leaf_color, slow=false) {
+	function drawTree(startX, startY, len, angle, brachWidth, branch_color, leaf_color, simple=false) {
 		ctx.beginPath();
 		ctx.save();
 		ctx.strokeStyle = branch_color;
@@ -122,6 +137,31 @@
 		d = Math.floor(Math.random() * (75 - 70) + 70) / 100;
 		drawTree(0, -len, len * c, angle + a, brachWidth * 0.5, branch_color, leaf_color);
 		drawTree(0, -len, len * d, angle - b, brachWidth * 0.7, branch_color, leaf_color);
+		ctx.restore();
+	}
+
+	function drawSimpleTree(startX, startY, len, angle, brachWidth, branch_color, leaf_color, simple=false) {
+		ctx.beginPath();
+		ctx.save();
+		ctx.strokeStyle = branch_color;
+		ctx.fillStyle = leaf_color;
+		ctx.lineWidth = brachWidth;
+		ctx.translate(startX, startY);
+		ctx.rotate(angle * Math.PI / 180);
+		ctx.moveTo(0, 0);
+		ctx.lineTo(0, -len)
+		ctx.stroke();
+		if(len < 25) {
+			ctx.beginPath();
+			// ctx.arc(0, len, 10, 0, Math.PI / 2);
+			// ctx.fill();
+			ctx.restore();
+			return;
+		}
+		let a = Math.floor(Math.random() * (20 - 5) + 5);
+		let d = 0.75;
+		drawSimpleTree(0, -len, len * d, angle + a, brachWidth * 0.6, branch_color, leaf_color);
+		drawSimpleTree(0, -len, len * d, angle - a, brachWidth * 0.6, branch_color, leaf_color);
 		ctx.restore();
 	}
 
