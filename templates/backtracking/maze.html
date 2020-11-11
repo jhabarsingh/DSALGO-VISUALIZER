@@ -43,8 +43,8 @@
 
 // Main
 	let arr =[];
-	let size = 15;
-	time_delay = 10;
+	let size = 20;
+	time_delay = 0;
 	let ctx = document.querySelector("canvas").getContext("2d");
 	let per_width = ctx.canvas.width / size;
 	let per_height = ctx.canvas.height / size;
@@ -125,7 +125,7 @@
 		let width = 2;
 		if(x < 0 || x >= size || y < 0 || y >= size) return;
 		arr[x][y].visited = "true";
-		await sleep(time_delay).then(() => {
+		// await sleep(time_delay).then(() => {
 			createRect(x, y);
 			visited_color = "purple";
 			i = x;
@@ -153,7 +153,7 @@
 			} else {
 				createLine(i, j + 1, i, j, visited_color, width);
 			}
-		})
+		// })
 		exclude = new Set();
 		include = new Set();
 		let p;
