@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Factorial</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+			background: black;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.controller {
+			padding: 10px 30px;
+			margin: 10px auto;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Factorial</p>
+	<canvas class='grid' width="1000" height="550">
+		
+	</canvas>
+	<div>
+		<button class="controller">Find Factorial</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let max_level = 6;
+	let p = Math.floor(Math.random() * (11 + 1 - 2) + 2);
+	let rect = {
+		width: 200,
+		height: 40
+	}
+	let time_delay = 500;
+	init();
+// Utility
+
+	function init(){
+		factorial(p)
+		document.querySelector(".controller").addEventListener("click", () => {
+			document.querySelector(".controller").disabled = true;
+			factorial(1, true);				
+		})
+	}
+
+	async function factorial(t=1, cal=false) {
+		ctx.fillStyle = "black";
+		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+		console.log(p)
+		gap = 13;
+		for(let i=p; i >= t; i--) {
+				await sleep(time_delay).then(() => {
+					ctx.fillStyle = "white"
+					let x = ctx.canvas.width / 2 - rect.width / 2;
+					let y = rect.height * (p - i) + (p - i) * gap + 10;
+					ctx.fillRect(x, y, rect.width, rect.height);	
+					ctx.fillStyle =  "black";
+					ctx.font = "bolder 20px arial";
+					ctx.fillText(`${i}!`, x + rect.width / 2 - 5, y + rect.height / 2 + 5);	
+				})				
+		}
+		if(cal) {
+			let m = 1;
+			for(let i=t; i <= p; i++) {
+					await sleep(time_delay).then(() => {
+						ctx.fillStyle = "white"
+						m *= i
+						let x = ctx.canvas.width / 2 - rect.width / 2;
+						let y = rect.height * (p - i) + (p - i) * gap + 10;
+						ctx.fillRect(x, y, rect.width, rect.height);	
+						ctx.fillStyle =  "red";
+						ctx.font = "bolder 25px ubuntu";
+						ctx.fillText(m, x + rect.width / 2 - 5, y + rect.height / 2 + 5);	
+					})
+					await sleep(time_delay).then(() => {
+						ctx.fillStyle = "black";
+						let x = ctx.canvas.width / 2 - rect.width / 2;
+						let y = rect.height * (p - i) + (p - i) * gap + 10;
+						ctx.fillRect(x, y, rect.width, rect.height);
+					})				
+			}
+
+			let x = ctx.canvas.width / 2 - rect.width * 1;
+			let y = ctx.canvas.height / 2 - rect.height * 2;
+			ctx.fillStyle = "white";
+			ctx.fillRect(x, y, rect.width * 2, rect.height * 4);	
+			ctx.fillStyle =  "red";
+			ctx.font = "bolder 40px ubuntu";
+			ctx.fillText(m, x + rect.width * 2 / 2 - 10, y + rect.height * 4 / 2 + 10);
+			setInterval(() => {
+				window.location.reload();
+			}, 4000);
+
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
