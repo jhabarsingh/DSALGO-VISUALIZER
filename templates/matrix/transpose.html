@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Transpose</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.transpose {
+			text-align: center;
+
+		}
+		.transpose > button {
+			padding: 10px 40px;
+			margin: 5px auto;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Transpose</p>
+	<canvas class='grid' width="1000" height="550">
+		
+	</canvas>
+	<div class="transpose">
+		<button class="transpose_button">Transpose</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let arr = [];
+	time_delay = 100;
+	let size =  10;
+	let per_width = ctx.canvas.width / size;
+	let per_height = ctx.canvas.height / size;
+	init();
+
+// Utility
+
+	function init() {
+		initialize_array();
+		draw_grid();
+		document.querySelector(".transpose_button").addEventListener("click", () => {
+			document.querySelector(".transpose_button").disabled = true
+			transpose();
+		})
+	}
+
+	function initialize_array() {
+		for(let i=0; i< size; i++) {
+			let temp = []
+			for(let j=0; j<size; j++) {
+				temp.push(Math.floor(Math.random() * (100 - 0) + 0))
+			}
+			arr.push(temp);
+		}
+	}
+
+	async function transpose() {
+		for(let i=0; i< size; i++) {
+			for(let j=i + 1; j<size; j++) {
+				arr[i][j] = arr[i][j] ^ arr[j][i];
+				arr[j][i] = arr[j][i] ^ arr[i][j];
+				arr[i][j] = arr[i][j] ^ arr[j][i];
+				await sleep(time_delay).then(() => {
+					draw_cell(i, j, "yellow", true);
+					draw_cell(j, i, "yellow", true);
+				})
+					
+			}
+		}
+		setTimeout(() => {
+			window.location.reload();
+		}, 4000)
+	}
+
+	async function draw_cell(i, j, color="black", t=false) {
+		ctx.fillStyle = color;
+		ctx.fillRect(i * per_width, j * per_height, per_width, per_height);
+		ctx.strokeStyle = "white";
+		ctx.strokeRect(i * per_width, j * per_height, per_width, per_height);
+		ctx.fillStyle = "white";
+		if(t) {
+			ctx.fillStyle = "black";
+			ctx.font = "bolder 25px ubuntu";
+			ctx.fillText(arr[i][j], i * per_width + per_width / 2, j * per_height + per_height / 2);
+		}
+		else {
+			ctx.font = "bolder 20px white";
+			ctx.fillText(arr[i][j], i * per_width + per_width / 2, j * per_height + per_height / 2);
+		}
+		ctx.stroke();
+	} 
+
+	async function draw_grid() {
+		for(let i=0; i< size; i++) {
+			for(let j=0; j<size; j++) {
+				await draw_cell(i, j);	
+			}
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
