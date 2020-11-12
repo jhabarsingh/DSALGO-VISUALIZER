@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Snow Flakes</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: black;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.button_generate{
+			display: block;
+			text-align: center;
+			margin: 5px auto;
+			padding: 15px 40px ;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Snow Flakes</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<button class="button_generate">Generate</button>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let canvas_width = ctx.canvas.width;
+	let canvas_height = ctx.canvas.height;
+	const max_level = 5;
+	const branch = 2;
+	const angle = Math.PI * 2 * 0.85;
+	init();
+
+// Utility
+	
+	function init() {
+		ctx.save();
+		ctx.translate(canvas_width / 2, canvas_height / 2);
+		let num = Math.floor(Math.random()*(15 - 3) + 3);
+		for(let i=0; i<num; i++) {
+			drawSnowFlake(0);
+			ctx.rotate(Math.PI * 2 / num)	
+		}
+		document.querySelector(".button_generate").addEventListener("click", () => {
+			ctx.restore();
+			ctx.restore();
+			ctx.fillStyle = "black";
+			ctx.fillRect(0, 0, canvas_width, canvas_height);
+			ctx.save();
+			ctx.translate(canvas_width / 2, canvas_height / 2);
+			let num = Math.floor(Math.random()*(15 - 3) + 3);
+			for(let i=0; i<num; i++) {
+				drawSnowFlake(0);
+				ctx.rotate(Math.PI * 2 / num)	
+			}
+		})
+	}	
+
+	async function drawSnowFlake(level) {
+		if(level > max_level) return;
+		ctx.strokeStyle = "white";
+		ctx.lineWidth = 2;
+		ctx.beginPath();
+		ctx.moveTo(0, 0);
+		ctx.lineTo(200, 0);
+		ctx.stroke();
+
+		for(let i=1; i<branch + 1; i++) {
+			ctx.save();
+			ctx.translate(200 * 1 / (branch + 1), 0);
+			ctx.scale(0.5, 0.5);
+			ctx.save();
+			
+			ctx.rotate(angle);
+			drawSnowFlake(level + 1);
+			ctx.restore();
+			ctx.save();
+
+			ctx.rotate(-angle);
+			drawSnowFlake(level + 1);			
+			ctx.restore();
+			ctx.restore();			
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
