@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kadane's Algorithm</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.kadane {
+			padding: 10px 30px;
+			margin: 4px auto;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Kadane's Algorithm</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<div>
+		<button class="kadane">
+			Find Max subset sum
+		</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let arr = [];
+	let subset = []
+	let size = 10;
+	let time_delay = 1000;
+	let per_width = (ctx.canvas.width - 20) / size;
+	init();
+// Utility
+
+	function init() {
+		initialize_array();
+		draw_array();
+		document.querySelector(".kadane").addEventListener("click", () => {
+			document.querySelector(".kadane").disabled = true;
+			kadanes(70, "red", 150);
+		})
+	}
+
+	function draw_array(height=100, bc="black", index=false, y=10) {
+		gap = 3;
+		for(let i=0; i<size; i++) {
+			ctx.fillStyle = bc;
+			ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 25px ubuntu";
+			ctx.fillText(arr[i], i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)	
+
+		}
+	}
+
+	async function kadanes(height, bc, y) {
+		gap = 3;
+		te = []
+		for(let i=0; i<size; i++) {
+				ctx.fillStyle = bc;
+				ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+				ctx.fillStyle = "black";
+				ctx.font = "bolder 20px ubuntu";
+				ctx.fillText("", i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)
+		}
+
+		sum = -10000;
+		t= -1000;
+		pos = 0;
+		for(let i=0; i<size; i++) {
+			await sleep(time_delay).then(() => {
+				ctx.fillStyle = bc;
+				ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+				ctx.fillStyle = "yellow";
+				ctx.font = "bolder 24px ubuntu";
+				if(sum + arr[i] > arr[i]) sum += arr[i];
+				else sum = arr[i];
+				if(t < sum) {
+					t = sum;
+					pos = i;
+				}
+				te.push(sum);
+				ctx.fillText(sum, i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)
+			})
+		}
+		i = pos;
+		ctx.fillStyle = "white";
+		ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+		ctx.fillStyle = "black";
+		ctx.font = "bolder 25px ubuntu";
+		ctx.fillText(t, i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)
+
+		let begin = pos;
+		for(i=pos ; i >=0; i--) {
+			if(te[i] == arr[i]){
+				begin = i;
+				break
+			}
+		}
+		for(let i=0; i<size; i++) {
+			if(i < begin || i > pos) {
+				arr[i] = "";
+			}
+		}
+		draw_array(100, "black", false, 250);
+
+
+	}
+
+	function initialize_array() {
+		for(let i=0; i<size; i++) {
+			let p = Math.floor(Math.random() * (10 - -10) + -10 );
+			arr.push(p)
+
+		}
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
