@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GCD</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: black;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.button > button {
+			padding: 10px 30px;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>GCD</p>
+	<canvas class='grid' width="1000" height="550">
+		
+	</canvas>
+	<div class="button">
+		<button>calculate</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let num1 = Math.floor(Math.random() * (50 - 2) + 2);
+	let num2 = Math.floor(Math.random() * (num1 - 2) + 2);
+	time_delay = 2000;
+	init();
+// Utility
+	function init() {
+		createBox(num1, num2);
+		createGrid(num1, num2);
+		document.querySelector("button").addEventListener("click", () => {
+			document.querySelector("button").disabled = true;
+			gcd(num1, num2);
+		})
+
+	}
+
+
+	function createBox(a, b) {
+		width = 150;
+		height = 50;
+		x = ctx.canvas.width - 150;
+		ctx.save();
+		ctx.fillStyle = "white";
+		ctx.fillRect(x, height * 0 + 5, width - 5, height);
+		ctx.fillRect(x, height * 1 + 10, width - 5, height);
+		ctx.fillStyle = "black";
+		ctx.font = "bolder 20px ubuntu"
+		ctx.fillText(`a = ${a}`, x + width / 2 - 10, height * 0 + 5 + height / 2);
+		ctx.fillText(`b = ${b}`, x + width / 2 - 10, height * 1 + 10 + height / 2);
+		ctx.restore();
+	}	
+
+	function createGrid(a, b, color="white") {
+		p = Math.floor(a / b);
+		ctx.fillRect(0, ctx.canvas.height / 2, ctx.canvas.width, ctx.canvas.height / 2);
+		width = ctx.canvas.width - 10;
+		height = 100;
+		ctx.save();
+		ctx.fillStyle = color;
+		ctx.fillRect(5, ctx.canvas.height - height * 1, width * a / 50, height - 5);
+		ctx.fillStyle = "yellow";
+		
+		ctx.fillRect(5 + width * (p * b) / 50, ctx.canvas.height - height * 1, width * (a - p * b) / 50, height - 5);
+		ctx.fillStyle = color;
+		
+		ctx.fillRect(5, ctx.canvas.height - height * 2 - 5, width * b / 50, height - 10);
+		ctx.fillStyle = "black";
+		ctx.font = "bolder 20px ubuntu"
+		if(a % b != 0){
+			ctx.fillText(a % b, 5 + width * (p * b) / 50 + width * (a - p * b) / 100 - 4, ctx.canvas.height - height * 1 + height / 2)
+		}
+		ctx.fillText(`${a}`, width * a / 100, ctx.canvas.height - height * 1  + height / 2);
+		ctx.fillText(`${b}`, width * b / 100, ctx.canvas.height - height * 2 + height / 2);
+		ctx.restore();
+	}
+	async function gcd(num1, num2) {
+		while(num1 != 0 && num2 != 0) {
+			rem = Math.floor(num1 / num2);
+			if(num1 < num2) {
+				temp = num1;
+				num1 = num2;
+				num2 = temp;
+			}
+			await sleep(time_delay).then(() => {
+				createGrid(num1, num2);
+				createBox(num1, num2);
+			})
+			mod = num1 % num2;
+			num1 = num2;
+			num2 = mod;
+		}
+		await sleep(time_delay).then(() => {
+			createGrid(num1, num2);
+			createBox(num1, num2);
+		})
+		await sleep(time_delay * 2).then(() => {
+			window.location.reload();
+		})
+
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
