@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Graph</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		.grid {
+			position: relative;
+			background: lightgreen;
+			margin: 10px auto;
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		p:nth-child(1) {
+			padding: 10px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			display: flex;
+			justify-content: space-around;
+			font-size: 20px;
+		}
+
+		p > span {
+			text-transform: uppercase;
+			color: gray;
+		}
+		.head__button {
+			padding: 5px 30px;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>
+		<span>Graph</span>
+		<span>
+			<button class="head__button graph">Original Graph</button>
+			<button class="head__button bfs">BFS</button>
+			<button class="head__button dfs">DFS</button>
+		</span>	
+	</p>
+	
+	<canvas class='grid' width="1000", height="600">
+		
+
+	</canvas>
+
+	<script>
+
+// Main
+
+	arr = ['a', 'b', 'c', 'd', 'e'];
+	each = []
+	size = arr.length;
+	edge = [];
+	bfs_edge = [];
+	dfs_edge = [];
+	dimension = 30;
+	rel = 15;
+	ctx = document.querySelector("canvas").getContext("2d");
+	time_delay = 1000;
+	dx = ctx.canvas.width / size;
+	dy = ctx.canvas.height / size;
+	ctx.save();
+	create_edges();
+	create_graph(edge);
+	init();
+	
+// Utility
+	
+	function init() {
+		document.querySelector(".dfs").addEventListener("click", () => {
+			async function get() {
+				visited = [];
+				for(let i=0; i<size; i++) visited.push(false);
+				await dfs(0, visited);
+				create_graph(dfs_edge, false);
+			}
+			get();
+		})
+
+		document.querySelector(".bfs").addEventListener("click", () => {
+			visited = [];
+			for(let i=0; i<size; i++) visited.push(false);
+			bfs(0, visited);
+			create_graph(bfs_edge, false);
+		})
+
+		document.querySelector(".graph").addEventListener("click", () => {
+			create_graph(edge);
+		})
+	}
+
+	async function  dfs(x, visited) {
+		if(visited[x]) return;
+		visited[x] = true;
+		for(let j=0; j<size; j++) {
+				if(!visited[j] && edge[x][j]) {
+					dfs_edge[x][j] = 1;
+					dfs_edge[j][x] = 1;	
+					dfs(j, visited);
+				}
+		}
+	}
+
+	async function bfs(x, visited) {
+		s = [];
+		s.push(x);
+		visited[x] = true;
+		while(s.length != 0) {
+			x = s.shift();
+			for(let j=0; j<size; j++) {
+				if(!visited[j] && edge[x][j] && x < j) {
+					bfs_edge[x][j]  = 1;
+					bfs_edge[j][x]  = 1;
+					await sleep(time_delay).then(() => {
+						createLine(x, j, "white");
+						createBox(x);
+						createBox(j);
+						createText(x);
+						createText(j);
+					})	
+					s.push(j);
+					visited[j] = true;
+				}
+				else if(visited[j] && j != x) { 
+					await sleep(time_delay * 2).then(() => {
+						createLine(x, j, "red");
+						createBox(x);
+						createBox(j);
+						createText(x);
+						createText(j);
+					})
+					return;
+				}
+			} 
+
+		}
+	}
+	
+	function create_edges() {
+		count = 0;
+		max = Math.floor(Math.random() * (10 - 4) + 4);
+		for(let i=0; i<size; i++) {
+			let temp = [];
+			let dfs_temp = [];
+			let bfs_temp = [];
+			for(let i=0; i<size; i++) {
+				temp.push(0);
+				dfs_temp.push(0);
+				bfs_temp.push(0);
+			}
+			edge.push(temp);
+			dfs_edge.push(dfs_temp);
+			bfs_edge.push(bfs_temp);
+		}
+
+		for(let i = 0; i< size; i++) {
+			each.push(Math.floor(Math.random() * (size - 1)) + 1)
+		}
+
+		for(let i=0; i< size; i++) {
+			if(count > max) break;
+			for(let j=i; j< size; j++) {
+				if(count > max) break;
+				let p = Math.floor(Math.random()*2 + 1) - 1;
+				edge[i][j] = p;
+				edge[j][i] = p;
+				if(p == 1) count ++;
+			}	
+		}
+	}
+
+	function createLine(i, j, color="black") {
+		ctx.strokeStyle = color;
+		let x = each[i] * dx + dimension / 2 + rel;
+		let y = i * dy + dimension / 2 + rel;
+		ctx.beginPath();
+		ctx.moveTo(x, y);
+		ctx.lineWidth = 4;
+		x = each[j] * dx + dimension / 2 + rel;
+		y = j * dy + dimension / 2 + rel;
+		ctx.lineTo(x, y);
+		ctx.stroke();
+		ctx.closePath();
+	}
+
+	function createBox(i, color="red") {
+		ctx.fillStyle = color
+		ctx.moveTo(each[i] * dx, i* dy);
+		let x = each[i] * dx + (dimension / 2) + rel;
+		let y = i * dy + dimension / 2 + rel;
+		ctx.arc(x , y , dimension ,0 , Math.PI * 2);
+		ctx.fill();
+	}
+
+	function createText(i, color="white") {
+		ctx.moveTo(each[i] * dx, i* dy);
+		let x = each[i] * dx + (dimension / 2) + rel;
+		let y = i * dy + dimension / 2 + rel;
+		ctx.fillStyle = 'white';
+		ctx.font = 'bolder 25px ubuntu'
+		ctx.moveTo(each[i] * dx, i* dy);	
+		ctx.fillText(arr[i],x, y);
+	}
+
+	async function create_graph(edge, clear=true) {
+		ctx.fillStyle = "lightgreen";
+		if(clear) ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+		for(let i=0; i< size; i++) {
+			for(let j=i; j< size; j++) {
+				if(+edge[i][j] == 1) {
+					createLine(i, j)
+				}
+			}	
+		}
+		for(let i=0; i< size; i++) {
+			createBox(i, "red");
+		}
+
+		for(let i=0; i< size; i++) {
+			createText(i, "white");
+		}
+		ctx.fillStyle = "lightgreen"
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
