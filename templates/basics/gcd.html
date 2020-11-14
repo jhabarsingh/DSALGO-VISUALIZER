@@ -100,8 +100,15 @@
 			ctx.fillText(a % b, 5 + width * (p * b) / 50 + width * (a - p * b) / 100 - 4, ctx.canvas.height - height * 1 + height / 2)
 		}
 		ctx.fillStyle = "red";
-		ctx.font = "bolder 25px ubuntu"
-		ctx.fillText(`${a}`, width * a / 100, ctx.canvas.height - height * 1  + height / 2);
+		ctx.font = "bolder 20px ubuntu"
+		if(b != 0){
+			ctx.fillText(`${Math.floor(a / b)}*${b}`, width * a / 100 - width * (a - p * b) / 100 - 10, ctx.canvas.height - height * 1  + height / 2);
+			
+		}
+		else {
+			ctx.fillText(`${a}`, width * a / 100 , ctx.canvas.height - height * 1  + height / 2);
+		
+		}
 		ctx.fillStyle = "black";
 		ctx.font = "bolder 20px ubuntu"
 		ctx.fillText(`${b}`, width * b / 100, ctx.canvas.height - height * 2 + height / 2);
