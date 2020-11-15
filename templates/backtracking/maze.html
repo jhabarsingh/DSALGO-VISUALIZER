@@ -27,6 +27,9 @@
 			text-transform: uppercase;
 			color: gray;
 		}
+		.play, .backtrack {
+			padding: 10px 30px;
+		}
 
 
 	</style>
@@ -38,21 +41,134 @@
 	<canvas class='grid' width="550" height="550">
 		
 	</canvas>
-
+	<div>
+		<button class="play">
+			Play
+		</button>
+		<button class="backtrack">
+			Backtrack
+		</button>
+	</div>
 	<script>
 
 // Main
 	let arr =[];
 	let size = 20;
-	time_delay = 0;
+	let current_x = 0;
+	let current_y = 0;
+	time_delay = 50;
 	let ctx = document.querySelector("canvas").getContext("2d");
 	let per_width = ctx.canvas.width / size;
 	let per_height = ctx.canvas.height / size;
 	let stack = [];
+	visit = [];
 	init();	
 	draw_grid();
 	dfs(0, 0);	
+	add_listeners();
 // Utility
+
+	function add_listeners() {
+		document.querySelector(".play").addEventListener("click", () => {
+			createRect(size-1, size-1, "black", true);
+			createRect(current_x, current_y, "white", true);
+			
+			document.addEventListener("keyup", (e) => {
+				// 37 --> l
+				// 38 --> u
+				// 39 --> r
+				// 40 --> d
+
+				if(+e.keyCode == 38) {
+					if(current_y > 0 && !arr[current_x][current_y].walls[0]) {
+						createRect(current_x, current_y, "purple", true);
+						current_y -= 1
+						createRect(current_x, current_y, "white", true);
+					}
+				}
+				else if(+e.keyCode == 39) {
+					if(current_x < size-1 && !arr[current_x][current_y].walls[1]) {
+						createRect(current_x, current_y, "purple", true);
+						current_x += 1
+						createRect(current_x, current_y, "white", true);
+					}
+				}
+				else if(+e.keyCode == 40) {
+					if(current_y < size - 1 && !arr[current_x][current_y].walls[2]) {
+						createRect(current_x, current_y, "purple", true);
+						current_y += 1
+						createRect(current_x, current_y, "white", true);
+					}
+				}
+				else if(+e.keyCode == 37) {
+					if(current_x > 0 && !arr[current_x][current_y].walls[3]) {
+						createRect(current_x, current_y, "purple", true);
+						current_x -= 1
+						createRect(current_x, current_y, "white", true);
+					}
+				}
+
+				if(current_x == size - 1 && current_y == size - 1) {
+					alert("Crongrats you won");
+					setTimeout(() => {
+						window.location.reload();
+					}, 2000);
+					return;
+				}
+			})
+		})
+
+		document.querySelector(".backtrack").addEventListener("click", () => {
+			createRect(size-1, size-1, "black", true);
+			for(let i=0; i<size; i++) {
+				let temp = [];
+				for(let j=0; j<size; j++) {
+					temp.push(0);
+				}
+				visit.push(temp);
+			}
+			createRect(current_x, current_y, "white", true);
+			backtrack(current_x, current_y);
+		})
+	}
+
+	async function backtrack(x, y) {
+		if(visit[x][y]) return;
+		if(x == size - 1 && y == size - 1){
+			alert("Crongrats we got the destination by backtracking");
+			window.location.reload();
+		}
+		visit[x][y] = 1;
+		await sleep(time_delay).then(() => {
+			createRect(x, y, "white", true);
+		});
+		if(y > 0 && !arr[x][y].walls[0]) {
+			await sleep(time_delay).then(() => {
+				// createRect(x, y, "purple", true);
+			});
+			await backtrack(x, y - 1);
+						
+		}
+		if(x < size-1 && !arr[x][y].walls[1]) {
+			await sleep(time_delay).then(() => {
+				// createRect(x, y, "purple", true);
+			});
+			await backtrack(x + 1, y);
+		}
+		if(y < size - 1 && !arr[x][y].walls[2]) {
+			await sleep(time_delay).then(() => {
+				// createRect(x, y, "purple", true);
+			});
+			await backtrack(x, y + 1);
+		}
+		if(x > 0 && !arr[x][y].walls[3]) {
+			await sleep(time_delay).then(() => {
+				// createRect(x, y, "purple", true);
+			});
+			await backtrack(x - 1, y);
+		} 
+	}
+
 	function init() {
 		for(let i = 0; i<size ; i++) {
 			let temp = [] 
@@ -78,8 +194,16 @@
 
 	}
 
-	function createRect(i, j) {
-		ctx.fillStyle = "purple";
+	function createRect(i, j, color="purple", circle=false) {
+		ctx.fillStyle = color;
+		if(circle) {
+			ctx.beginPath();
+			ctx.strokeStyle = color;
+			ctx.arc(per_width * i + per_width / 4 + 7, per_height * j + per_height / 4 + 7, per_height / 2 - 3, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.closePath();
+			return;
+		}
 		ctx.fillRect(per_width * i, per_height * j, per_width, per_height);
 	}
 
@@ -120,39 +244,42 @@
 		}
 	}
 
+	function letsMove(x, y, width, color="purple") {
+		createRect(x, y);
+		visited_color = color;
+		i = x;
+		j = y;
+		if(arr[i][j].walls[0]) {
+			createLine(i, j, i + 1, j, "white", width)
+		} else {
+			createLine(i, j, i + 1, j, visited_color, width)
+		}
+
+		if(arr[i][j].walls[1]) {
+			createLine(i + 1, j, i + 1, j + 1, "white", width);
+		} else {
+			createLine(i + 1, j, i + 1, j + 1, visited_color, width);
+		}
+
+		if(arr[i][j].walls[2]) {
+			createLine(i + 1, j + 1, i, j + 1, "white", width);
+		} else {
+			createLine(i + 1, j + 1, i, j + 1, visited_color, width);
+		}
+
+		if(arr[i][j].walls[3]) {
+			createLine(i, j + 1, i, j, "white", width)
+		} else {
+			createLine(i, j + 1, i, j, visited_color, width);
+			}
+	}
 	async function dfs(x, y) {
 		
 		let width = 2;
 		if(x < 0 || x >= size || y < 0 || y >= size) return;
 		arr[x][y].visited = "true";
 		// await sleep(time_delay).then(() => {
-			createRect(x, y);
-			visited_color = "purple";
-			i = x;
-			j = y;
-			if(arr[i][j].walls[0]) {
-				createLine(i, j, i + 1, j, "white", width)
-			} else {
-				createLine(i, j, i + 1, j, visited_color, width)
-			}
-
-			if(arr[i][j].walls[1]) {
-				createLine(i + 1, j, i + 1, j + 1, "white", width);
-			} else {
-				createLine(i + 1, j, i + 1, j + 1, visited_color, width);
-			}
-
-			if(arr[i][j].walls[2]) {
-				createLine(i + 1, j + 1, i, j + 1, "white", width);
-			} else {
-				createLine(i + 1, j + 1, i, j + 1, visited_color, width);
-			}
-
-			if(arr[i][j].walls[3]) {
-				createLine(i, j + 1, i, j, "white", width)
-			} else {
-				createLine(i, j + 1, i, j, visited_color, width);
-			}
+			letsMove(x, y, width);
 		// })
 		exclude = new Set();
 		include = new Set();
