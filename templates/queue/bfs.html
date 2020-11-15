@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Graph</title>
+	<title>BFS</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -42,7 +42,7 @@
 </head>
 <body>
 	<p>
-		<span>Graph</span>
+		<span>BFS</span>
 		<span>
 			<button class="head__button graph">Original Graph</button>
 			<button class="head__button bfs">BFS</button>
@@ -66,7 +66,7 @@
 	dimension = 30;
 	rel = 15;
 	ctx = document.querySelector("canvas").getContext("2d");
-	time_delay = 500;
+	time_delay = 1000;
 	dx = (ctx.canvas.width - 500) / size;
 	dy = ctx.canvas.height / size;
 	ctx.save();
@@ -125,9 +125,10 @@
 						createBox(j);
 						createText(x);
 						createText(j);
+						s.push(j);
 					})
-					s.push(j);
 					visited[j] = true;
+				
 				}
 			} 
 
