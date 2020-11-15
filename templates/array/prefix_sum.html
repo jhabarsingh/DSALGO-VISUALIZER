@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prefix SumKadane's Algorithm</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.prefix_sum {
+			padding: 10px 30px;
+			margin: 4px auto;
+		}
+
+		.num1, .num2 {
+			width: 80px;
+			padding: 10px 10px;
+		}
+		.num1, .num2 {
+			margin-right: 20px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Prefix Sum</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<div>
+		<input type="number" value=0 class="num1">
+		<input type="number" value=10 class="num2">
+		<button class="prefix_sum" disabled>
+			Prefix Sum
+		</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let arr = [];
+	let subset = []
+	let sum_array = [0];
+	let size = 10;
+	let time_delay = 400;
+	let per_width = (ctx.canvas.width - 20) / size;
+	init();
+// Utility
+
+	async function init() {
+		initialize_array();
+		draw_array(45,"red", true, 5, true);
+		draw_array();
+		await draw_array(60, "green", true, 120 + 50);
+		document.querySelector(".prefix_sum").disabled = false;
+		document.querySelector(".prefix_sum").addEventListener("click", () => {
+			draw_array();
+			draw_array(60, "green", true, 120 + 50);
+			let num1 = +document.querySelector(".num1").value
+			let num2 = +document.querySelector(".num2").value
+
+			if(num1 >= num2) {
+				alert("number 1 should be less than number 2")
+				return;
+			}
+			else if( num1 < 0) {
+				alert("number 1 should not be less 0")
+				return;
+			}
+			else if(num2 > size) {
+				alert("number 2 should be less than or eqaul size of array")
+				return;
+			}
+			document.querySelector(".prefix_sum").disabled = true;
+			prefix_sum(num1, num2);
+		})
+	}
+
+	async function prefix_sum(num1, num2, y=50, height=100) {
+		let arr1 = [num1, num2 - 1];
+		gap = 3;
+		for(let i=0; i<arr1.length; i++) {
+			ctx.fillStyle = "yellow"
+			ctx.fillRect(arr1[i] * (per_width - 2) + gap * arr1[i] + 5, y, per_width, height);
+			ctx.fillStyle = "black";
+			ctx.font = "bolder 25px ubuntu";
+			ctx.fillText(arr[arr1[i]], arr1[i] * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)			
+		}
+
+		ctx.fillStyle = "white";
+		width = 200; 
+		height = 100;
+
+		await sleep(time_delay).then(() => {
+			ctx.fillRect(ctx.canvas.width / 2 - width / 2, 250, width, height);
+			ctx.fillStyle = "black";
+			ctx.font = "bolder 20px ubuntu";
+			ctx.fillStyle = "black";
+			ctx.fillText(`${sum_array[num2]} - ${sum_array[num1]}`, ctx.canvas.width / 2 - 20, 250 + height / 2);
+		})
+		
+		await sleep(time_delay).then(() => {
+			ctx.fillStyle = "black";
+			ctx.fillRect(ctx.canvas.width / 2 - width / 2, 250 + height + 10, width, height);
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 25px ubuntu";
+			ctx.fillText(`${sum_array[num2] - sum_array[num1]}`, ctx.canvas.width / 2 - 10, 250 + height + 10 + height / 2);	
+		})
+
+
+		document.querySelector(".prefix_sum").disabled = false;
+	}
+
+	async function draw_array(height=100, bc="black", index=false, y=50, inda=false) {
+		gap = 3;
+
+		if(inda == true) {
+			for(let i=0; i<size; i++) {
+				await sleep(time_delay / 4).then(() => {
+					ctx.fillStyle = bc;
+					ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+					ctx.fillStyle = "white";
+					ctx.font = "bolder 20px ubuntu";
+					ctx.fillText(i, i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)
+				})	
+
+			}
+			return;		
+		}
+		if(index) {
+			let sum = 0;
+			for(let i=0; i<size; i++) {
+				await sleep(time_delay / 4).then(() => {
+					ctx.fillStyle = bc;
+					ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+					sum += arr[i]
+					sum_array.push(sum)
+					ctx.fillStyle = "white";
+					ctx.font = "bolder 20px ubuntu";
+					ctx.fillText(sum, i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)
+				})	
+
+			}
+			return;		
+		}
+		for(let i=0; i<size; i++) {
+			ctx.fillStyle = bc;
+			ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 25px ubuntu";
+			ctx.fillText(arr[i], i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)	
+
+		}
+	}
+
+
+	function initialize_array() {
+		for(let i=0; i<size; i++) {
+			let p = Math.floor(Math.random() * (20 - 0) + 0 );
+			arr.push(p)
+
+		}
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
