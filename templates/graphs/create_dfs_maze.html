@@ -28,6 +28,9 @@
 			color: gray;
 		}
 
+		.maze {
+			padding: 10px 40px;
+		}
 
 	</style>
 	<meta charset="utf-8">
@@ -38,20 +41,23 @@
 	<canvas class='grid' width="550" height="550">
 		
 	</canvas>
-
+	<div>
+		<button class="maze">
+			Create Maze	
+		</button>
+	</div>
 	<script>
 
 // Main
 	let arr =[];
 	let size = 20;
-	time_delay = 10;
+	time_delay = 50;
 	let ctx = document.querySelector("canvas").getContext("2d");
 	let per_width = ctx.canvas.width / size;
 	let per_height = ctx.canvas.height / size;
 	let stack = [];
 	init();	
-	draw_grid();
-	dfs(0, 0);	
+	draw_grid();	
 // Utility
 	function init() {
 		for(let i = 0; i<size ; i++) {
@@ -65,6 +71,9 @@
 			arr.push(temp);
 		}
 
+		document.querySelector('.maze').addEventListener("click", () => {
+			dfs(0, 0);
+		})
 	}
 
 	async function createLine(x1, y1, x2, y2, color, width=2) {
