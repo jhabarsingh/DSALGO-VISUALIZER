@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sieve Of Eratosthenes</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.generate {
+			padding: 10px 30px;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Sieve Of Eratosthenes</p>
+	<canvas class='grid' width="1000" height="550">
+		
+	</canvas>
+	<div>
+		<button class="generate">
+			Generate Sieve
+		</button>
+	</div>
+
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let pw = ctx.canvas.width / size;
+	let ph = ctx.canvas.height / size;
+	let sieve = [];
+
+	init();
+// Utility
+
+	function init() { 
+		for(let i=0; i< size * size; i++) {
+			sieve.push(1);
+		}
+		sieve[0] = 0;
+		draw_array()
+		add_listeners();
+	}
+
+	function draw_array() {
+		for(let i=0; i<size; i++) {
+			for(let j=0; j<size; j++) {
+				ctx.fillStyle = "black";
+				ctx.strokeStyle = "white";
+				ctx.fillRect(j * pw, i * ph, pw, ph);
+				ctx.strokeRect(j * pw, i * ph, pw, ph);
+				ctx.fillStyle = "white";
+				ctx.font = "bolder 12px arial"
+				ctx.fillText(sieve[i * size + j	], j * pw + pw / 2 - 4, i * ph + ph / 2 + 4)
+			}	
+		}
+	}
+
+	function add_listeners() {
+		document.querySelector(".generate").addEventListener("click", () => {
+			generate_sieve();
+		})
+	}
+
+	async function generate_sieve() {
+		for(let m=1; m< size * size; m++) {
+			i = Math.floor(m / size);
+			j = Math.floor(m % size);
+			val = m + 1;
+
+			if(sieve[i] == 1) {
+				for(let n=(i+1); n  < size * size; n = n * (i + 1)) {
+					i = Math.floor(n / size);
+					j = Math.floor(n % size);
+					ctx.fillStyle = "black";
+					ctx.strokeStyle = "white";
+					sieve[n - 1] = 0;
+					ctx.fillRect(j * pw, i * ph, pw, ph);
+					ctx.strokeRect(j * pw, i * ph, pw, ph);
+				} 
+			}
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
