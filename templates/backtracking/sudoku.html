@@ -46,11 +46,23 @@
 	size = 9;
 	width = ctx.canvas.width / 9;
 	height = ctx.canvas.height / 9;
+	let sudoku = [];
 	init();
 // Utility
 
 	function init() {
+		create_sudoku();
 		create_grid();
+	}
+
+	function create_sudoku() {
+		for(let i=0; i<size; i++) {
+			let temp = [];
+			for(let j=0; j<size; j++) {
+				temp.push(0);
+			}
+			sudoku.push(temp);
+		}
 	}
 
 	function create_grid() {
