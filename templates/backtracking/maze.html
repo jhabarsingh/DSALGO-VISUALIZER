@@ -119,6 +119,7 @@
 		})
 
 		document.querySelector(".backtrack").addEventListener("click", () => {
+			document.querySelector(".play").disabled = true;
 			createRect(size-1, size-1, "black", true);
 			for(let i=0; i<size; i++) {
 				let temp = [];
