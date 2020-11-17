@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>0/1 Unbounded Knapsack</title>
+	<title>Partition Sum</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -43,14 +43,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p>0/1 Unbounded Knapsack</p>
+	<p>Partition Sum</p>
 	<canvas class='grid' width="1000" height="550">
 		
 	</canvas>
 	<div>
 		<input type="number" class="number" min="0" value="0" />
 		<button class="calc">
-			Calculate Max Profit	
+			Calculate Subset Sum	
 		</button>
 	</div>
 	<script>
@@ -59,8 +59,7 @@
 	let ctx = document.querySelector("canvas").getContext("2d");
 	let size = 10;
 	let w = [];
-	let v = [];
-	let time_delay = 100;
+	let time_delay = 10;
 	let weight = [];
 	let mem = [];
 	let per_width = ctx.canvas.width / size;
@@ -76,13 +75,10 @@
 
 	function init_array() {
 		min_weight = 1;
-		max_weight =  6;
-		min_value = 1;
-		max_value = 50;
+		max_weight =  20;
 
 		for(let i=0; i<size; i++) {
 			w.push(Math.floor(Math.random() * (max_weight + 1 - min_weight) + (min_weight)));
-			v.push(Math.floor(Math.random() * (max_value + 1 - min_value) + (min_value)));
 		}
 	}
 
@@ -90,11 +86,11 @@
 		document.querySelector(".calc").addEventListener("click", () => {
 			weight = +document.querySelector(".number").value;
 			if(weight > 10 || weight < 0) {
-				alert("keep weight between 0 and 10");
+				alert("keep Sum between 0 and 10");
 			}
 			else {
 				document.querySelector(".calc").disabled = true;
-				knapsack();
+				partition_sum();
 			}
 		})
 	}
@@ -107,13 +103,7 @@
 		ctx.fillRect(0, ctx.canvas.height - height, per_width, height);
 		ctx.fillStyle = "white";
 		ctx.font = "bolder 15px arial";
-		ctx.fillText("Weight", pw / 2 - 20, ctx.canvas.height - height / 2 + 5);
-		
-		ctx.fillStyle = "red";
-		ctx.fillRect(0, ctx.canvas.height - 2 * height - 1, per_width, height);
-		ctx.fillStyle = "white";
-		ctx.font = "bolder 15px arial";
-		ctx.fillText("Value", pw / 2 - 20, ctx.canvas.height - 2 * height / 2 - 20);
+		ctx.fillText("Array", pw / 2 - 20, ctx.canvas.height - height / 2 + 5);
 
 		for(let i=0; i<size; i++) {
 			ctx.beginPath();
@@ -124,23 +114,16 @@
 			ctx.strokeRect(pw * (i + 1), ctx.canvas.height - height, per_width, height)
 			ctx.font = "bolder 15px arial";
 			ctx.fillText(w[i], pw * (i + 1) +  pw / 2 - 20, ctx.canvas.height - height / 2 + 5);
-			
-			ctx.fillStyle = "black";
-			ctx.fillRect(pw * (i + 1), ctx.canvas.height - 2 * height - 1, per_width, height);
-			ctx.fillStyle = "white";
-			ctx.strokeStyle = "white";
-			ctx.strokeRect(pw * (i + 1), ctx.canvas.height - 2 * height - 1, per_width, height)
-			ctx.font = "bolder 15px arial";
-			ctx.fillText(v[i], pw * (i + 1) + pw / 2 - 20, ctx.canvas.height - 2 * height / 2 - 20);
+
 			ctx.closePath();
 		}
 	}
 
-	async function knapsack() {
+	async function partition_sum() {
 		for(let i=0; i<size + 1; i++) {
 			let temp = [];
 			for(let j=0; j<size + 1; j++) {
-				if(i == 0 || 0) temp.push(0)
+				if(j == 0) temp.push(1)
 				else temp.push(0);
 			}
 			mem.push(temp);
@@ -157,16 +140,15 @@
 			ctx.closePath();
 			if(j == 0 ){
 				ctx.fillStyle = "white";
-				ctx.font = "bolder 15px arial";
-				ctx.fillText("value/weight", 0 + 2,  j * ph + ph / 2)
+				ctx.font = "bolder 13px arial";
+				ctx.fillText("Element / Sum", 0 + 5,  j * ph + ph / 2)
 				
 			}
 			else {
-				ctx.strokeRect(0,  j * ph, 50, ph)
+				// ctx.strokeRect(0,  j * ph, 50, ph)
 				ctx.fillStyle = "white";
-				ctx.font = "bolder 15px arial";
-				ctx.fillText(v[j - 2] || 0, 0 + 15,  j * ph + ph / 2);
-				ctx.fillText(w[j - 2] || 0, 50	 + 15,  j * ph + ph / 2)
+				ctx.font = "bolder 18px arial";
+				ctx.fillText(w[j - 2] || 0, 50	 - 5,  j * ph + ph / 2 + 5)
 			}
 			for(let i=0; i< size + 1; i++) {
 				ctx.beginPath();
@@ -210,7 +192,7 @@
 							mem[x][y] = mem[x - 1][y];
 						}
 						else {
-							mem[x][y] = mem[x - 1][y] > v[x - 1] + mem[x][y - w[x - 1]] ? mem[x - 1][y]:  v[x - 1] + mem[x][y - w[x - 1]]
+							mem[x][y] = mem[x - 1][y] >  mem[x - 1][y - w[x - 1]] ? mem[x - 1][y]:   mem[x - 1][y - w[x - 1]]
 						}
 						ctx.font = "bolder 20px arial";
 						ctx.fillText(mem[x][y], 100 + 	i * pw + pw / 2,  j * ph + ph / 2);
