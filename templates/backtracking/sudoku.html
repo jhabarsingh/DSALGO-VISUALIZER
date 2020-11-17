@@ -47,12 +47,33 @@
 	width = ctx.canvas.width / 9;
 	height = ctx.canvas.height / 9;
 	let sudoku = [];
+	let sudoku_solver = [];
 	init();
 // Utility
 
 	function init() {
 		create_sudoku();
 		create_grid();
+	}
+
+	function sudoku_checker(val, x, y, count) {
+		let c = 0;
+		for(let i = Math.floor(x / 3); i < Math.floor(x / 3) + 3; i++) {
+			for(let j = Math.floor(y / 3); j < Math.floor(y / 3) + 3; j++) {
+				if(sudoku[i][j] != 0) c++;
+				if(c == count) return false;
+				if(sudoku[i][j] == val) return false;
+			}
+		}
+
+		for(let i = 0; i < size; i++) {
+			if(sudoku[0][i] == val) return false;
+		}
+
+		for(let i = 0; i < size; i++) {
+			if(sudoku[i][0] == val) return false;
+		}
+		return true
 	}
 
 	function create_sudoku() {
@@ -63,6 +84,26 @@
 			}
 			sudoku.push(temp);
 		}
+
+		count = 0;
+		for(let i=0; i< size; i = (i + 1) % size) {
+			if(count == (3 * 9)) break;
+			for(let j=0; j <  size; j = (j + 1) % size) {
+				if(count == (3 * 9)) break;
+				let p = Math.floor(Math.random() * (2 - 0) + 0);
+				console.log(p);
+				if(p) {
+					let val = Math.floor(Math.random(size + 1 - 1) + 1);
+					if(sudoku_checker(val, i, j, 3)) {
+						sudoku[i][j] = val;
+						count++;
+						console.log(count);
+					}
+				}	
+			}
+		}
+
+
 	}
 
 	function create_grid() {
