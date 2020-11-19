@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sliding Window</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.prefix_sum {
+			padding: 10px 30px;
+			margin: 4px auto;
+		}
+
+		.num1, .num2 {
+			width: 80px;
+			padding: 10px 10px;
+		}
+		.num1, .num2 {
+			margin-right: 20px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Sliding Window</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<div class="opt">
+		<input type="number" value=1 class="num1" min=1>
+		<button class="prefix_sum" disabled>
+			slide
+		</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let arr = [];
+	let subset = []
+	let sum_array = [0];
+	let size = 10;
+	let pos = 0;
+	let time_delay = 200;
+	let per_width = (ctx.canvas.width - 20) / size;
+	init();
+// Utility
+
+	async function init() {
+		initialize_array();
+		draw_array(45,"red", true, 5, true);
+		draw_array();
+		document.querySelector(".prefix_sum").disabled = false;
+		document.querySelector(".prefix_sum").addEventListener("click", () => {
+			draw_array();
+			let num1 = +document.querySelector(".num1").value
+			if(num1 > size) {
+				alert("window size should be less than " + size)
+				return;
+			}
+			else if(num1 <= 0) {
+				alert("window  size should be greater than 0")
+				return;
+			}
+			if(pos == 0) {
+				document.querySelector(".num1").style.display = "none";
+				let el = document.createElement("span");
+				el.innerText = `K = ${num1}`;
+				el.style.padding = "10px 30px";
+				el.style.width = "50px";
+				el.style.background = "lightgreen"
+				el.style.marginRight = "20px"
+				el.style.fontWeight = "bolder";
+				document.querySelector(".opt").prepend(el);
+			}
+			slide_window(num1);
+		})
+	}
+
+	async function slide_window(num1, y=50, height=100) {
+		gap = 3;
+		arr1 = [];
+		let string;
+		let sum = 0;
+		if(pos < num1) {
+			for(let i=0; i <= pos; i++) {
+				arr1.push(i);
+				sum += arr[i];
+			}
+			string = `${sum - arr[pos]} + ${arr[pos]}`;
+			pos++;
+		}	
+		else if(pos <= size) {
+			if(pos == num1) pos++;
+			let sum1 = 0;
+			for(let i = pos - num1 - 1; i < pos - 1; i++) sum += arr[i];
+
+			for(let i=pos - num1; i<pos; i++) {
+				arr1.push(i);
+				sum1 += arr[i];
+			}
+			string = `${sum} + ${arr[pos - 1]} - ${arr[pos - num1 - 1]}`;
+			sum =  sum1;
+			if(pos  != size)
+				pos++;
+			else{
+				document.querySelector(".prefix_sum").disabled = true;
+			}
+		}
+
+		for(let i=0; i<arr1.length; i++) {
+			ctx.fillStyle = "yellow"
+			ctx.fillRect(arr1[i] * (per_width - 2) + gap * arr1[i] + 5, y, per_width, height);
+			ctx.fillStyle = "black";
+			ctx.font = "bolder 25px ubuntu";
+			ctx.fillText(arr[arr1[i]], arr1[i] * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)			
+		}
+
+		ctx.fillStyle = "white";
+		width = 200; 
+		height = 100;
+
+		await sleep(time_delay).then(() => {
+			ctx.fillRect(ctx.canvas.width / 2 - width / 2, 250, width, height);
+			ctx.fillStyle = "black";
+			ctx.font = "bolder 20px ubuntu";
+			ctx.fillStyle = "black";
+			ctx.fillText(string, ctx.canvas.width / 2 - 20, 250 + height / 2);
+		})
+		
+		await sleep(time_delay).then(() => {
+			ctx.fillStyle = "black";
+			ctx.fillRect(ctx.canvas.width / 2 - width / 2, 250 + height + 10, width, height);
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 25px ubuntu";
+			ctx.fillText(sum, ctx.canvas.width / 2 - 10, 250 + height + 10 + height / 2);	
+		})
+
+	}
+
+	async function draw_array(height=100, bc="black", index=false, y=50, inda=false) {
+		gap = 3;
+
+		if(inda == true) {
+			for(let i=0; i<size; i++) {
+				ctx.fillStyle = bc;
+				ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+				ctx.fillStyle = "white";
+				ctx.font = "bolder 20px ubuntu";
+				ctx.fillText(i, i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)
+			}
+			return;		
+		}
+		if(index) {
+			let sum = 0;
+			for(let i=0; i<size; i++) {
+				await sleep(time_delay / 4).then(() => {
+					ctx.fillStyle = bc;
+					ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+					sum += arr[i]
+					sum_array.push(sum)
+					ctx.fillStyle = "white";
+					ctx.font = "bolder 20px ubuntu";
+					ctx.fillText(sum, i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)
+				})	
+
+			}
+			return;		
+		}
+		for(let i=0; i<size; i++) {
+			ctx.fillStyle = bc;
+			ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 25px ubuntu";
+			ctx.fillText(arr[i], i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)	
+
+		}
+	}
+
+
+	function initialize_array() {
+		for(let i=0; i<size; i++) {
+			let p = Math.floor(Math.random() * (20 - 0) + 0 );
+			arr.push(p)
+
+		}
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
