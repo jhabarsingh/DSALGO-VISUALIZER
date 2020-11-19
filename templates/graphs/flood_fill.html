@@ -29,6 +29,10 @@
 			color: gray;
 		}
 
+		.find {
+			padding: 10px 30px;
+		}
+
 
 	</style>
 	<meta charset="utf-8">
@@ -36,10 +40,14 @@
 </head>
 <body>
 	<p> Flood Fill </p>
-	<canvas class='grid' width="1000" height="600">
+	<canvas class='grid' width="1000" height="550">
 		
 	</canvas>
-
+	<div>
+		<button class="find">
+			Find Shortest Distance
+		</button>
+	</div>
 	<script>
 
 // Main
@@ -67,7 +75,10 @@
 	async function init() {
 		init_array();
 		draw_grid();
-		flood_fill(start.y, start.x, start.y, start.x);
+		document.querySelector(".find").addEventListener("click", () => {
+			document.querySelector(".find").disabled = true;
+			flood_fill(start.y, start.x, start.y, start.x);
+		});
 	}
 
 	function init_array() {
