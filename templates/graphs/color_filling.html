@@ -28,6 +28,23 @@
 			color: gray;
 		}
 
+		.opt > * {
+			padding: 10px 30px;
+		}
+
+		.opt > span > span {
+			width: 40px;
+			height: 20px;
+			background: red;
+			padding: 10px 20px;
+			margin: 3px;
+			border: 1px solid black;
+			cursor: pointer;
+		}
+
+		.white { 
+			box-shadow: 5px 3px 10px rgba(0, 0, 0, .4);
+		}
 
 	</style>
 	<meta charset="utf-8">
@@ -38,28 +55,136 @@
 	<canvas class='grid' width="1000" height="500">
 		
 	</canvas>
-
+	<div class="opt">
+		<span>
+			<span class="black"></span>
+			<span class="pink"></span>
+			<span class="yellow"></span>
+			<span class="green"></span>
+			<span class="white"></span>
+			<span class="orange"></span>
+		</span>
+		<button class="draw" disabled=true>Draw</button>
+		<button class="fill" >Fill Color</button>
+	</div>
 	<script>
 
 // Main
 	let ctx = document.querySelector("canvas").getContext("2d");
+	let coordinate = {
+		x: 0,
+		y: 0
+	}
+	let color = "white";
+	width = 5;
+	arr = [];
+	draw = true;
+	time_delay = 10;
+	init();
 	create_grid();
 // Utility
 	function sleep(ms) {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
+	function init() {
+		generate_array();
+
+		document.querySelector(".draw").addEventListener("click", () => {
+			draw = true;
+			document.querySelector(".draw").disabled = true;
+			document.querySelector(".fill").disabled = false;
+		})
+
+		document.querySelector(".fill").addEventListener("click", () => {
+			draw = false;
+			document.querySelector(".fill").disabled = true;
+			document.querySelector(".draw").disabled = false;
+		})
+
+		document.querySelectorAll(".opt > span > span").forEach((e) => {
+			e.style.background = e.classList[0];
+		})
+
+		document.querySelectorAll(".opt > span > span").forEach((ev) => {
+			ev.addEventListener("click",(e) => {
+				document.querySelectorAll(".opt > span > span").forEach((ev) => {
+					ev.style.boxShadow = "0px 0px 0px rgba(0, 0, 0, 0)";
+				});
+				color = ev.classList[0];
+				if(!draw) ev.style.boxShadow = "5px 3px 10px rgba(0, 0, 0, .4)";
+			});
+		}, false)
+	}
+
+	function generate_array() {
+		max_x = ctx.canvas.width / width;
+		max_y = ctx.canvas.height / width;
+
+		for(let i=0; i<max_x; i++) {
+			temp = [];
+			for(let j=0; j<max_y; j++) {
+				temp.push(0);
+			}
+			arr.push(temp);
+		}
+	}
+
+	const paint = () => {
+		x = coordinate.x;
+		y = coordinate.y;
+		xx = Math.floor(x / width);
+		yy = Math.floor(y / width);
+		arr[xx][yy] = 1;
+		ctx.beginPath();
+		ctx.moveTo(xx * width + width / 2, yy * width + width / 2);
+		ctx.arc(xx * width + width / 2, yy * width + width / 2, width / 2, 0, Math.PI * 2, true);
+		ctx.fillStyle = color;
+		ctx.fill();
+		ctx.closePath();
+	}
+
+	async function flood_fill(xx, yy) {
+		if(xx < 0 || yy < 0 || xx >= arr.length || yy > arr[0].length) return;
+		if(arr[xx][yy] == 1) return;
+		arr[xx][yy] = 1;
+		await sleep(time_delay).then(() => {
+			ctx.beginPath();
+			ctx.moveTo(xx * width + width / 2, yy * width + width / 2);
+			ctx.arc(xx * width + width / 2, yy * width + width / 2, width / 2, 0, Math.PI * 2, true);
+			ctx.fillStyle = color;
+			ctx.fill();
+			ctx.closePath();
+		})
+		flood_fill(xx - 1, yy);
+		flood_fill(xx, yy - 1);
+		flood_fill(xx + 1, yy);
+		flood_fill(xx, yy + 1);
+	}
+
 	function create_grid(width=5) {
 			document.querySelector("canvas").addEventListener("click", (e) => {
-				x = e.offsetX;
-				y = e.offsetY;
-				xx = Math.floor(x / width);
-				yy = Math.floor(y / width);
-				ctx.moveTo(xx * width + width / 2, yy * width + width / 2);
-				ctx.arc(xx * width + width / 2, yy * width + width / 2, width / 2, 0, Math.PI * 2, true);
-				ctx.fill();
-				removeEventListener(a);
+				if(!draw) {
+					document.querySelector(".fill").disabled = true;
+					xx = Math.floor( e.offsetX / width);
+					yy = Math.floor( e.offsetY / width);
+					flood_fill(xx, yy);
+					return;
+				}	
 			})
+
+			document.querySelector("canvas").addEventListener("mousemove", (e) => {
+				coordinate.x = e.offsetX;
+				coordinate.y = e.offsetY;
+			}, false)
+
+			document.querySelector("canvas").addEventListener("mousedown", (e) => {
+				document.querySelector("canvas").addEventListener("mousemove", paint, false);
+			}, false);
+
+			document.querySelector("canvas").addEventListener("mouseup", (e) => {
+				document.querySelector("canvas").removeEventListener("mousemove", paint, false);
+			}, false)
 	}
 
 	</script>
