@@ -80,6 +80,9 @@
 				alert("No such node exist");
 				return;
 			}
+			if(parent[+value - 1] ==  -1) {
+				alert(`${value} has no parent`)
+			}
 			document.querySelector(".find").disabled = true;
 			find(value);
 		
