@@ -38,6 +38,20 @@
 			margin-right: 20px;
 		}
 
+		.inst {
+			background: lightgreen;
+			padding: 10px 30px;
+			margin: 10px 0px 2px 10px;
+			font-family: ubuntu;
+			text-transform: uppercase;
+			display: none;
+		}
+
+		.inst > b {
+			color: red;
+			font-size: 20px;
+		}
+
 	</style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -51,6 +65,7 @@
 		<button class="union">
 			Union
 		</button>
+		<span class="inst">Now Parent of all node is <b>1</b></span>
 	</div>
 	<script>
 
@@ -75,6 +90,7 @@
 			edge = [[3, 10]];
 			edge.forEach((e, i) => {
 			
+			document.querySelector(".union").disabled = true;
 			x1 =  arr[i][1] * per_width + per_width / 2;
 			y1 = arr[i][0] * per_height + per_height / 2;
 			e.forEach(edge => {
@@ -102,7 +118,10 @@
 				ctx.closePath();
 			})
 			edge = [[2, 12], [4, 5], [6, 7], [9], [], [], [], [], [], [8, 11], []];
+			document.querySelector(".inst").style.display = "inline-block";
 		})
+
+
 	}
 	
 	function init_array() {
