@@ -81,6 +81,7 @@
 	function init() {
 		document.querySelector(".dfs").addEventListener("click", () => {
 			async function get() {
+				create_graph(edge);
 				visited = [];
 				for(let i=0; i<size; i++) visited.push(false);
 				await dfs(0, visited);
@@ -91,6 +92,7 @@
 
 		document.querySelector(".bfs").addEventListener("click", () => {
 			visited = [];
+			create_graph(edge);
 			for(let i=0; i<size; i++) visited.push(false);
 			bfs(0, visited);
 			create_graph(bfs_edge, false);
@@ -102,13 +104,25 @@
 	}
 
 	async function  dfs(x, visited) {
-		if(visited[x]) return;
+		if(visited[x]) {
+			await sleep(time_delay).then(() => {
+				alert("cycle is detected");
+			})
+			return;
+		}
 		visited[x] = true;
-		for(let j=0; j<size; j++) {
+		for(let j=1; j<size; j++) {
 				if(!visited[j] && edge[x][j]) {
+					await sleep(time_delay).then(() => {
+						createLine(x, j, "white");
+						createBox(x);
+						createBox(j);
+						createText(x);
+						createText(j);
+					})
 					dfs_edge[x][j] = 1;
 					dfs_edge[j][x] = 1;	
-					dfs(j, visited);
+					await dfs(j, visited);
 				}
 		}
 	}
@@ -119,7 +133,7 @@
 		visited[x] = true;
 		while(s.length != 0) {
 			x = s.shift();
-			for(let j=0; j<size; j++) {
+			for(let j=x + 1; j<size; j++) {
 				if(!visited[j] && edge[x][j] && x < j) {
 					bfs_edge[x][j]  = 1;
 					bfs_edge[j][x]  = 1;
@@ -133,19 +147,25 @@
 					s.push(j);
 					visited[j] = true;
 				}
-				else if(visited[j] && j != x) { 
-					await sleep(time_delay * 2).then(() => {
-						createLine(x, j, "red");
+				else if(visited[j] && edge[x][j] && j != x) { 
+					await sleep(time_delay).then(() => {
+						createLine(x, j, "white");
 						createBox(x);
 						createBox(j);
 						createText(x);
 						createText(j);
+					})
+					await sleep(time_delay).then(() => {
+						alert("cycle is present");
 					})
 					return;
 				}
 			} 
 
 		}
+		await sleep(time_delay).then(() => {
+			alert("cycle is not present");
+		})
 	}
 	
 	function create_edges() {
