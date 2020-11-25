@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kadanes 2D</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Kadanes 2D</p>
+	<canvas class='grid' width="1100" height="550">
+		
+	</canvas>
+
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let right = 400;
+	let bottom = 0;
+	let pw = (ctx.canvas.width - right) / size;
+	let ph = (ctx.canvas.height - bottom )/ size;
+	let arr = [];
+	init();
+// Utility
+	function init() {
+		init_array();
+		animate_array();
+		kadane_array(arr[0]);
+		parameters()
+		add_listeners();
+	}
+
+	function init_array() {
+		for(let i=0; i<size; i++) {
+			temp = [];
+			for(let j=0; j<size; j++) {
+				let max = 10;
+				let min = -10;
+				let val = Math.floor(Math.random() * (max + 1 - min) + min);
+				temp.push(val);
+			}
+			arr.push(temp);
+		}
+	}
+
+	function add_listeners() {
+
+	}
+
+	function animate_array() {
+		for(let i=0; i<size; i++) {
+			for(let j=0; j<size; j++) {
+				ctx.fillStyle = "black";
+				ctx.fillRect(j * pw, i * ph, pw, ph);
+				ctx.strokeStyle = "white";
+				ctx.strokeRect(j * pw, i * ph, pw, ph);
+				ctx.fillStyle = "white";
+				ctx.font = "bolder 17px arial";
+				ctx.fillText(arr[i][j], j * pw + pw / 2, i * ph + ph / 2)
+			}
+		}
+	}
+
+	function kadane_array(arr) {
+		let j = size;
+		let gap = 20;
+		for(let i=0; i<size; i++) {
+			ctx.fillStyle = "yellow";
+			ctx.fillRect(gap + j * pw, i * ph, pw, ph);
+			ctx.strokeStyle = "black";
+			ctx.strokeRect(gap + j * pw, i * ph, pw, ph);
+			ctx.fillStyle = "red";
+			ctx.font = "bolder 17px arial";
+			ctx.fillText(arr[i], gap + j * pw + pw / 2, i * ph + ph / 2)
+		}
+	}
+
+	function parameters() {
+		let j = size + 1;
+		let gap = 40;
+		let s = ["currentSum", "maxSum", "maxLeft", "maxRight", "maxUp", "maxBottom"];
+		param = s.length;
+		for(let i=0; i<param; i++) {
+			ctx.fillStyle = "black";
+			ctx.fillRect(gap + j * pw, i * ph + 100, 2 * pw, ph);
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(gap + j * pw, i * ph + 100, 2 * pw, ph);
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 17px arial";
+			ctx.fillText(s[i], gap + j * pw + pw / 2, i * ph + ph / 2 + 100)
+		}
+
+		gap = 5;
+		j = size + 1;
+		let space = 36 + 2 * pw;
+		for(let i=0; i<param; i++) {
+			ctx.fillStyle = "white";
+			ctx.fillRect(gap + j * pw + space, i * ph + 100, pw, ph);
+			ctx.strokeStyle = "black";
+			ctx.strokeRect(gap + j * pw + space, i * ph + 100, pw, ph);
+			ctx.fillStyle = "black";
+			ctx.font = "bolder 17px arial";
+			ctx.fillText(0, gap + j * pw + pw / 2 + space, i * ph + ph / 2 + 100)
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>

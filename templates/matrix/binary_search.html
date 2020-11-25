@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Binary Search</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.opt > button {
+			padding: 10px 30px;
+		}
+		.opt > input {
+			width: 100px;
+			padding: 10px 0px 10px 50px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Binary Search</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<div class="opt">
+		<input type="number" class="value" value=0>
+		<button class="find">
+			Find Key
+		</button>
+	</div>
+	<script>
+
+// Main
+	let time_delay = 1000;
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let arr = [];
+	pw = ctx.canvas.width / size;
+	ph = ctx.canvas.height / size;
+	init();
+// Utility
+	
+	function init() {
+		init_array();
+		draw_array();
+		add_listeners();
+	}
+
+	function init_array() {
+		for(let i=0; i<size; i++) {
+			let temp = [];
+			let min = i * 20;
+			let max = (i + 1) * 20;
+			for(let j=0; j<size; j++) {
+				let val = Math.floor(Math.random() * (max - min) + min);
+				temp.push(val);
+			}
+			temp.sort((a, b) => a-b);
+			arr.push(temp);
+		}
+	}
+	async function draw_array(x1=0, x2=size - 1, y1=0, y2=size - 1, bc="black", c="white") {
+		gap = 0;
+		for(let  i=x1; i<=x2; i++) {
+			for(let j=y1; j<=y2; j++) {
+				ctx.fillStyle = bc;
+				ctx.fillRect(gap + j * pw, i * ph, pw, ph);
+				ctx.strokeStyle = c;
+				ctx.strokeRect(gap + j * pw, i * ph, pw, ph);
+				ctx.fillStyle = c;
+				ctx.font = "bolder 17px arial";
+				ctx.fillText(arr[i][j], gap + j * pw + pw / 2, i * ph + ph / 2)
+			}
+		}
+	}
+
+	function add_listeners() {
+		document.querySelector(".find").addEventListener("click", () => {
+			let value = +document.querySelector(".value").value;
+			binarySeach(value);
+		})
+	}	
+
+	async function binarySeach(value) {
+		let x1 = 0;
+		let x2 = size - 1;
+		let y1 = 0;
+		let y2 = size - 1;
+
+		while(x1 <= x2 && y1 <= y2) {
+			midx = (x1 + x2) / 2;
+			midx = Math.floor(midx);
+			midy = (y1 + y2) / 2;
+			midy = Math.floor(midy);
+			console.log(arr[midx][midy])
+			if(arr[midx][midy] == value) {
+
+				await sleep(time_delay).then(() => {
+					draw_array(midx, midx, midy, midy,"white", "black")
+				})
+				break;
+			}
+			break;
+			l = arr[x1][midy];
+			r = arr[x2][midy];
+			
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
