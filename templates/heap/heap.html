@@ -104,7 +104,7 @@
 	<div class="arr__controllers">
 		<div>
 			<button class="arr__insert">Insert</button>
-			<button class="arr__delete">Delete</button>
+			<button class="arr__delete" disabled>Delete</button>
 		</div>		
 	</div>
 
@@ -131,11 +131,12 @@
 		width: 60,
 		height: 40
 	}
+	let h_size = size;
 	heap = [];
 
 	init();
 	animate();
-	create_heap();
+	create_heap(0, 0, 4, 0, max_width , 10, 0);
 
 // utility
 	
@@ -149,24 +150,46 @@
 		return false;
 	}
 
-	function create_heap_cell(i, j) {
+	function create_heap_cell(val, i, j, col=-1) {
 		let gap = 10;
 		ctx.fillStyle = "black";
-		ctx.fillRect(max_width / 2 + gap + i * rect.width, 10 + j * gap, rect.width, rect.height);
+		if(col!= -1 && val == col) ctx.fillStyle = "yellow";
+		ctx.fillRect(i, j , rect.width, rect.height);
 
 		ctx.strokeStyle = "white";
-		ctx.strokeRect(max_width / 2 + gap + i * rect.width, 10 + j * gap, rect.width, rect.height);
+		ctx.strokeRect(i, j, rect.width, rect.height);
 		ctx.fillStyle = "white";
-		ctx.fillText(heap[i], max_width / 2 + gap + i * rect.width + rect.width / 2, 10 + j * gap + rect.height / 2);
+		if(col!= -1 && val == col) ctx.fillStyle = "red";
+		if(!heap[val]) val = "\\0" 
+		else val = heap[val];
+		ctx.fillText(val, i + rect.width / 2, j + rect.height / 2);
 	}
 
-	function create_heap() {
-		let j = -5;
-		for(let i=0; i<size; i++) {
-			if(count(i + 1)) j += 5;
-			create_heap_cell(i, j);
-
-		}
+	async function create_heap(val, s, e, l, r, j, time_delay, col=-1) {
+		if(s == e) return;
+		// await sleep(time_delay / 10).then(() => {
+			ctx.beginPath();
+			ctx.strokeStyle = "white";
+			ctx.lineWidth = 5;	
+			ctx.moveTo((l + r)/ 2, j);
+			ctx.lineTo((l + (l + r) / 2) / 2, j + rect.height + 10);
+			ctx.stroke();
+			ctx.closePath();
+		// })
+		// await sleep(time_delay / 10).then(() => {
+			ctx.beginPath();
+			ctx.strokeStyle = "white";
+			ctx.lineWidth = 5;	
+			ctx.moveTo((l + r)/ 2, j);
+			ctx.lineTo((r + (l + r) / 2) / 2, j + rect.height + 10);
+			ctx.stroke();
+			ctx.closePath();
+		// })
+		// await sleep(time_delay / 10).then(() => {
+			create_heap_cell(val, (l + r) / 2 - rect.width / 2, j, col);
+		// })
+		await create_heap(val * 2 + 1, s + 1, e, l, (l + r) / 2,  j + rect.height + 10, time_delay, col);
+		await create_heap(val * 2 + 2, s + 1, e, (l + r) / 2, r, j + rect.height + 10, time_delay, col);	
 	}
 
 	function randomize_an_array() {
@@ -181,7 +204,6 @@
 		for(let i=0; i<size - no_of_null; i++) {
 			arr[i] = Math.floor(Math.random() * max + 1);
 			copy[i] = (arr[i]);
-			heap[i] = "\\0"
 		}
 	}
 
@@ -194,14 +216,30 @@
 		document.querySelector(".arr__insert").addEventListener("click", () =>{
 			insert_animation();
 			let val;
+			if(arr.length == 0) {
+				alert("Nothing is left to insert")
+				return;
+			}
 			if(arr.length != 0) {
 				val = arr.pop();
 			}
+			if(arr.length == 0) {
+				document.querySelector(".arr__delete").disabled = false;				
+			}
+			heap.push(val);
 			animate();
+			clear(0, 0, max_width, 390);
+			create_heap(0, 0, 4, 0, max_width , 10, 0, heap.length - 1);
+			insert_animation();
 		})
 
 		document.querySelector(".arr__delete").addEventListener("click", () => {
-			
+			if(h_size == 0) {
+				alert("Nothing is there to delete in heap")
+				return;
+			}
+
+			delete_animation();
 		})
 	}
 
@@ -251,13 +289,72 @@
 
 	}
 
-	async function insert_animation(value, index) {
-	
-	}
-	
-	async function delete_animation(index) {
+	async function insert_animation() {
+		last = heap.length - 1;
+		document.querySelector(".arr__insert").disabled = true;
+		parent = Math.floor((last - 1) / 2);
+
+		if(last == 0) {
+			document.querySelector(".arr__insert").disabled = false;
+			return;
+		}
+		if(heap[parent] >= heap[last]) {
+			document.querySelector(".arr__insert").disabled = false;
+			return;
+		}
+
+		while(parent != -1) {
+			if(heap[parent] < heap[last]) {
+				await sleep(time_delay).then(() => {
+						temp = heap[parent];
+						heap[parent] = heap[last]
+						heap[last] = temp;
+						last = parent;
+						parent = Math.floor((last - 1) / 2);
+				})
+				await create_heap(0, 0, 4, 0, max_width , 10, 0, last);
+			}
+			else break;
+		}
+		document.querySelector(".arr__insert").disabled = false;
 
 	}
+	
+	async function delete_animation() {
+		first = 0;
+		last = heap.length - 1;
+		
+		temp = heap[first]
+		heap[first] = heap[h_size  -1]
+		heap[h_size - 1] = temp;
+		document.querySelector(".arr__delete").disabled = true;
+		lchild = 2 * first + 1;
+		rchild = 2 * first + 2;
+		heap[h_size - 1] = "\\0";
+
+		max = (heap[lchild] > heap[rchild]) ? lchild : rchild;
+		await create_heap(0, 0, 4, 0, max_width , 10, 0, 0);
+		while(heap[max] != "\\0" && max < size) {
+				await sleep(time_delay).then(() => {
+					temp = heap[first];
+					heap[first] = heap[max]
+					heap[max] = temp;
+					first = max;
+				})
+				await create_heap(0, 0, 4, 0, max_width , 10, 0, max);		
+				lchild = 2 * first + 1;
+				rchild = 2 * first + 2;
+				max = (heap[lchild] > heap[rchild]) ? lchild : rchild;
+				if(lchild == "\\0") {
+					max = rchild;
+				} 
+				if(rchild == "\\0") {
+					max = lchild;
+				}
+		}
+		h_size--;
+		document.querySelector(".arr__delete").disabled = false;
+	}	
 
 
 	function sleep(ms) {
