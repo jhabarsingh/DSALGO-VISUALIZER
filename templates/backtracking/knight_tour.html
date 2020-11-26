@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>heading</title>
+	<title>Knight Tour</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -16,6 +16,7 @@
 		.grid {
 			background: lightgreen;
 			margin: auto;
+			border: 2px solid black;
 		}
 
 		p:nth-child(1) {
@@ -28,25 +29,178 @@
 			color: gray;
 		}
 
+		.knight, .path {
+			padding: 10px 30px;
+		}
 
+		.counter {
+			width: 100px;
+			background: black;
+			padding: 10px 20px;
+			margin-left: 20px;
+			color: white;
+			display: none;
+		}
 	</style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p>heading</p>
-	<canvas class='grid' width="1000" height="500">
+	<p>Knight Tour</p>
+	<canvas class='grid' width="1000" height="550">
 		
 	</canvas>
+	<div>
+		<button class="knight">
+			Knight Tour
+		</button>
+		<button class="path" disabled>
+			Draw Path
+		</button>
 
+	</div>
 	<script>
 
 // Main
 	let ctx = document.querySelector("canvas").getContext("2d");
-	
+	size = 5;
+	pw = ctx.canvas.width / size;
+	ph = ctx.canvas.height / size;
+	time_delay = 0;
+	let knightImage = new Image();
+	knightImage.src = "../../images/knight.png"
+	let board = [];
+	count = 0;
+	dont_delete = false;
+	solution = [];
+	init();
 // Utility
+	function init() {
+		for(let i=0; i<size; i++) {
+			let temp = [];
+			for(let j=0; j<size; j++) {
+				temp.push(0);
+			}
+			board.push(temp);
+		}
+		create_grid();
+		add_listeners();
+	}
+
+	function create_grid() {
+		for(let i=0; i<size; i++) {
+			for(let j=0; j<size; j++) {
+				ctx.beginPath();
+				ctx.fillStyle = (i + j) % 2 ? "white" : "black";
+				ctx.fillRect(j * pw, i * ph, pw, ph);
+				ctx.closePath();
+			}
+		}
+		knightImage.onload = () => {
+			ctx.drawImage(knightImage, 10, 0, pw - 10, ph);
+		}
+	}
+
+	function add_listeners() {
+		document.querySelector(".knight").addEventListener("click", () => {
+			solution.push([0, 0]);
+			async function get() {
+
+				await knightTour(0, 0, 0)
+				document.querySelector(".path").disabled = false;
+			}
+			get();
+		}) 
+		
+		document.querySelector(".path").addEventListener("click", () => {
+			for(let i=0; i< Math.floor((solution.length - 1) / 2); i++) {
+				temp = solution[i];
+				solution[i] = solution[solution.length - 1 - i];
+				solution[solution.length - 1 - i] = temp;
+			}
+			while(solution.length != 1) {
+				ctx.beginPath();
+				x1 = solution[solution.length - 1][0];
+				y1 = solution[solution.length - 1][1];
+				solution.pop();
+				x2 = solution[solution.length - 1][0];
+				y2 = solution[solution.length - 1][1];
+				ctx.lineWidth = 5;
+				ctx.strokeStyle = "blue";
+				ctx.moveTo(x1 * pw + pw / 2, y1 * ph + ph / 2);
+				ctx.lineTo(x2 * pw + pw / 2, y2 * ph + ph / 2);
+				ctx.stroke();
+				ctx.closePath();
+				if(solution.length == 0) {
+					ctx.beginPath();
+					x1 = x2;
+					y1 = y2;
+					x2 = 0;
+					y2 = 0;
+					ctx.lineWidth = 5;
+					ctx.strokeStyle = "blue";
+					ctx.moveTo(x1 * pw + pw / 2, y1 * ph + ph / 2);
+					ctx.lineTo(x2 * pw + pw / 2, y2 * ph + ph / 2);
+					ctx.stroke();
+					ctx.closePath();
+				}
+			}
+		})
+	}
+
 	function sleep(ms) {
 		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	function is_valid(i, j) {
+		if(i < 0 || i >= size) return false;
+		if(j < 0 || j >= size) return false;
+		if(board[i][j]) return false;
+		return true;
+	}
+	async function knightTour(i, j, done) {
+		if(done == size * size) {
+			console.log(done);
+			dont_delete = true;
+			return;
+		}
+		if(dont_delete) return;
+		let stack = [];
+		ctx.drawImage(knightImage, 10 + i * pw, j * ph, pw - 10, ph);
+		board[i][j] = 1;
+		t = [[2, 1], [2, -1], [-2, 1], [-2, -1], [-1, 2], [1, 2], [-1, -2], [1, -2]]
+		t.forEach((e) => {
+			if(is_valid(i + e[0], j + e[1])) {
+				stack.push([i + e[0], j + e[1]]);
+			}
+		})
+		while(stack.length != 0){
+			await sleep(time_delay).then(() => {
+			})
+			ctx.fillStyle = (i + j) % 2 ? "white" : "black";
+			ctx.fillRect(i * pw, j * ph, pw, ph);
+			ctx.font = "bold 20px arial"
+			ctx.fillStyle = (i + j) % 2 ? "black" : "white";
+			ctx.fillText(done, i * pw + pw / 2, j * ph + ph / 2);
+			solution.push([stack[stack.length - 1][0], stack[stack.length - 1][1]])
+			await knightTour(stack[stack.length - 1][0], stack[stack.length - 1][1], done + 1)
+			await sleep(time_delay).then(() => {
+				ctx.fillStyle = (i + j) % 2 ? "white" : "black";
+				ctx.fillRect(i * pw, j * ph, pw, ph);
+			})
+			solution.pop();
+			stack.pop();
+		}
+		await sleep(time_delay).then(() => {
+			ctx.fillStyle = (i + j) % 2 ? "white" : "black";
+			ctx.fillRect(i * pw, j * ph, pw, ph);
+			ctx.font = "bold 20px arial"
+			ctx.fillStyle = (i + j) % 2 ? "black" : "white";
+			ctx.fillText(done, i * pw + pw / 2, j * ph + ph / 2);
+		})
+
+		board[i][j] = 0;
+
 	}
 
 	</script>
