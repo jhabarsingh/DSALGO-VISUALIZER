@@ -29,7 +29,7 @@
 			color: gray;
 		}
 
-		.knight, .path {
+		.knight, .path, .solution {
 			padding: 10px 30px;
 		}
 
@@ -57,7 +57,9 @@
 		<button class="path" disabled>
 			Draw Path
 		</button>
-
+		<button class="solution">
+			Solution
+		</button>
 	</div>
 	<script>
 
@@ -66,7 +68,7 @@
 	size = 5;
 	pw = ctx.canvas.width / size;
 	ph = ctx.canvas.height / size;
-	time_delay = 0;
+	time_delay = 100;
 	let knightImage = new Image();
 	knightImage.src = "../../images/knight.png"
 	let board = [];
@@ -74,6 +76,7 @@
 	dont_delete = false;
 	solution = [];
 	init();
+
 // Utility
 	function init() {
 		for(let i=0; i<size; i++) {
@@ -109,42 +112,84 @@
 				await knightTour(0, 0, 0)
 				document.querySelector(".path").disabled = false;
 			}
+			document.querySelector(".solution").disabled = true;
 			get();
 		}) 
 		
+		document.querySelector(".solution").addEventListener("click", () => {
+			document.querySelector(".knight").disabled = true;
+			document.querySelector(".solution").disabled = true;
+			solution = []
+			for(let i=0; i<size * size; i++) {
+				solution.push(0);
+			}
+			dont_delete = true;
+			let arr = [
+				[ 0,  13, 8,  19, 2  ],
+				[ 23, 18, 1,  14, 9  ],
+				[ 12, 7,  24, 3,  20 ],
+				[ 17, 22, 5,  10, 15 ],
+				[ 6,  11, 16, 21, 4  ],
+
+			]
+			temp = [];
+			for(let i=0; i<size; i++) {
+				for(let j=0; j<size; j++) {
+					solution[arr[i][j]] = [i, j];
+				}
+			}
+
+			for(let i=solution.length - 1; i > -1; i--) {
+				temp.push(solution[i]);
+			}
+			async function get() {	
+				
+				while(temp.length != 0) {
+					i = temp[temp.length - 1][0];
+					j = temp[temp.length - 1][1];
+					await sleep(time_delay).then(() => {
+						ctx.drawImage(knightImage, 10 + j * pw, i * ph, pw - 10, ph);
+					})
+					await sleep(time_delay).then(() => {
+						ctx.fillStyle = (i + j) % 2 ? "black" : "white";
+						ctx.font = "bolder 20px arial"
+						ctx.fillText(arr[i][j], j * pw + pw / 2, i * ph + ph / 2);
+					})
+					temp.pop();
+				}
+				document.querySelector(".path").disabled = false;
+			}
+			get();
+		})
+
 		document.querySelector(".path").addEventListener("click", () => {
+			document.querySelector(".path").disabled  = true;
 			for(let i=0; i< Math.floor((solution.length - 1) / 2); i++) {
 				temp = solution[i];
 				solution[i] = solution[solution.length - 1 - i];
 				solution[solution.length - 1 - i] = temp;
 			}
-			while(solution.length != 1) {
-				ctx.beginPath();
-				x1 = solution[solution.length - 1][0];
-				y1 = solution[solution.length - 1][1];
-				solution.pop();
-				x2 = solution[solution.length - 1][0];
-				y2 = solution[solution.length - 1][1];
-				ctx.lineWidth = 5;
-				ctx.strokeStyle = "blue";
-				ctx.moveTo(x1 * pw + pw / 2, y1 * ph + ph / 2);
-				ctx.lineTo(x2 * pw + pw / 2, y2 * ph + ph / 2);
-				ctx.stroke();
-				ctx.closePath();
-				if(solution.length == 0) {
-					ctx.beginPath();
-					x1 = x2;
-					y1 = y2;
-					x2 = 0;
-					y2 = 0;
-					ctx.lineWidth = 5;
-					ctx.strokeStyle = "blue";
-					ctx.moveTo(x1 * pw + pw / 2, y1 * ph + ph / 2);
-					ctx.lineTo(x2 * pw + pw / 2, y2 * ph + ph / 2);
-					ctx.stroke();
-					ctx.closePath();
+			
+			async function geet() {
+				while(solution.length != 1) {
+					await sleep(time_delay).then(() => {
+						ctx.beginPath();
+						y1 = solution[solution.length - 1][0];
+						x1 = solution[solution.length - 1][1];
+						solution.pop();
+						y2 = solution[solution.length - 1][0];
+						x2 = solution[solution.length - 1][1];
+						ctx.lineWidth = 5;
+						ctx.strokeStyle = "red";
+						ctx.moveTo(x1 * pw + pw / 2, y1 * ph + ph / 2);
+						ctx.lineTo(x2 * pw + pw / 2, y2 * ph + ph / 2);
+						ctx.stroke();
+						ctx.closePath();
+					})
 				}
 			}
+
+			geet();
 		})
 	}
 
