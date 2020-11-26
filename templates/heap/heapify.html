@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Heapify</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+	
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			position: relative;
+			background: lightgreen;
+			margin: 10px auto;
+			display: flex;
+			flex-wrap: wrap;
+			outline: 1px solid red;
+		}
+
+		p, p:nth-child(1) {
+			padding: 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 20px;
+		}
+
+		.arr__controllers {
+			max-width: 500px;
+			margin: auto;
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.arr__delete, .arr__insert, .arr__search {
+			padding: 10px 30px;
+		}
+
+		.arr__peek__input {
+			width: 60px;
+			padding: 10px;
+		}
+
+		.color__scheme {
+			display: flex;
+			padding: 10px;
+			justify-content: space-between;
+			border: 1px solid lightgreen;
+			margin-right: 5px;
+		}
+
+		.color__scheme > span:nth-child(1) {
+			height: 20px;
+			width: 20px;
+			padding: 5px;
+			margin-right: 20px;
+			background: lightgreen;
+		}
+
+
+		.color__scheme > span:nth-child(2) {
+			font-weight: bolder;
+			color: gray;
+			margin: 0px 20px 0 0 ;
+
+		}
+
+		.insert__details {
+			display: flex;
+			justify-content: center;
+			align-self: center;
+			padding: 20px;
+			background: lightgreen;
+		}
+		.heapify {
+			padding: 10px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Heapify</p>
+	<canvas class='grid' width='1000' height='500'>
+		
+	</canvas>
+
+	<div class="arr__controllers">
+		<div>
+			<button class="heapify">Heapify</button>
+		</div>		
+	</div>
+
+	<script>
+
+	</script>
+</body>
+</html>
+
+
+	<script>
+
+// MAIN
+	arr =[];
+	max = 100;
+	time_delay = 1000;
+	size = 15;
+	no_of_null = 0	;
+	canvas = document.querySelector('canvas');
+	max_width = canvas.width;
+	max_height = canvas.height;
+	ctx = canvas.getContext("2d");
+	rect = {
+		width: 60,
+		height: 40
+	}
+	let h_size = size;
+	heap = [];
+	ha = [];
+	init();
+	animate();
+	create_heap(0, 0, 4, 0, max_width , 10, 0);
+
+// utility
+	
+	function count(num) {
+		let p = 0;
+		while(num) {
+			if(num&1)p++
+			num >>= 1;
+		}
+		if(p == 1) return true;
+		return false;
+	}
+
+	function create_heap_cell(val, i, j, col=-1, color) {
+		let gap = 10;
+		ctx.fillStyle = "black";
+		if(col!= -1 && val == col) {
+			ctx.fillStyle = "yellow";
+			if(color) {
+				ctx.fillStyle = "pink";	
+			}
+		}
+		ctx.fillRect(i, j , rect.width, rect.height);
+
+		ctx.strokeStyle = "white";
+		ctx.strokeRect(i, j, rect.width, rect.height);
+		ctx.fillStyle = "white";
+		if(col!= -1 && val == col) ctx.fillStyle = "red";
+		if(!heap[val]) val = "\\0" 
+		else val = heap[val];
+		ctx.fillText(val, i + rect.width / 2, j + rect.height / 2);
+	}
+
+	async function create_heap(val, s, e, l, r, j, time_delay, col=-1, color=false) {
+		if(s == e) return;
+		// await sleep(time_delay / 10).then(() => {
+			ctx.beginPath();
+			ctx.strokeStyle = "white";
+			ctx.lineWidth = 5;	
+			ctx.moveTo((l + r)/ 2, j);
+			ctx.lineTo((l + (l + r) / 2) / 2, j + rect.height + 10);
+			ctx.stroke();
+			ctx.closePath();
+		// })
+		// await sleep(time_delay / 10).then(() => {
+			ctx.beginPath();
+			ctx.strokeStyle = "white";
+			ctx.lineWidth = 5;	
+			ctx.moveTo((l + r)/ 2, j);
+			ctx.lineTo((r + (l + r) / 2) / 2, j + rect.height + 10);
+			ctx.stroke();
+			ctx.closePath();
+		// })
+		// await sleep(time_delay / 10).then(() => {
+			create_heap_cell(val, (l + r) / 2 - rect.width / 2, j, col, color);
+		// })
+		await create_heap(val * 2 + 1, s + 1, e, l, (l + r) / 2,  j + rect.height + 10, time_delay, col, color);
+		await create_heap(val * 2 + 2, s + 1, e, (l + r) / 2, r, j + rect.height + 10, time_delay, col, color);	
+	}
+
+	function randomize_an_array() {
+		arr = [];
+		copy = [];
+
+		for(let i=0; i<size; i++) {
+			arr.push("\\0");
+			copy.push("\\0")
+		}
+
+		for(let i=0; i<size - no_of_null; i++) {
+			arr[i] = Math.floor(Math.random() * max + 1);
+			copy[i] = (arr[i]);
+			heap.push(arr[i])
+		}
+	}
+
+	function init() {	
+			randomize_an_array();
+			add_listeners();
+	}
+
+	function add_listeners() {
+		document.querySelector(".heapify").addEventListener("click", () => {
+			heapify();
+		})
+	}
+
+	async function heapify() {
+		for(let i=size-1; i > -1; i--) {
+			await sleep(time_delay).then(() => {
+				create_heap(0, 0, 4, 0, max_width , 10, 0, i);
+			});
+
+			if(i * 2 + 1 >= size) {
+			}
+			else {
+				l = i * 2 + 1;
+				r = i * 2 + 2;
+				max = heap[l] > heap[r] ? l : r;
+				if(heap[max] > heap[i]){
+						temp = heap[max]
+						heap[max] = heap[i]
+						heap[i] = temp;
+				}
+				
+			}
+			await sleep(time_delay).then(() => {
+				create_heap(0, 0, 4, 0, max_width , 10, 0, i);
+			});
+		}
+
+		for(let i=0; i <size; i++) {
+			await sleep(time_delay).then(() => {
+				create_heap(0, 0, 4, 0, max_width , 10, 0, i);
+			});
+
+			if(i * 2 + 1 >= size) {
+			}
+			else {
+				l = i * 2 + 1;
+				r = i * 2 + 2;
+				max = heap[l] > heap[r] ? l : r;
+				if(heap[max] > heap[i]){
+					// await sleep(time_delay * 2).then(() => {
+						temp = heap[max]
+						heap[max] = heap[i]
+						heap[i] = temp;
+					// })
+				}
+				
+			}
+			await sleep(time_delay).then(() => {
+				create_heap(0, 0, 4, 0, max_width , 10, 0, i);
+			});
+		}
+	} 
+
+	function clear(x1=0, y1=0, width=max_width, height=max_height) {
+			ctx.fillStyle = 'lightgreen';
+			ctx.fillRect(x1, y1, width, height)
+	}
+
+	function animate(glit_color=-1, hs=false) {
+		clear(0, 390, max_width, ctx.canvas.height);
+	
+		arr.forEach((e, i) => {
+			ctx.fillStyle = "black";
+			lit = 0;
+			if(i == glit_color) {
+				ctx.fillStyle = "red";
+				ctx.fillRect(i * rect.width + i + 10, 140 + max_height/2 - 6, rect.width, rect.height);
+				lit = 10;
+			}
+			else {
+				ctx.fillRect(i * rect.width + i + 10, 140 + max_height/2, rect.width, rect.height);
+			}	
+			ctx.fillStyle = 'white';
+			ctx.font = 'bold 15px ubuntu'
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, 140 + max_height/2 + rect.height * (3/4) - lit)
+			ctx.fillStyle = 'black';
+		})
+		let p = [];
+		for(let i=0; i<size; i++) {
+			p.push(i);
+		}
+
+		p.forEach((e, i) => {
+			ctx.fillStyle = "red";	
+			ctx.fillRect(i * rect.width + i + 10, 130 + max_height/2 + 2 * rect.height, rect.width, rect.height * (3 / 4));
+			ctx.fillStyle = 'yellow';
+			ctx.font = 'bold 15px ubuntu'
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10,130 +  max_height/2 + rect.height * (3/4) + (7.5 / 4) * rect.height)
+			ctx.fillStyle = 'black';
+		})
+		ctx.fillStyle = "darkblue";
+		ctx.font = "bolder 12px monospace";
+		ctx.fillText("Index", 10, 160 + max_height/2 + 45)
+
+	}
+
+	
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	</script>
+</body>
+</html>
