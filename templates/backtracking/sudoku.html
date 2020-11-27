@@ -16,6 +16,7 @@
 		.grid {
 			background: lightgreen;
 			margin: auto;
+			border: 2px solid black;
 		}
 
 		p:nth-child(1) {
@@ -28,6 +29,9 @@
 			color: gray;
 		}
 
+		.solve {
+			padding: 10px 30px;
+		}
 
 	</style>
 	<meta charset="utf-8">
@@ -35,74 +39,49 @@
 </head>
 <body>
 	<p> Sudoku </p>
-	<canvas class='grid' width="1000" height="600">
+	<canvas class='grid' width="1000" height="550">
 		
 	</canvas>
-
+	<div>
+		<button class="solve">
+			Solve
+		</button>
+	</div>
 	<script>
 
 // Main
 	let ctx = document.querySelector("canvas").getContext("2d");
 	size = 9;
-	width = ctx.canvas.width / 9;
-	height = ctx.canvas.height / 9;
-	let sudoku = [];
+	width = ctx.canvas.width / size;
+	height = ctx.canvas.height / size;
+	let sudoku = [
+		[5, 3, 0, 0, 7, 0, 0, 0, 0],
+		[6, 0, 0, 1, 9, 5, 0, 0, 0],
+		[0, 9, 8, 0, 0, 0, 0, 6, 0],
+		[8, 0, 0, 0, 6, 0, 0, 0, 3],
+		[4, 0, 0, 8, 0, 3, 0, 0, 1],
+		[7, 0, 0, 0, 2, 0, 0, 0, 6],
+		[0, 6, 0, 0, 0, 0, 2, 8, 0],
+		[0, 0, 0, 4, 1, 9, 0, 0, 5],
+		[0, 0, 0, 0, 8, 0, 0, 7, 9],
+	];
 	let sudoku_solver = [];
 	init();
 // Utility
 
 	function init() {
-		create_sudoku();
 		create_grid();
+		document.querySelector(".solve").addEventListener("click", () => {
+			solve_sudoku();
+		})
 	}
 
 	function sudoku_checker(val, x, y, count) {
-		let c = 0;
-		for(let i = Math.floor(x / 3); i < Math.floor(x / 3) + 3; i++) {
-			for(let j = Math.floor(y / 3); j < Math.floor(y / 3) + 3; j++) {
-				if(sudoku[i][j] != 0) c++;
-				if(c == count) return false;
-				if(sudoku[i][j] == val) return false;
-			}
-		}
-
-		for(let i = 0; i < size; i++) {
-			if(sudoku[0][i] == val) return false;
-		}
-
-		for(let i = 0; i < size; i++) {
-			if(sudoku[i][0] == val) return false;
-		}
-		return true
+		
 	}
 
-	function create_sudoku() {
-		for(let i=0; i<size; i++) {
-			let temp = [];
-			for(let j=0; j<size; j++) {
-				temp.push(0);
-			}
-			sudoku.push(temp);
-		}
-
-		count = 0;
-		for(let i=0; i< size; i = (i + 1) % size) {
-			if(count == (3 * 9)) break;
-			for(let j=0; j <  size; j = (j + 1) % size) {
-				if(count == (3 * 9)) break;
-				let p = Math.floor(Math.random() * (2 - 0) + 0);
-				console.log(p);
-				if(p) {
-					let val = Math.floor(Math.random(size + 1 - 1) + 1);
-					if(sudoku_checker(val, i, j, 3)) {
-						sudoku[i][j] = val;
-						count++;
-						console.log(count);
-					}
-				}	
-			}
-		}
-
+	function solve_sudoku() {
+	
 
 	}
 
@@ -110,6 +89,13 @@
 		let p =1;
 		for(let i=0; i< size; i++) {
 			for(let j=0; j< size; j++) {
+				if(sudoku[i][j]) {
+					ctx.fillStyle = "green";
+					ctx.fillRect(j * width, i * height, width, height);	
+					ctx.fillStyle = "white";
+					ctx.font = "bolder 20px arial"
+					ctx.fillText(sudoku[i][j], j * width + width / 2, i * height + height / 2);
+				}
 				ctx.strokeStyle = "black";
 				ctx.strokeRect(i * width, j*height, width * p, height * p);
 				ctx.stroke();
@@ -120,7 +106,7 @@
 		for(let i=0; i< size; i+=p) {
 			for(let j=0; j< size; j+=p) {
 				ctx.strokeStyle = "black";
-				ctx.lineWidth = 10;
+				ctx.lineWidth = 3;
 				ctx.strokeRect(i * width, j*height, width * p, height * p);
 				ctx.stroke();
 			}

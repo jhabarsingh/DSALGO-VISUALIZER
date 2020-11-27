@@ -29,6 +29,9 @@
 			color: gray;
 		}
 
+		.queen {
+			padding: 10px 30px;
+		}
 
 	</style>
 	<meta charset="utf-8">
@@ -36,10 +39,14 @@
 </head>
 <body>
 	<p> N Queen </p>
-	<canvas class='grid' width="1000" height="600">
+	<canvas class='grid' width="1000" height="550">
 		
 	</canvas>
-
+	<div>
+		<button class="queen">
+			N Queen Backtrack
+		</button>
+	</div>
 	<script>
 
 // Main
@@ -57,7 +64,6 @@
 	let arr = [];
 	let queen = [];
 	init();		
-	
 // Utility
 
 	function init() {
@@ -67,7 +73,6 @@
 				queen.push(-1);
 			}
 			set_queen();		
-			back_track(0);
 		};	
 		
 		for(let i=0; i<size; i++) {
@@ -77,6 +82,11 @@
 			}
 			arr.push(t);
 		}
+
+		document.querySelector(".queen").addEventListener("click", () => {
+			document.querySelector(".queen").disabled = true;
+			back_track(0);
+		})
 	}
 
 	function create_grid() {
