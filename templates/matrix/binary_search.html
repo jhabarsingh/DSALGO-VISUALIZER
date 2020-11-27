@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Binary Search</title>
+	<title>Sorted Matrix Search</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -16,6 +16,7 @@
 		.grid {
 			background: lightgreen;
 			margin: auto;
+			border: 2px solid black;
 		}
 
 		p:nth-child(1) {
@@ -41,7 +42,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p>Binary Search</p>
+	<p>Sorted Matrix Search</p>
 	<canvas class='grid' width="1000" height="500">
 		
 	</canvas>
@@ -54,7 +55,7 @@
 	<script>
 
 // Main
-	let time_delay = 1000;
+	let time_delay = 500;
 	let ctx = document.querySelector("canvas").getContext("2d");
 	let size = 10;
 	let arr = [];
@@ -100,34 +101,58 @@
 	function add_listeners() {
 		document.querySelector(".find").addEventListener("click", () => {
 			let value = +document.querySelector(".value").value;
+			document.querySelector(".find").disabled = true;
 			binarySeach(value);
 		})
 	}	
 
 	async function binarySeach(value) {
-		let x1 = 0;
-		let x2 = size - 1;
-		let y1 = 0;
-		let y2 = size - 1;
+		let i = 0;
+		let j = size - 1;
 
-		while(x1 <= x2 && y1 <= y2) {
-			midx = (x1 + x2) / 2;
-			midx = Math.floor(midx);
-			midy = (y1 + y2) / 2;
-			midy = Math.floor(midy);
-			console.log(arr[midx][midy])
-			if(arr[midx][midy] == value) {
-
+		while(i >= 0 && j >= 0 && i <size && j<size) {
+			gap = 0;
+			c = "black";
+			bc = "yellow";
+			if(arr[i][j] != value) {
 				await sleep(time_delay).then(() => {
-					draw_array(midx, midx, midy, midy,"white", "black")
+					ctx.fillStyle = bc;
+					ctx.fillRect(gap + j * pw, i * ph, pw, ph);
+					ctx.strokeStyle = "white";
+					ctx.strokeRect(gap + j * pw, i * ph, pw, ph);
+					ctx.fillStyle = c;
+					ctx.font = "bolder 25px arial";
+					ctx.fillText(arr[i][j], gap + j * pw + pw / 2, i * ph + ph / 2)
 				})
-				break;
 			}
-			break;
-			l = arr[x1][midy];
-			r = arr[x2][midy];
-			
+			if(arr[i][j] == value) {
+				await sleep(time_delay).then(() => {
+					bc = "white";
+					c = "black";
+					ctx.fillStyle = bc;
+					ctx.fillRect(gap + j * pw, i * ph, pw, ph);
+					ctx.strokeStyle = "white";
+					ctx.strokeRect(gap + j * pw, i * ph, pw, ph);
+					ctx.fillStyle = c;
+					ctx.font = "bolder 25px arial";
+					ctx.fillText(arr[i][j], gap + j * pw + pw / 2, i * ph + ph / 2)
+				})
+				await sleep(time_delay).then(() => {
+					alert(`found the element at ${i}, ${j}`);
+				})
+				return;
+			}
+			else if(value > arr[i][j]) {
+				i++;
+			}
+			else {
+				j--;
+			}
 		}
+		await sleep(time_delay).then(() => {
+			alert("Element Not Present");
+		})
+				
 	}
 
 	function sleep(ms) {

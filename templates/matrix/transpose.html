@@ -55,10 +55,10 @@
 // Main
 	let ctx = document.querySelector("canvas").getContext("2d");
 	let arr = [];
-	time_delay = 100;
-	let size =  10;
-	let per_width = ctx.canvas.width / size;
-	let per_height = ctx.canvas.height / size;
+	time_delay = 500;
+	let size =  5;
+	let per_width = ctx.canvas.width / (2 * size);
+	let per_height = ctx.canvas.height / (2 * size);
 	init();
 
 // Utility
@@ -68,7 +68,8 @@
 		draw_grid();
 		document.querySelector(".transpose_button").addEventListener("click", () => {
 			document.querySelector(".transpose_button").disabled = true
-			transpose();
+			draw_grid(true);
+			transpose(true);
 		})
 	}
 
@@ -82,46 +83,49 @@
 		}
 	}
 
-	async function transpose() {
+	async function transpose(all=false) {
 		for(let i=0; i< size; i++) {
 			for(let j=i + 1; j<size; j++) {
 				arr[i][j] = arr[i][j] ^ arr[j][i];
 				arr[j][i] = arr[j][i] ^ arr[i][j];
 				arr[i][j] = arr[i][j] ^ arr[j][i];
 				await sleep(time_delay).then(() => {
-					draw_cell(i, j, "yellow", true);
-					draw_cell(j, i, "yellow", true);
+					draw_cell(i, j, "yellow", true, all);
+					draw_cell(j, i, "yellow", true, all);
 				})
 					
 			}
 		}
-		setTimeout(() => {
-			window.location.reload();
-		}, 4000)
 	}
 
-	async function draw_cell(i, j, color="black", t=false) {
+	async function draw_cell(i, j, color="black", t=false, all=false) {
 		ctx.fillStyle = color;
-		ctx.fillRect(i * per_width, j * per_height, per_width, per_height);
+		gapx = 0;
+		gapy = 0;
+		if(all) {
+			gapx = ctx.canvas.width / 2;
+			gapy = ctx.canvas.height / 2;
+		}
+		ctx.fillRect(gapx + i * per_width, gapy + j * per_height, per_width, per_height);
 		ctx.strokeStyle = "white";
-		ctx.strokeRect(i * per_width, j * per_height, per_width, per_height);
+		ctx.strokeRect(gapx + i * per_width, gapy + j * per_height, per_width, per_height);
 		ctx.fillStyle = "white";
 		if(t) {
 			ctx.fillStyle = "black";
 			ctx.font = "bolder 25px ubuntu";
-			ctx.fillText(arr[i][j], i * per_width + per_width / 2, j * per_height + per_height / 2);
+			ctx.fillText(arr[i][j], gapx + i * per_width + per_width / 2, gapy + j * per_height + per_height / 2);
 		}
 		else {
 			ctx.font = "bolder 20px white";
-			ctx.fillText(arr[i][j], i * per_width + per_width / 2, j * per_height + per_height / 2);
+			ctx.fillText(arr[i][j], gapx + i * per_width + per_width / 2, gapy + j * per_height + per_height / 2);
 		}
 		ctx.stroke();
 	} 
 
-	async function draw_grid() {
+	async function draw_grid(all=false) {
 		for(let i=0; i< size; i++) {
 			for(let j=0; j<size; j++) {
-				await draw_cell(i, j);	
+				await draw_cell(i, j, "black", false, all);	
 			}
 		}
 	}
