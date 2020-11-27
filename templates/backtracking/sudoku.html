@@ -52,6 +52,7 @@
 // Main
 	let ctx = document.querySelector("canvas").getContext("2d");
 	size = 9;
+	time_delay = 500;
 	width = ctx.canvas.width / size;
 	height = ctx.canvas.height / size;
 	let sudoku = [
@@ -67,22 +68,50 @@
 	];
 	let sudoku_solver = [];
 	init();
+	let done = false;
 // Utility
 
 	function init() {
+		for(let i=0; i<size; i++) {
+			let temp = [];
+			for(let j=0; j<size; j++) {
+				temp.push(sudoku[i][j]);
+			}	
+			sudoku_solver.push(temp);
+		}
 		create_grid();
 		document.querySelector(".solve").addEventListener("click", () => {
-			solve_sudoku();
+			solve_sudoku(0);
 		})
 	}
 
-	function sudoku_checker(val, x, y, count) {
+	function sudoku_checker(value, x, y) {
+		// Out Of Bond
+		if(x < 0 || y < 0 || y >=size || x >= size) return false;
+
+		// Present in Sudoku
+		if(sudoku[x][y]) return false;
+		let l = Math.floor(x / 3);
+		let r = Math.floor(y / 3);
 		
+		// Presnt in 3 X 3 Grid
+		for(let i = 3 * l; i<(3 * (l + 1)); i++) {
+			for(let j = 3 * r; j<(3 * (r + 1)); j++) {
+				if(sudoku_solver[i][j] == value) return false;
+			}
+		}
+
+		// Present in same Row, Col;
+		for(let i=0; i<size; i++) {
+			if(sudoku_solver[i][y] == value) return false;
+			if(sudoku_solver[x][i] == value) return false;
+		}
+		return true;
+
 	}
 
-	function solve_sudoku() {
-	
-
+	async function solve_sudoku(x) {
+		
 	}
 
 	function create_grid() {
@@ -96,21 +125,12 @@
 					ctx.font = "bolder 20px arial"
 					ctx.fillText(sudoku[i][j], j * width + width / 2, i * height + height / 2);
 				}
-				ctx.strokeStyle = "black";
+				ctx.strokeStyle = "white";
 				ctx.strokeRect(i * width, j*height, width * p, height * p);
 				ctx.stroke();
 			}
 		}
 
-		p = 3;
-		for(let i=0; i< size; i+=p) {
-			for(let j=0; j< size; j+=p) {
-				ctx.strokeStyle = "black";
-				ctx.lineWidth = 3;
-				ctx.strokeRect(i * width, j*height, width * p, height * p);
-				ctx.stroke();
-			}
-		}
 	}
 
 	function sleep(ms) {
