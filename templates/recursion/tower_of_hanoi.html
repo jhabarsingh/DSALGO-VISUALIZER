@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Towe Of Hanoi</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.solve {
+			padding: 10px 30px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Towe Of Hanoi</p>
+	<canvas class='grid' width="1000" height="550">
+		
+	</canvas>
+	<div>
+		<button class="solve">
+			Solve
+		</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 5;
+	width =  20;
+	height = 400;
+	time_delay = 100;
+	source = [0, 1, 2, 3, 4];
+	init();
+// Utility
+
+	function init() {
+		s = [0, 1, 2, 3, 4];
+		d = [];
+		h = [];
+		create_towers(size, s, d, h, 0, 1, 2);
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	async function create_towers(n, s, d, h, ss, dd, hh) {
+		if(n == 0)return;
+		ctx.fillStyle = "lightgreen"
+		ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+		ctx.fillStyle = "black"
+		pw = (ctx.canvas.width - 100) / 3;
+		for(let i=0; i<3; i++) {
+			ctx.fillStyle = "black";
+			ctx.fillRect(pw * (i + 1) - width / 2 - 120, ctx.canvas.height - height, width, height);
+		}
+
+		for(let k=0; k<s.length; k++) {
+			await sleep(time_delay).then(() => {
+				j = s[k]
+				width = 200 * (size + 1) / (size + 2 * j);
+				ctx.fillStyle = "red";
+				i = ss;
+				ctx.fillRect(pw * (i + 1) - 120 -width / 2, ctx.canvas.height - 20 * (k + 1), width, 20);
+				ctx.strokeStyle = "white";
+				ctx.strokeRect(pw * (i + 1) - 120 -width / 2, ctx.canvas.height - 20 * (k + 1), width, 20);
+			})
+		}
+
+		for(let k=0; k<d.length; k++) {
+			await sleep(time_delay).then(() => {
+				j = d[k]
+				width = 200 * (size + 1) / (size + 2 * j);
+				ctx.fillStyle = "red";
+				i = dd;
+				ctx.fillRect(pw * (i + 1) - 120 -width / 2, ctx.canvas.height - 20 * (k + 1), width, 20);
+				ctx.strokeStyle = "white";
+				ctx.strokeRect(pw * (i + 1) - 120 -width / 2, ctx.canvas.height - 20 * (k + 1), width, 20);
+			})
+		}
+
+		for(let k=0; k<h.length; k++) {
+			await sleep(time_delay).then(() => {
+				j = h[k]
+				width = 200 * (size + 1) / (size + 2 * j);
+				ctx.fillStyle = "red";
+				i = hh;
+				ctx.fillRect(pw * (i + 1) - 120 -width / 2, ctx.canvas.height - 20 * (k + 1), width, 20);
+				ctx.strokeStyle = "white";
+				ctx.strokeRect(pw * (i + 1) - 120 -width / 2, ctx.canvas.height - 20 * (k + 1), width, 20);
+			})
+		}
+
+		for(let i=1; i<s.length; i++) {
+			h.push(s[i]);
+		}
+		while(s.length >0 && s.length!=1) {
+			s.pop();
+		}
+		await create_towers(n - 1, s, d, h, ss, hh, dd);
+		d.push(s.pop());
+		s = [];
+		await create_towers(n, s, d, h, ss, dd, hh)
+	}
+
+	</script>
+</body>
+</html>
