@@ -167,5 +167,5 @@
   3. Big Theta (θ)
 
 **Number Theory**
-  1. Sieve Of Erosthene
+  1. Sieve Of Eratosthenes
   2. GCD (Eucledian)
