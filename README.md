@@ -3,164 +3,164 @@
 > **Ds Algo visualizer** is made for the students who want to learn **Data structures and algorithms** with Animations. This project includes all the important data structures that are  being used widely. Even 450+ questions are included that you can solve simuntaneouly to make a strong grip over each of these data structures and algorithms.   
 
 ### DSALGO Visualizer Includes
-1. **DATA STRUCTURES**
- * Array
- * Matrix
- * Stack
- * Queue
- * Heap
- * Linked List
- * Binary Search Tree
- * Graph
- * String
- * Disjoint Set
- * Hashing Table
- * Segment Tree
+**DATA STRUCTURES**
+ 1.  Array
+ 2.  Matrix
+ 3.  Stack
+ 4.  Queue
+ 5.  Heap
+ 6.  Linked List
+ 7.  Binary Search Tree
+ 8.  Graph
+ 9.  String
+ 10. Disjoint Set
+ 11. Hashing Table
+ 12. Segment Tree
 
-2. **Array Algorithms**
-  * Kadanes
-  * Prefix Sum
-  * Sliding Window
-  * Binary Search
-  * Linear Search
+**Array Algorithms**
+  1. Kadanes
+  2. Prefix Sum
+  3. Sliding Window
+  4. Binary Search
+  5. Linear Search
 
-3. **Stack Algorithms**
-  * Balanced Bracket
-  * Infix  To Postfix
-  * Infix To Prefix
-  * Postfix Evaluation
-  * Prefix Evaluation
-  * Maximum Area Under The Histogram
+**Stack Algorithms**
+  1. Balanced Bracket
+  2. Infix  To Postfix
+  3. Infix To Prefix
+  4. Postfix Evaluation
+  5. Prefix Evaluation
+  6. Maximum Area Under The Histogram
 
-4. **Matrix Algorithms**
-  * Transpose
-  * Kadanes 2D
-  * Sorted Matrix Search
+**Matrix Algorithms**
+  1. Transpose
+  2. Kadanes 2D
+  3. Sorted Matrix Search
 
-5. **Queue Algorithms**
-  * BFS
+**Queue Algorithms**
+  1. BFS
 
-6. **Heap Algorithms**
-  * Heapify
-  * Heap Sort
+**Heap Algorithms**
+  1. Heapify
+  2. Heap Sort
 
-8. **Linked List Algorithms**
-  * Singly Linked List
-  * Doubly Linked List
-  * Circular Linked List
-  * Stack Using Linked List
-  * Queue Using Linked List
+**Linked List Algorithms**
+  1. Singly Linked List
+  2. Doubly Linked List
+  3. Circular Linked List
+  4. Stack Using Linked List
+  5. Queue Using Linked List
 
-9. **Binary Search Tree Algorithms**
-  * Traversal (Inorder, Preorder, Postorder)
-  * AVL Rotations (LL, LR, RR, RL)
+**Binary Search Tree Algorithms**
+  1. Traversal (Inorder, Preorder, Postorder)
+  2. AVL Rotations (LL, LR, RR, RL)
 
-10. **Graph Algorithms**
-  * BFS
-  * DFS
-  * Flood Fill
-  * Color Filling
-  * DFS Maze
-  * Cycle Detection (BFS / DFS)
-  * Prims
-  * Kruskals
-  * Topological Sort
-  * Bellman Ford
-  * Floyd Warshall
-  * Graph Coloring
-  * Snake And Ladders
-  * Travelling Salesman
+**Graph Algorithms**
+  1.  BFS
+  2.  DFS
+  3.  Flood Fill
+  4.  Color Filling
+  5.  DFS Maze
+  6.  Cycle Detection (BFS / DFS)
+  7.  Prims
+  8.  Kruskals
+  9.  Topological Sort
+  10. Bellman Ford
+  11. Floyd Warshall
+  12. Graph Coloring
+  13. Snake And Ladders
+  14. Travelling Salesman
   
-11. **Sorting Algorithms**
-  * Heap Sort
-  * Bubble Sort
-  * Selection Sort
-  * Insertion Sort
-  * Quick Sort
-  * Merge Sort
-  * Counting Sort
+ **Sorting Algorithms**
+  1. Heap Sort
+  2. Bubble Sort
+  3. Selection Sort
+  4. Insertion Sort
+  5. Quick Sort
+  6. Merge Sort
+  7. Counting Sort
 
-12. **Search Algorithms**
-  * Binary Search
-  * Linear Search
+**Search Algorithms**
+  1. Binary Search
+  2. Linear Search
 
-13. **Recurstion Algorithms**
-  * Factorial 
-  * H Tree Animation
-  * Snow Flakes Animation
-  * Tower Of Hanoi
+**Recursion Algorithms**
+  1. Factorial 
+  2. H Tree Animation
+  3. Snow Flakes Animation
+  4. Tower Of Hanoi
 
-14. **Backtracking Algorithms**
-  * N-Queen
-  * Maze Generator
-  * Sudoku
-  * Knight Tour
+**Backtracking Algorithms**
+  1. N-Queen
+  2. Maze Generator
+  3. Sudoku
+  4. Knight Tour
 
-15. **Divide And Conquer Paradigm**
-  * Merge Sort
-  * Quick Sort
+**Divide And Conquer Paradigm**
+  1. Merge Sort
+  2. Quick Sort
 
-16. **Greedy Paradigm**
-  * Prims
-  * Kruskals
-  * Fractional Knapsack
-  * Counting Money
-  * Job Scheduling
-  * Huffman Coding
+**Greedy Paradigm**
+  1. Prims
+  2. Kruskals
+  3. Fractional Knapsack
+  4. Counting Money
+  5. Job Scheduling
+  6. Huffman Coding
  
-17. **Dynamic Programming Paradigm**
-  * Travelling Salesman
-  * 0/1 Knapsack
-  * Unbounded Knapsack
-  * Subset Sum
-  * Cutting Rod
-  * Coin Change
-  * Longest Common Subsequence
-  * Matrix Chain Multipication 
-  * Levenshtein Distance 
-  * Ladders Problem
+**Dynamic Programming Paradigm**
+  1.  Travelling Salesman
+  2.  0/1 Knapsack
+  3.  Unbounded Knapsack
+  4.  Subset Sum
+  5.  Cutting Rod
+  6.  Coin Change
+  7.  Longest Common Subsequence
+  8.  Matrix Chain Multipication 
+  9.  Levenshtein Distance 
+  10. Ladders Problem
 
-18. **String Algorithms**
-  * KMP
-  * Robin Karp
-  * Boyer Moore
-  * Z Function
+**String Algorithms**
+  1. KMP
+  2. Robin Karp
+  3. Boyer Moore
+  4. Z Function
 
-19. **Disjoint Set Algorithms**
-  * Union
-  * Find
+**Disjoint Set Algorithms**
+  1. Union
+  2. Find
 
-20. **Hashing Tables Algorithms**
-  * Open Hahing
-  * Closed Hashing
+**Hashing Tables Algorithms**
+  1. Open Hahing
+  2. Closed Hashing
 
-21. **Segment Tree Algorithms**
-  * Range Query 
-  * Update Query
+**Segment Tree Algorithms**
+  1. Range Query 
+  2. Update Query
 
-22. **Questions**
-  * Array
-  * Matrix
-  * String
-  * Searching And Sorting
-  * Linked List
-  * Binary Tree
-  * Binary Search Tree
-  * Greedy
-  * Backtracking
-  * Stack And Queue
-  * Heap
-  *  Graphs
-  * Trie
-  * Dynamic Programming
-  * Bit Manipulation
+**Questions**
+  1.  Array
+  2.  Matrix
+  3.  String
+  4.  Searching And Sorting
+  5.  Linked List
+  6.  Binary Tree
+  7.  Binary Search Tree
+  8.  Greedy
+  9.  Backtracking
+  10. Stack And Queue
+  11. Heap
+  12. Graphs
+  13. Trie
+  14. Dynamic Programming
+  15. Bit Manipulation
  
 
-23. **Time Complexity**
-  * Big-Oh (O)
-  * Big-Omege (Ω)
-  * Big Theta (θ)
+**Time Complexity**
+  1. Big-Oh (O)
+  2. Big-Omege (Ω)
+  3. Big Theta (θ)
 
-24. **Number Theory**
-  * Sieve Of Erosthene
-  * GCD (Eucledian)
+**Number Theory**
+  1. Sieve Of Erosthene
+  2. GCD (Eucledian)
