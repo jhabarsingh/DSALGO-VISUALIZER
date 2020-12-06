@@ -169,3 +169,14 @@
 **Number Theory**
   1. Sieve Of Eratosthenes
   2. GCD (Eucledian)
+
+
+## <a href="https://medium.com/mindsdb/contributing-to-an-open-source-project-how-to-get-started-6ba812301738">How To Contribure</a>
+> When I thought of commencing this project the first doubt came to mind was that *Should I use Javascript Framework (REACT) or Vanilla Js To create this project* and finally I decided to use  Vanilla Js and the reason I came to this conclusion was because I wanted to keep this project simple so that more and more people could contribute and learn from it.
+
+### You can contribute to this project in many ways
+ 1. You can create an issue if you find any bug.
+ 2. You can work on an existing issue and Send PR.
+ 3. You can add another data structure or Algorithm to the existing project and Send a PR.
+ 4. Even if you find any grammatical or spelling mistake then also you can create an issue.
+
