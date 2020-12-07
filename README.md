@@ -4,7 +4,7 @@
 
 > **<a href="https://jhabarsingh.github.io/DSALGO-Visualizer/" >Ds Algo visualizer</a>** is made for the students who want to learn **Data structures and algorithms** with Animations. This project includes all the important data structures that are  being used widely. Even 450+ questions are included that you can solve simuntaneouly to make a strong grip over each of these data structures and algorithms.   
 
-### DSALGO VISUALIZER INCLUDES
+### <a href="https://jhabarsingh.github.io/DSALGO-Visualizer/" >DSALGO VISUALIZER INCLUDES</a>
 
 **DATA STRUCTURES**
  1.  Array
