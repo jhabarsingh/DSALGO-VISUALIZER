@@ -21,14 +21,14 @@
  11. Hashing Table
  12. Segment Tree
 
-**Array Algorithms**
+**ARRAY ALGORITHMS**
   1. Kadanes
   2. Prefix Sum
   3. Sliding Window
   4. Binary Search
   5. Linear Search
 
-**Stack Algorithms**
+**STACK ALGORITHMS**
   1. Balanced Bracket
   2. Infix  To Postfix
   3. Infix To Prefix
@@ -36,30 +36,30 @@
   5. Prefix Evaluation
   6. Maximum Area Under The Histogram
 
-**Matrix Algorithms**
+**MATRIX ALGORITHMS**
   1. Transpose
   2. Kadanes 2D
   3. Sorted Matrix Search
 
-**Queue Algorithms**
+**QUEUE ALGORITHMS**
   1. BFS
 
-**Heap Algorithms**
+**HEAP ALGORITHMS**
   1. Heapify
   2. Heap Sort
 
-**Linked List Algorithms**
+**LINKED LIST ALGORITHMS**
   1. Singly Linked List
   2. Doubly Linked List
   3. Circular Linked List
   4. Stack Using Linked List
   5. Queue Using Linked List
 
-**Binary Search Tree Algorithms**
+**BINARY SEARCH TREE ALGORITHMS**
   1. Traversal (Inorder, Preorder, Postorder)
   2. AVL Rotations (LL, LR, RR, RL)
 
-**Graph Algorithms**
+**GRAPH ALGORITHMS**
   1.  BFS
   2.  DFS
   3.  Flood Fill
@@ -75,7 +75,7 @@
   13. Snake And Ladders
   14. Travelling Salesman
   
- **Sorting Algorithms**
+ **SORTING ALGORITHMS**
   1. Heap Sort
   2. Bubble Sort
   3. Selection Sort
@@ -84,27 +84,27 @@
   6. Merge Sort
   7. Counting Sort
 
-**Search Algorithms**
+**SEARCH ALGORITHMS**
   1. Binary Search
   2. Linear Search
 
-**Recursion Algorithms**
+**RECURSION ALGORITHMS**
   1. Factorial 
   2. H Tree Animation
   3. Snow Flakes Animation
   4. Tower Of Hanoi
 
-**Backtracking Algorithms**
+**BACKTRACKING ALGORITHMS**
   1. N-Queen
   2. Maze Generator
   3. Sudoku
   4. Knight Tour
 
-**Divide And Conquer Paradigm**
+**DIVIDE AND CONQUER PARADIGM**
   1. Merge Sort
   2. Quick Sort
 
-**Greedy Paradigm**
+**GREEDY PARADIGM**
   1. Prims
   2. Kruskals
   3. Fractional Knapsack
@@ -112,7 +112,7 @@
   5. Job Scheduling
   6. Huffman Coding
  
-**Dynamic Programming Paradigm**
+**DYNAMIC PROGRAMMING PARADIGM**
   1.  Travelling Salesman
   2.  0/1 Knapsack
   3.  Unbounded Knapsack
@@ -124,25 +124,25 @@
   9.  Levenshtein Distance 
   10. Ladders Problem
 
-**String Algorithms**
+**STRING ALGORITHMS**
   1. KMP
   2. Robin Karp
   3. Boyer Moore
   4. Z Function
 
-**Disjoint Set Algorithms**
+**DISJOINT SET ALGORITHMS**
   1. Union
   2. Find
 
-**Hashing Tables Algorithms**
+**HASHING TABLES ALGORITHMS**
   1. Open Hahing
   2. Closed Hashing
 
-**Segment Tree Algorithms**
+**SEGMENT TREE ALGORITHMS**
   1. Range Query 
   2. Update Query
 
-**Questions**
+**QUESTIONS**
   1.  Array
   2.  Matrix
   3.  String
@@ -160,12 +160,12 @@
   15. Bit Manipulation
  
 
-**Time Complexity**
+**TIME COMPLEXITY**
   1. Big-Oh (O)
   2. Big-Omege (Ω)
   3. Big Theta (θ)
 
-**Number Theory**
+**NUMBER THEORY**
   1. Sieve Of Eratosthenes
   2. GCD (Eucledian)
 
