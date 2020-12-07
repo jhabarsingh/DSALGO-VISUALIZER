@@ -7,18 +7,18 @@
 ### DSALGO VISUALIZER INCLUDES
 
 **DATA STRUCTURES**
- 1.  <span style="color:orange;">ARRAY</span>
- 2.  <span style="color:orange;">MATRIX</span>
- 3.  <span style="color:orange;">STACK</span>
- 4.  <span style="color:orange;">QUEUE</span>
- 5.  <span style="color:orange;">HEAP</span>
- 6.  <span style="color:orange;">LINKED LIST</span>
- 7.  <span style="color:orange;">BINARY SEARCH TREE</span>
- 8.  <span style="color:orange;">GRAPH</span>
- 9.  <span style="color:orange;">STRING</span>
- 10. <span style="color:orange;">DISJOINT SET</span>
- 11. <span style="color:orange;">HASHING TABLES</span>
- 12. <span style="color:orange;">SEGMENT TREE</span>
+ 1.  Array
+ 2.  Matrix
+ 3.  Stack
+ 4.  Queue
+ 5.  Heap
+ 6.  Linked List
+ 7.  Binary Search Tree
+ 8.  Graph
+ 9.  String 
+ 10. Disjoint Set
+ 11. Hashing Table
+ 12. Segment Tree
 
 **ARRAY ALGORITHMS**
   1. Kadanes
