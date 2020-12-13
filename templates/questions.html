@@ -143,6 +143,16 @@
 			font-size: 25px;
 			border-radius: 50%;
 		}
+
+
+		.question__mark__2 {
+			border-radius:50%!important;
+			border: 1px solid red;
+			background: pink;
+			box-shadow: 4px 4px 10px rgba(0, 0, 0, .3);
+			position: relative;
+			bottom: 20px;
+		}
 	</style>
 </head>
 <body>
@@ -1206,7 +1216,9 @@
 								<a href=${link[i]} class="question__link" target="_black">
 									${ques[i]}
 								</a>
+								
 								<span class="question__markers">
+									<span class="question__mark__2 q__m" onclick="adder(${i+1})">C</span>
 									<span class="question__mark__1 q__m"></span>
 								</span>
 							</span>	
@@ -1232,6 +1244,7 @@
 				let val = e.target.value;
 				location.href =`#${val.split(" ")[0]}`;
 			})
+
 
 			document.querySelectorAll('.question__mark__1').forEach((element, index) => {
 				element.addEventListener("click", (el) => {
@@ -1259,6 +1272,10 @@
 		}
 
 
+		function adder(e) {
+			link = `https://github.com/jhabarsingh/ASPARTAN_450/blob/main/${e}.cpp`
+			window.open(link, "_blank")
+		}
 		function checkLocalExist() {
 			if(!localStorage.getItem("counter")) {
 				for(let i=0; i<limit; i++) {
