@@ -82,6 +82,7 @@
 			}
 			if(parent[+value - 1] ==  -1) {
 				alert(`${value} has no parent`)
+				return;
 			}
 			document.querySelector(".find").disabled = true;
 			find(value);
