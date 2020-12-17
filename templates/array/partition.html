@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Partitioning</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.prefix_sum {
+			padding: 10px 30px;
+			margin: 4px auto;
+		}
+
+		.num1, .num2 {
+			width: 80px;
+			padding: 10px 10px;
+		}
+		.num1, .num2 {
+			margin-right: 20px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Partitioning</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<div class="opt">
+		<button class="prefix_sum" disabled>
+			Partition
+		</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let arr = [];
+	let subset = []
+	let sum_array = [0];
+	let size = 10;
+	let pos = 0;
+	let time_delay = 1000;
+	let per_width = (ctx.canvas.width - 20) / size;
+	init();
+// Utility
+
+	async function init() {
+		initialize_array();
+		draw_array(45,"red", true, 5, true);
+		draw_array();
+		draw_array(100, "black", false, ctx.canvas.height - 100, false);
+		document.querySelector(".prefix_sum").disabled = false;
+		document.querySelector(".prefix_sum").addEventListener("click", () => {
+			document.querySelector(".prefix_sum").disabled = true;
+			partition();
+		})
+	}
+
+
+	async function draw_block(ii, jj) {
+		gap = 3;
+		height = 100;
+		y = 50;
+		bc = "black";
+		for(let i=0; i<size; i++) {
+			ctx.fillStyle = bc;
+			if(i == ii || i == jj) {
+				ctx.fillStyle = "yellow";
+			}
+			if(jj == size - 1 && i == jj) {
+				ctx.fillStyle = "black";
+			} else if(i == size - 1) {
+				ctx.fillStyle = "pink";
+			} 
+
+			ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+			
+			ctx.fillStyle = "white";
+			if(i == ii | i == jj) {
+				ctx.fillStyle = "red";
+			}
+			if(jj == size - 1 && i == jj) {
+				ctx.fillStyle = "white";
+			} else if(i == size - 1) {
+				ctx.fillStyle = "red";
+			} 
+			ctx.font = "bolder 25px ubuntu";
+			ctx.fillText(arr[i], i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)	
+
+		}
+	}
+
+	async function partition() {
+		let i = 0;
+		let j = 0;
+		let pivot = arr[size - 1];
+		await sleep(time_delay).then(() => { 
+			draw_block(i, j);
+		});
+		while(j < size - 1) {
+			if(arr[j] > pivot) {
+				j++;
+			}
+			else {
+				let temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+				i++; j++;
+			}
+			await sleep(time_delay).then(() => { 
+				draw_block(i, j);
+			});
+
+		}
+		let temp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = temp;
+		await sleep(time_delay).then(() => { 
+			draw_block(i, j);
+		});
+	}
+
+	async function draw_array(height=100, bc="black", index=false, y=50, inda=false) {
+		gap = 3;
+
+		if(inda == true) {
+			for(let i=0; i<size; i++) {
+				ctx.fillStyle = bc;
+				ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+				ctx.fillStyle = "white";
+				ctx.font = "bolder 20px ubuntu";
+				ctx.fillText(i, i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)
+			}
+			return;		
+		}
+		if(index) {
+			let sum = 0;
+			for(let i=0; i<size; i++) {
+				await sleep(time_delay / 4).then(() => {
+					ctx.fillStyle = bc;
+					ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+					sum += arr[i]
+					sum_array.push(sum)
+					ctx.fillStyle = "white";
+					ctx.font = "bolder 20px ubuntu";
+					ctx.fillText(sum, i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)
+				})	
+
+			}
+			return;		
+		}
+		for(let i=0; i<size; i++) {
+			ctx.fillStyle = bc;
+			if(i == size - 1) {
+				ctx.fillStyle = "pink";
+			}
+			ctx.fillRect(i * (per_width - 2) + gap * i + 5, y, per_width, height);	
+			
+			ctx.fillStyle = "white";
+			if(i == size - 1) {
+				ctx.fillStyle = "red";
+			}
+			ctx.font = "bolder 25px ubuntu";
+			ctx.fillText(arr[i], i * (per_width - 2) + gap * i + 5 + per_width / 2, y + height / 2)	
+
+		}
+	}
+
+
+	function initialize_array() {
+		for(let i=0; i<size; i++) {
+			let p = Math.floor(Math.random() * (20 - 0) + 0 );
+			arr.push(p)
+
+		}
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
