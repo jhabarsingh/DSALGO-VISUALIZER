@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Binary Exponentiation</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+		.a, .number, .exponentiation {
+				width: 100px;
+				padding: 5px 10px;
+		}
+		.a {
+			background: lightgreen;
+		}
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Binary Exponentiation</p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+	<div>
+		<span class="a">2</span>
+		<input class="number" type="number" placeholder="number"></input>
+		<button class="exponentiation">
+			Exponentiate
+		</button>		
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let bits = [];
+	let time_delay = 10;
+	init();
+// Utility
+	function init() {
+		for(let i=0; i<32; i++) {
+			bits.push(0);
+		}
+		draw_bits();
+		draw_index();
+		add_listeners();
+	}
+
+	async function add_listeners() {
+		await document.querySelector("button").addEventListener("click", () => {
+			let val = document.querySelector("input.number").value;
+			if(val == "")
+				alert("please enter a number");
+			else {
+				if(val > 32 || val <= 0) {
+					alert("value should be less than 33 and positive");
+					return
+				}
+				document.querySelector("button").disabled = true;
+				val = +val
+				b = val;
+				let count = 0;
+				while(val){
+					if(val & 1)
+						bits[count] = 1;
+					count++;
+					val >>= 1;
+				}
+				async function get() {
+					await draw_bits(true);
+				}
+				get();
+			}
+			async function get(b) {
+				await binary_expo(b);
+			}
+			get(b);
+		})
+	}
+
+	async function result(val, p=false)	 {
+		y = 300;
+		w = 200;
+		h = 100;
+		x = 200;
+		ctx.fillStyle = "black";
+		
+		if(p)
+			ctx.fillStyle = "red";
+		ctx.fillRect(x, y, w, h);
+		ctx.fillText("Result", x / 2, y + h / 2)
+		ctx.fillStyle = "white";
+		ctx.fillText(val, x + w / 4, y + h / 2);
+	
+	}
+
+	async function aVal(val) {
+		y = 500;
+		w = 200;
+		h = 100;
+		x = 200;
+		ctx.fillStyle = "black";
+		ctx.fillRect(x, y, w, h);
+		ctx.fillText("2 multiple", x / 2, y + h / 2)
+		ctx.fillStyle = "white";
+		ctx.fillText(val, x + w / 4, y + h / 2);
+	}
+
+	async function binary_expo(b) {
+		a = 2;
+		let res = 1;
+		let count = 0;
+		time_delay = 1000;
+		await sleep(time_delay).then(() => {
+			result(res);
+			aVal(a);
+			draw_bits(count);
+		})
+		while(b) {
+			if(b & 1) {
+				res *= a;
+				await sleep(time_delay).then(() => {
+					result(res);
+				})
+			}
+			a *= a;
+			await sleep(time_delay).then(() => {
+				aVal(a);
+			})
+			count++;
+			b >>= 1;
+			await sleep(time_delay).then(() => {
+				draw_bits(slow=false, count);
+			})
+
+		}
+		await sleep(time_delay).then(() => {
+			result(res, true);
+		})
+	}
+
+
+	async function draw_bits(slow=false, ii=-1) {
+		let pw = ctx.canvas.width / 32;
+		let ph = pw;
+
+		if(slow) {
+			for(let i=0; i<32; i++) {
+				await sleep(time_delay).then(() => {
+					ctx.fillStyle = "black";
+					ctx.fillRect(i * pw, 0, pw, ph);
+					ctx.beginPath();
+					ctx.strokeStyle = "white";
+					ctx.strokeRect(i * pw, 0, pw, ph);
+					ctx.closePath();
+					ctx.fillStyle = "white";
+					ctx.fillText(bits[31 - i], i * pw + pw / 2, ph / 2);
+				})
+				
+			}	
+			return;
+		}
+		for(let i=0; i<32; i++) {
+			ctx.fillStyle = "black";
+			ctx.fillRect(i * pw, 0, pw, ph);
+			ctx.beginPath();
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(i * pw, 0, pw, ph);
+			ctx.closePath();
+			ctx.fillStyle = "white";
+			ctx.fillText(bits[31 - i], i * pw + pw / 2, ph / 2);
+			
+		}
+		if(ii != -1) {
+			let i = 31 - ii;
+			ctx.fillStyle = "yellow";
+			ctx.fillRect(i * pw, 0, pw, ph);
+			ctx.beginPath();
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(i * pw, 0, pw, ph);
+			ctx.closePath();
+			ctx.fillStyle = "red";
+			ctx.fillText(bits[31 - i], i * pw + pw / 2, ph / 2);
+		}
+	}
+
+	async function draw_index() {
+		let pw = ctx.canvas.width / 32;
+		let ph = pw;
+		h = 40
+		for(let i=0; i<32; i++) {
+			ctx.fillStyle = "red";
+			ctx.fillRect(i * pw, h, pw, ph);
+			ctx.beginPath();
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(i * pw, h, pw, ph);
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 12px arial"
+			ctx.fillText(31 - i, i * pw + pw / 4, h + ph / 2);
+			ctx.closePath();
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
