@@ -116,7 +116,11 @@
 		ctx.strokeStyle = "lightgreen";
 		ctx.strokeRect(x, y, 100, height);
 		ctx.font = "bolder 12px ubuntu"
-		ctx.fillText(string[i], x + 100 / 2, y + height / 2);
+		if(string.length == 0)
+			ctx.fillText("", x + 100 / 2, y + height / 2);
+
+		else
+			ctx.fillText(string[i], x + 100 / 2, y + height / 2);
 
 		w = (ctx.canvas.width - 300) / 20;
 
@@ -145,9 +149,9 @@
 	async function infixToPrefix(string) {
 		prefix = "";
 		stack = [];
-		for(let i=0; i<string.length; i++) {
+		let i;
+		for(i=0; i<string.length; i++) {
 			let symbol = string[i];
-			console.log(stack, " ", prefix);
 			if(symbol == 'a' || symbol == 'b') {
 				prefix += symbol;
 			}
@@ -195,8 +199,11 @@
 
 		while(stack.length != 0) {
 			prefix += stack.pop();
+			await sleep(time_delay).then(() => {
+				drawAll(i, "", stack, prefix);
+			})
+			i++
 		}
-		console.log(prefix);
 	}
 
 	function sleep(ms) {
