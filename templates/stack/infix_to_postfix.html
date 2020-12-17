@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Infix To Postfix</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.number, .evaluate {
+			padding: 5px 10px;
+		}
+		.number {
+			width: 300px;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Infix To Postfix</p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+	<div>
+		<input class="number" placeholder="Infix expression"></input>
+		<button class="evaluate">Evaluate</button>
+	</div>
+	<div>
+		<b>Note: </b>Infix expression should only contain &nbsp;&nbsp;&nbsp;<b>a, b, ^, /, *, +, -, (,  )</b>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let time_delay = 1000;
+	let str = "ab^/*+-()";
+	let priority = {
+		"(": 0, 
+		"+": 1,
+		"-": 1,
+		"/": 2,
+		"*": 2,
+		"^": 3
+	}
+	init();
+// Utility
+
+	function init() {
+		add_listeners();
+	}
+
+	// TESTCASE ((a+b)/(a-b)/(a*b))
+	function add_listeners() {
+		document.querySelector(".evaluate").addEventListener("click", () => {
+			val = document.querySelector(".number").value;
+			
+			// FILTERING THE STRING
+			if(val.length > 20 || val.length <= 0){
+				alert("keep the length of expression less then 21 and greater than 0");
+				return;
+			}
+			for(let i=0; i<val.length; i++) {
+				let count = 0;
+				for(let j =0; j<str.length; j++) {
+					if(val[i] == str[j]) {
+						count++; break;
+					}
+				}
+				if(count == 0) {
+					alert("Unknown symbol detected");
+					return;
+				}
+			}
+			document.querySelector(".evaluate").disabled = true;
+			infixToPrefix(val);
+		})
+	}
+	async function drawAll(i, string, stack, prefix) {
+		height = ctx.canvas.height / 20;
+		x = 0;
+		y = i * height;
+		ctx.beginPath();
+		ctx.fillStyle = "black";
+		ctx.fillRect(x, y, 100, height);
+		ctx.fillStyle = "white";
+		ctx.strokeStyle = "lightgreen";
+		ctx.strokeRect(x, y, 100, height);
+		ctx.font = "bolder 12px ubuntu"
+		ctx.fillText(string[i], x + 100 / 2, y + height / 2);
+
+		w = (ctx.canvas.width - 300) / 20;
+
+		for(let i=0; i<20; i++) {
+			ctx.fillStyle = "red";
+			ctx.fillRect(100 + i*w, y, w, height);
+			ctx.strokeStyle = "lightgreen";
+			ctx.strokeRect(100 + i*w, y, w, height);
+		}
+
+		for(let i=0; i<stack.length; i++) {
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 12px ubuntu"
+			ctx.fillText(stack[i], 100 + i*w + w / 2, y + height / 2);
+		}
+		ctx.fillStyle = "black";
+		ctx.fillRect(ctx.canvas.width - 200, y, 200, height);
+		ctx.fillStyle = "white";
+		ctx.strokeStyle = "lightgreen";
+		ctx.strokeRect(ctx.canvas.width - 200, y, 200, height)
+		ctx.font = "bolder 12px ubuntu"
+		ctx.fillText(prefix, ctx.canvas.width - 200 + 50, y + height / 2);
+		ctx.closePath();
+	}
+
+	async function infixToPrefix(string) {
+		prefix = "";
+		stack = [];
+		for(let i=0; i<string.length; i++) {
+			let symbol = string[i];
+			console.log(stack, " ", prefix);
+			if(symbol == 'a' || symbol == 'b') {
+				prefix += symbol;
+			}
+			else if(stack.length == 0) {
+				stack.push(symbol);
+			}
+			else if(symbol == "(") {
+				stack.push("(");
+			}
+			else if(symbol == ")") {
+				while(stack[stack.length - 1] != "(") {
+					prefix += stack.pop();
+				}
+				stack.pop();
+			}
+			else{
+				if(priority[symbol] < priority[stack[stack.length - 1]]) {
+					prefix += stack.pop();
+					stack.push(symbol);
+				}
+				else if(priority[symbol] > priority[stack[stack.length - 1]]) {
+					stack.push(symbol);
+				}
+				else {
+					// CHECK ASSOCIATIVITY BUT ALL SYMBOLS IN OUR CASE HAVE ASSOCIATY L ----> R
+					while(stack.length != 0 && priority[symbol] == priority[stack[stack.length - 1]]) {
+						prefix += stack.pop();
+					}
+					if(stack.length == 0) {
+						stack.push(symbol);
+					}
+					if(priority[symbol] < priority[stack[stack.length - 1]]) {
+						prefix += stack.pop();
+						stack.push(symbol);
+					}
+					else if(priority[symbol] > priority[stack[stack.length - 1]]) {
+						stack.push(symbol);
+					}
+				}
+			}
+			await sleep(time_delay).then(() => {
+				drawAll(i, string, stack, prefix);
+			})
+		}
+
+		while(stack.length != 0) {
+			prefix += stack.pop();
+		}
+		console.log(prefix);
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
