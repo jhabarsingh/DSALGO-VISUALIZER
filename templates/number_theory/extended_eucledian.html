@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Extended Eucledian</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Extended Eucledian</p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let a = Math.floor(Math.random() * (101 - 1) + 1);
+	let b = Math.floor(Math.random() * (101 - 1) + 1);
+	time_delay = 500;
+	if(a < b) {
+		temp = a
+		a = b
+		b = a
+	}
+	let d;
+	init();
+// Utility
+	async function create_rectangle(i, x, y, d, t=false) {
+		number = 15;
+		height = ctx.canvas.height / (number + 1);
+
+		if(t) {
+			a = x;
+			b = y;
+			ctx.fillStyle = "green";
+			ctx.fillRect(0, i * height, ctx.canvas.width, height);
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(0, i * height, ctx.canvas.width, height);
+			ctx.fillStyle =  "white";
+			ctx.font = "bolder 12px ubuntu"
+			ctx.fillText(`${b}(${Math.floor(a / b)}) + ${a % b} = ${a}`, ctx.canvas.width / 2 - 50, i * height + height / 2);
+			return;
+		}
+		if(i == 0) {
+			ctx.fillStyle = "red";
+			ctx.fillRect(0, i * height, ctx.canvas.width, height);
+			ctx.fillStyle =  "white";
+			ctx.font = "bolder 18px ubuntu"
+			ctx.fillText(`${a}X + ${b}Y = gcd(a, b)`, ctx.canvas.width / 2 - 50, i * height + height / 2);
+		}
+		else {
+			ctx.fillStyle = "black";
+			ctx.fillRect(0, i * height, ctx.canvas.width, height);
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(0, i * height, ctx.canvas.width, height);
+			ctx.fillStyle =  "white";
+			ctx.font = "bolder 12px ubuntu"
+			ctx.fillText(`${a}(${x}) + ${b}(${y}) = ${d}`, ctx.canvas.width / 2 - 50, i * height + height / 2);
+		}
+	}
+
+	async function extended_gcd(i, a, b, x) {
+		if(b == 0) {
+			x[0] = 1;
+			x[1] = 0;
+			return a;
+		}
+		let x1 = [1, 1];
+		t = [];
+		t.push(i[0] + 1);
+		await sleep(time_delay).then(() => {
+			d = extended_gcd(t, b, a % b, x1)
+			return d;
+		}).then((res) => {
+			x[0] = x1[1]
+			x[1] = x1[0] - x1[1] * Math.floor(a / b);
+			create_rectangle(i[0], x[0], x[1], res);
+		})
+		 
+		
+		return d;
+	}
+
+	async function gcd(i, a, b) {
+		console.log(i[0])
+		if(b == 0) {
+			return a;
+		}
+
+		await sleep(time_delay).then(() => {
+			create_rectangle(i[0], a, b, 1, true);
+		})
+		i[0]++;
+		return gcd(i, b, a % b);
+	}
+  	async function init() {
+		await create_rectangle(0);
+		let p = [0, 0];
+		m = a;
+		n = b;
+		d = a;
+		e = b;
+		i = [1]
+		await gcd(i, d, e);
+		a = m
+		b = n;
+		await extended_gcd(i, m, n, p);
+		await sleep(time_delay).then(() => {
+			ctx.fillStyle = "yellow";
+			ctx.fillRect(0, ctx.canvas.height - 40, ctx.canvas.width, 40);
+			ctx.fillStyle = "red";
+			ctx.fillText(`X = ${p[0]}`, ctx.canvas.width / 2 - 100, ctx.canvas.height - 20);
+			ctx.fillText(`Y = ${p[1]}`, ctx.canvas.width / 2 + 100, ctx.canvas.height - 20);
+		
+		})		
+	}
+
+
+	function add_listeners() {
+
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
