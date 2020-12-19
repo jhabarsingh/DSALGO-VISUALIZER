@@ -28,6 +28,10 @@
 			color: gray;
 		}
 
+		button {
+			margin-top: 10px;
+			padding: 10px 20px;
+		}
 
 	</style>
 	<meta charset="utf-8">
@@ -38,7 +42,9 @@
 	<canvas class='grid' width="1000" height="600">
 		
 	</canvas>
-
+	<div>
+		<button class="evaluate">Evaluate</button>
+	</div>
 	<script>
 
 // Main
@@ -111,7 +117,6 @@
 	}
 
 	async function gcd(i, a, b) {
-		console.log(i[0])
 		if(b == 0) {
 			return a;
 		}
@@ -124,29 +129,34 @@
 	}
   	async function init() {
 		await create_rectangle(0);
-		let p = [0, 0];
-		m = a;
-		n = b;
-		d = a;
-		e = b;
-		i = [1]
-		await gcd(i, d, e);
-		a = m
-		b = n;
-		await extended_gcd(i, m, n, p);
-		await sleep(time_delay).then(() => {
-			ctx.fillStyle = "yellow";
-			ctx.fillRect(0, ctx.canvas.height - 40, ctx.canvas.width, 40);
-			ctx.fillStyle = "red";
-			ctx.fillText(`X = ${p[0]}`, ctx.canvas.width / 2 - 100, ctx.canvas.height - 20);
-			ctx.fillText(`Y = ${p[1]}`, ctx.canvas.width / 2 + 100, ctx.canvas.height - 20);
-		
-		})		
+		add_listeners();
 	}
 
 
-	function add_listeners() {
-
+	async function add_listeners() {
+		document.querySelector(".evaluate").addEventListener("click", () => {
+			async function get() {
+				let p = [0, 0];
+				m = a;
+				n = b;
+				d = a;
+				e = b;
+				i = [1]
+				await gcd(i, d, e);
+				a = m
+				b = n;
+				await extended_gcd(i, m, n, p);
+				await sleep(time_delay).then(() => {
+					ctx.fillStyle = "yellow";
+					ctx.fillRect(0, ctx.canvas.height - 40, ctx.canvas.width, 40);
+					ctx.fillStyle = "red";
+					ctx.fillText(`X = ${p[0]}`, ctx.canvas.width / 2 - 100, ctx.canvas.height - 20);
+					ctx.fillText(`Y = ${p[1]}`, ctx.canvas.width / 2 + 100, ctx.canvas.height - 20);
+				
+				})	
+			}
+			get();
+		})
 	}
 
 	function sleep(ms) {
