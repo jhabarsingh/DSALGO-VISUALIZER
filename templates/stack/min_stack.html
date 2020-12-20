@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Min Stack O(1) Space</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			width: 1000px;
+			position: relative;
+			height: 400px;
+			background: lightgreen;
+			margin: 40px auto;
+			display: flex;
+			flex-wrap: wrap;
+			outline: 1px solid red;
+		}
+
+		p, p:nth-child(1) {
+			padding: 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 20px;
+		}
+
+		.stack__controllers {
+			max-width: 500px;
+			margin: auto;
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.stack__push, .stack__pop, .stack__peek {
+			padding: 10px 30px;
+		}
+
+		.stack__peek__input {
+			width: 60px;
+			padding: 10px;
+		}
+
+		.color__scheme {
+			display: flex;
+			padding: 10px;
+			justify-content: space-between;
+			border: 1px solid lightgreen;
+			margin-right: 5px;
+		}
+
+		.color__scheme > span:nth-child(1) {
+			height: 20px;
+			width: 20px;
+			padding: 5px;
+			margin-right: 20px;
+			background: lightgreen;
+		}
+
+
+		.color__scheme > span:nth-child(2) {
+			font-weight: bolder;
+			color: gray;
+			margin: 0px 20px 0 0 ;
+
+		}
+
+		.all {
+			display: none;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Min Stack O(1) Space</p>
+	<canvas class='grid' width='1000',height='400px'>
+		
+	</canvas>
+
+	<div class="stack__controllers">
+		<div class="color__scheme">
+			<span></span>
+			<span>Top</span>
+		</div>
+
+		<div class="color__scheme">
+			<span style="background: red;"></span>
+			<span>Min</span>
+			<span style="padding: 0px 10px;" class="min">-1</span>
+		</div>
+
+		<button class="stack__push">PUSH</button>
+		<button class="stack__pop">POP</button>
+		<div class="all">
+			<input type="number" class="stack__peek__input" placeholder="Peek Value" value="0" name="peek">
+			<button class="stack__peek">PEEK</button>
+		</div>		
+	</div>
+
+	<script>
+
+	</script>
+</body>
+</html>
+
+
+	<script>
+// MAIN
+	arr =[];
+	max = 10;
+	time_delay = 500;
+	canvas = document.querySelector('canvas');
+	max_width = canvas.width;
+	max_height = canvas.height;
+
+	stack_width = 200;
+	ctx = canvas.getContext("2d");
+	size = 10;
+	rect = {
+		width: 60,
+		height: 24
+	}
+	p = []
+	let min = -1;
+	init();
+	animate();
+	mb = document.querySelector(".min");
+
+// utility
+	function randomize_an_array() {
+		arr = [];
+		stack = [];
+		for(let i=0; i<size; i++) {
+			arr.push(Math.floor(Math.random() * max + 1));
+		}
+	}
+
+	function init() {	
+			randomize_an_array();
+			create_stack();
+			document.querySelector(".stack__push").addEventListener("click", () => {
+				document.querySelector(".min").innerText = min;
+				push();
+			})
+			
+			document.querySelector(".stack__pop").addEventListener("click", () => {
+				document.querySelector(".min").innerText = min;
+				pop();
+			})
+
+			document.querySelector(".stack__peek").addEventListener("click", () => {
+				let val = +document.querySelector(".stack__peek__input").value;
+				peek(val);
+			})
+
+	}
+
+	function create_stack() {
+		ctx.fillStyle = 'black';
+		ctx.fillRect(max_width - stack_width, 0, stack_width, max_height)
+		ctx.fillStyle = 'white';
+		ctx.fillRect(max_width - stack_width, max_height - rect.height / 2 - 3, stack_width, 1)
+		ctx.font = 'bold 15px ubuntu'	
+		ctx.fillText("MIN STACK", max_width - stack_width / 2 - 25, max_height - 1);
+	}
+
+
+	function clear(x1=0, y1=0, width=max_width, height=max_height) {
+			ctx.fillStyle = 'lightgreen';
+			ctx.fillRect(x1, y1, width, height)
+	}
+
+	function animate() {
+		clear(0, 0, max_width, max_height);
+		create_stack();
+		arr.forEach((e, i) => {
+			ctx.fillStyle = "black";	
+			ctx.fillRect(i * rect.width + i + 10, max_height/2, rect.width, rect.height);
+			ctx.fillStyle = 'white';
+			ctx.font = 'bold 15px ubuntu'
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4))
+			ctx.fillStyle = 'black';
+		})	
+		stack.forEach((e, i) => {
+			if(i == stack.length - 1) {
+				ctx.fillStyle = "lightgreen";					
+			}
+			else {
+				ctx.fillStyle = "white";	
+
+			}
+			let h = max_height - rect.height - i*(rect.height/2) - i -4;
+			ctx.fillRect(max_width - stack_width + 5, h, stack_width - 10, rect.height / 2);
+			ctx.fillStyle = 'red';
+			ctx.font = 'bold 12px ubuntu'
+			ctx.fillText(`${e}`, max_width - stack_width / 2 - 20, h + rect.height/2 - 1)
+			ctx.fillStyle = 'black';
+		});
+	}
+
+	function push() {
+		if(stack.length == size) {
+			alert("stack overflow");
+		}
+		else if(arr.length == 0) {
+			alert("No Element is present to push");
+			window.location.reload();
+		}
+		else {
+			if(stack.length == 0) {
+				stack.push(arr.shift());
+				p.push(stack[stack.length - 1]);
+				min =  stack[stack.length - 1];
+				mb.innerText = min
+			}
+				
+			else {
+				if(min > arr[0]) {
+					stack.push(`2 * (${arr[0]}) - (${min}) = ${2 * arr[0] - min}`);
+					pp = arr[0];
+					p.push(2 * arr.shift() - min);
+					min =  pp;
+					mb.innerText = min;
+				}
+				else {
+					stack.push(arr[0]);
+					p.push(arr.shift());
+				}
+			}
+			animate();
+		}
+	}
+
+	function pop() {
+		if(stack.length == 0) {
+			if(arr.length == 0) {
+				alert("Empty stack can't pop further");
+				window.location.reload();
+			}
+			else {
+				alert("Empty stack,  please push something to pop")
+			}
+		}
+		else {
+			stack.splice(stack.length - 1, 1);
+			if(min > p[p.length - 1]) {
+				min = 2 * min - p[p.length - 1];
+			}
+			p.pop();
+			mb.innerText = min;
+			animate();
+		}
+	}
+
+	async function peek(val) {
+	
+
+		if(val < stack.length) {
+			let i = stack.length - val - 1;
+			let h = max_height - rect.height - i*(rect.height/2) - i -4;
+			await sleep(time_delay).then(() => {
+				glitter(h, stack[i], "red", "white");
+			})
+			await sleep(time_delay).then(() => {
+				if(i == stack.length - 1) {
+					glitter(h, stack[i], "lightgreen", "red");
+				}
+				else {
+					glitter(h, stack[i]);	
+				}
+			})
+		}
+		else {
+			alert("Peek value should be less than the stack size")
+		}
+	}
+
+	function glitter(i, val, recta="white", text="red") {
+		let h = i;
+		ctx.fillStyle = recta;
+		ctx.fillRect(max_width - stack_width + 5, h, stack_width - 10, rect.height / 2);
+		ctx.fillStyle = text;
+		ctx.font = 'bold 12px ubuntu'
+		ctx.fillText(`${val}`, max_width - stack_width / 2, h + rect.height/2 - 1)
+		ctx.fillStyle = 'black';
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	</script>
+</body>
+</html>
