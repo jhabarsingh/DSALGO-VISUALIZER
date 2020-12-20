@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Max Area Under The Histogram</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.visualise {
+			padding: 10px 20px;
+		}
+
+		.max {
+			padding: 10px 20px;
+			background: lightgreen;
+		}
+
+	</style>	
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Max Area Under The Histogram</p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+	<div>
+		<span style="border: 1px solid green;padding: 10px 1px 10px 20px;">MAX AREA &nbsp;<span class="max"></span></span>
+		<button class="visualise">Visualize</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 20;
+	let arr = [];
+	time_delay = 500;
+	pre = [];
+	let max = 10;
+	let area = 0;
+	next = [];
+	ans = [];
+	init();
+
+// Utility
+	function init() {
+		min = 1;
+		for(let i=0; i<size; i++) {
+			p = Math.floor(Math.random() * (max - min + 1) + min);
+			arr.push(p);
+		}
+
+		let stack = [];
+		for(let i=0; i<size; i++) {
+			if(stack.length == 0) {
+					pre[i] = -1;
+			}
+			else {
+				while(stack.length != 0 && arr[stack[stack.length - 1]] >= arr[i]) {
+					stack.pop();
+				} 
+
+				if(stack.length == 0) {
+					pre[i] = -1;
+				}
+				else {
+					pre[i] = stack[stack.length - 1];
+				}
+			}
+			stack.push(i);
+		}
+
+		stack = [];
+		for(let i=size-1; i>-1; i--) {
+			if(stack.length == 0) {
+					next[i] = size;
+			}
+			else {
+				while(stack.length != 0 && arr[stack[stack.length - 1]] >= arr[i]) {
+					stack.pop();
+				} 
+
+				if(stack.length == 0) {
+					next[i] = size;
+				}
+				else {
+					next[i] = stack[stack.length - 1];
+				}
+			}
+			stack.push(i);
+		}		
+
+		for(let i=0; i<size; i++) {
+			ans[i] = (next[i] - pre[i] - 1) * arr[i];   // (AREA)
+		}
+
+		createHistogram();
+		add_listeners();
+	}
+
+
+	function add_listeners() {
+		document.querySelector(".visualise").addEventListener("click", () => {
+			document.querySelector(".visualise").disabled = true;
+			document.querySelector(".max").innerText = area;
+			async function get() {
+				for(let i=0; i<size; i++) {
+					await sleep(time_delay).then(() => {
+						pw = ctx.canvas.width / size;
+						width = pw * (next[i] - pre[i] - 1);
+						height = (arr[i] / max) * ctx.canvas.height;
+						y = ctx.canvas.height - height;
+						ctx.beginPath();
+						ctx.fillStyle = "red";	
+						ctx.fillRect((pre[i] + 1)* pw, y , width, height);
+
+						ctx.strokeStyle = "white";		
+						ctx.lineWidth  = 2;
+						ctx.strokeRect((pre[i] + 1) * pw, y, width, height);
+						if(ans[i] > area) {
+							area = ans[i];
+							document.querySelector(".max").innerText = area;
+						}
+					})
+					await sleep(time_delay).then(() => {
+						createHistogram();
+					});
+				}
+			}
+
+			get();
+		})
+	}
+
+	async function createCell(i, height) {
+		pw = ctx.canvas.width / size;
+		gap = 1;
+		y = ctx.canvas.height - height;
+		ctx.beginPath();
+		ctx.fillStyle = "black";	
+		ctx.fillRect(i * pw, y , pw, height);
+
+		ctx.strokeStyle = "white";		
+		ctx.lineWidth  = 2;
+		ctx.strokeRect(i * pw, y, pw, height);
+	}
+
+	async function createHistogram() {
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+		for(let i=0; i<size; i++) {
+			createCell(i, (arr[i] / max) * ctx.canvas.height);
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
