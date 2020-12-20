@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Segment Trees</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.controllers > input {
+			width: 100px;
+			padding: 5px 10px;
+		}
+
+		.controllers > button {
+			padding: 5px 10px;
+			margin: 0px 10px;
+		}
+
+		.get {
+			padding: 5px 10px;
+			background: lightgreen;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Segment Trees</p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+	<div class="controllers">
+		<span class="get"><span>Sum: &nbsp;&nbsp;</span>0</span>
+		<input type="number" class="min">
+		<input type="number" class="max">
+		<button class="add">Add 1</button>
+		<button class="sum">Get Sum</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let arr = [];
+	let size = 7;
+	init();
+// Utility
+	
+	function init() {
+		generateArray();
+		add_listeners();
+	}
+
+	function add_listeners() {
+		document.querySelector(".add").addEventListener("click", () => {
+			min = +document.querySelector(".min").value;
+			max = +document.querySelector(".max").value;
+			if(min > max) {
+				alert("range is incorrect");
+				return;
+			}
+		})
+
+
+		document.querySelector(".sum").addEventListener("click", () => {
+			
+		})
+	}
+
+	function generateArray() {
+		for(let i=0; i<size; i++) {
+			min = 0;
+			max = 10;
+			p = Math.floor(Math.random() * (max - min + 1) + min);
+			arr.push(p);
+		}
+
+		drawArray();
+
+		start = ctx.canvas.width / 4 
+		end = ctx.canvas.width / 2 +  start;
+		createSegment(0, size - 1, start, end, 0, 20, 20);
+	}	
+
+	function drawSegmentCell(i, j, val, start, end, fin=false) {
+		pw = (end - start) / 10;
+		gap = 20;
+		ctx.beginPath();
+		ctx.fillStyle = "black";	
+		if(fin) ctx.fillStyle = "red";
+		ctx.fillRect(start + i * pw, j * pw + j * gap , pw, pw);
+
+		ctx.strokeStyle = "yellow";		
+		ctx.lineWidth  = 2;
+		if(fin) {
+			ctx.strokeStyle = "white";
+			ctx.lineWidth  = 4;
+		}
+		ctx.strokeRect(start + i * pw, j * pw + j * gap, pw, pw);
+		
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 12px ubuntu";		
+		ctx.fillText(val, start + i * pw + pw / 2,  +j * gap + j * pw + pw / 2);
+		ctx.closePath();
+	}
+
+	async function createSegment(i, j, start, end, level, diff1, diff2) {
+		if(i > j) {
+			return;
+		}
+		if(i == j) {
+			drawSegmentCell(i, level, arr[i], start, end, true)
+			return;
+
+		}
+		for(let ptr = i; ptr <= j; ptr++) {
+			drawSegmentCell(ptr, level, arr[ptr], start, end)
+		}
+
+		let mid = Math.floor((i + j) / 2);
+
+		createSegment(i, mid, start - diff1, end - diff1, level + 1, diff1 * 1.3, diff2 / 4)
+		createSegment(mid + 1, j, start + mid / 2 + diff2, end + diff2, level + 1, diff1 * .001, diff2 * 2)
+	}
+
+
+	function drawCell(i, bottom=50, index=false) {
+		pw = ctx.canvas.width / size;
+		height = 50;
+		if(index) height = 40
+		ctx.beginPath();
+		ctx.fillStyle = "black";
+		if(index) 
+			ctx.fillStyle = "red";
+		ctx.fillRect(i * pw, ctx.canvas.height - height - bottom, pw, height);
+
+		ctx.strokeStyle = "white";
+		ctx.strokeRect(i * pw, ctx.canvas.height - height - bottom, pw, height);
+			
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 15px arial";
+		if(!index)
+			ctx.fillText(arr[i], i * pw + pw / 2, ctx.canvas.height - height -bottom + height / 2);
+		else
+			ctx.fillText(i, i * pw + pw / 2, ctx.canvas.height - height -bottom + height / 2);
+		ctx.closePath();
+	}
+	function drawArray() {
+		for(let i=0; i<size; i++) {
+			drawCell(i);
+			drawCell(i, 0, true);
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
