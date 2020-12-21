@@ -133,6 +133,7 @@
 	function add_listener() {
 		document.querySelector(".arr__peek").addEventListener("click", () => {
 			let key = +document.querySelector(".arr__peek__input").value;
+			document.querySelector(".arr__peek").disabled = true;
 			binary_search(key);
 		})
 	}

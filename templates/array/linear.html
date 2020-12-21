@@ -161,6 +161,7 @@
 	function add_listeners() {
 		document.querySelector(".arr__search").addEventListener("click", () => {
 			let key = +document.querySelector(".key__search").value;
+			document.querySelector(".arr__search").disabled = true;
 			traverse(key);		
 		})
 	}
