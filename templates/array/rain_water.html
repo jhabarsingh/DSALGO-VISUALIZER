@@ -126,24 +126,26 @@
 				for(let i=0; i<size; i++) {
 					await sleep(time_delay).then(() => {
 						pw = ctx.canvas.width / size;
-						width = pw * (next[i] - pre[i] - 1);
-						height = (arr[i] + ans[i] / max) * ctx.canvas.height;
+						width = pw;
+						height = ((arr[i] + ans[i]) / max) * ctx.canvas.height;
 						y = ctx.canvas.height - height;
 						ctx.beginPath();
 						ctx.fillStyle = "blue";	
-						ctx.fillRect((pre[i] + 1)* pw, y , width, height);
+						ctx.fillRect(i * pw, y , width, height);
 
 						// ctx.strokeStyle = "white";		
 						// ctx.lineWidth  = 2;
 						// ctx.strokeRect((pre[i] + 1) * pw, y, width, height);
-						if(ans[i] > area) {
-							area = ans[i];
-							document.querySelector(".max").innerText = area;
-						}
-					})
-					await sleep(time_delay).then(() => {
+						// if(ans[i] > area) {
+						// 	area = ans[i];
+						area = area + arr[i] * ans[i];
+						document.querySelector(".max").innerText = area;
+						// }
 						createHistogram();
-					});
+					})
+					// await sleep(time_delay).then(() => {
+						
+					// });
 				}
 			}
 
