@@ -135,6 +135,7 @@
 
 	async function add_listeners() {
 		document.querySelector(".evaluate").addEventListener("click", () => {
+			document.querySelector(".evaluate").disabled = true;
 			async function get() {
 				let p = [0, 0];
 				m = a;
