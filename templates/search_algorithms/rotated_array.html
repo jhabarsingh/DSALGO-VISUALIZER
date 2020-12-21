@@ -107,7 +107,7 @@
 		let pre = (mid + size - 1) % size;
 		let next = (mid + 1) % size;
 
-		if(arr[pre] >= arr[mid] && arr[next] >= arr[mid]) {
+		if(low == high || arr[pre] > arr[mid] && arr[next] > arr[mid]) {
 			document.querySelector(".point").innerText = mid;
 			await sleep(time_delay).then(() => {
 				alert("This is The Starting Point");
