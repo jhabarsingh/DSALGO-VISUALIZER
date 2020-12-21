@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rotated Sorted Array</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+		.visualise, .point {
+			padding: 10px 20px;
+		}
+
+		.point {
+			background: lightgreen;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Rotated Sorted Array</p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+	<div>
+		<span>Start Point &nbsp;<span class="point">-1</span></span>
+		<button class="visualise">Find Start</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let arr = [];
+	max = 20
+	let time_delay = 1000;
+
+	init();
+// Utility
+	function init() {
+		min = 1;
+		for(let i=0; i<size; i++) {
+			temp = Math.floor(Math.random() * (max - min + 1) + min); 
+			arr[i] = temp;
+		}
+		arr.sort((a, b) => a-b);
+
+		rotated = Math.floor(Math.random() * (9 - 0) + 0);
+		
+		temp = []
+		for(let i = 0; i<size; i++) {
+			temp[i] = arr[(i + rotated) % size];
+		}
+		arr = temp;
+		drawLines();
+		add_listeners();
+	}
+
+	function add_listeners() {
+		document.querySelector(".visualise").addEventListener("click", () => {
+			document.querySelector(".visualise").disabled = true;
+			binary_search(0, size - 1);
+		})
+	}
+
+	async function binary_search(low, high) {
+		if(low > high) {
+			return;
+		}
+		let mid = Math.floor((low  + high) / 2);
+
+
+		pw = ctx.canvas.width / (size);
+		ctx.beginPath();
+		ctx.moveTo(mid * pw, 0);
+		ctx.lineTo(mid * pw, ctx.canvas.height);
+		ctx.strokeStyle = "green";
+		ctx.lineWidth = 1;
+		ctx.stroke();
+		ctx.closePath();
+		
+		
+		let pre = (mid + size - 1) % size;
+		let next = (mid + 1) % size;
+
+		if(arr[pre] >= arr[mid] && arr[next] >= arr[mid]) {
+			document.querySelector(".point").innerText = mid;
+			await sleep(time_delay).then(() => {
+				alert("This is The Starting Point");
+			})
+		}
+		else if(arr[high] < arr[mid]) {
+			await sleep(time_delay).then(() => {
+				drawLines();
+			});
+			await sleep(time_delay).then(() => {
+				binary_search(next, high);
+			});
+		}
+		else if(arr[low] > arr[mid]) {
+			await sleep(time_delay).then(() => {
+				drawLines();
+			});
+			await sleep(time_delay).then(() => {
+				binary_search(low, pre);
+			});
+		}
+		else {
+			await sleep(time_delay).then(() => {
+				drawLines();
+			});
+			await sleep(time_delay).then(() => {
+				binary_search(0, 0);
+			});
+		}
+	}
+
+	function drawLines() {
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+		pw = ctx.canvas.width / (size);
+		ctx.fillStyle = "black";
+		for(let i=0; i<size - 1; i++) {
+			ctx.beginPath();
+			ctx.lineWidth = 3;
+			ctx.strokeStyle = "white";
+			ctx.moveTo(i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height)
+			ctx.lineTo((i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height)
+			
+			ctx.stroke();
+			
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height, 10, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.closePath();
+			if(i == size - 2) {
+				ctx.arc((i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height, 10, 0, Math.PI * 2);
+				ctx.fill();
+					
+			}
+		}
+		let i = size - 1;
+		ctx.moveTo(i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height)
+		ctx.lineTo((i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height)
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
