@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Linear Search</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+	
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			width: 1000px;
+			position: relative;
+			height: 400px;
+			background: lightgreen;
+			margin: 40px auto;
+			display: flex;
+			flex-wrap: wrap;
+			outline: 1px solid red;
+		}
+
+		p, p:nth-child(1) {
+			padding: 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 20px;
+		}
+
+		.arr__controllers {
+			max-width: 500px;
+			margin: auto;
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.arr__delete, .arr__insert, .arr__search {
+			padding: 10px 30px;
+		}
+
+		.arr__peek__input {
+			width: 60px;
+			padding: 10px;
+		}
+
+		.color__scheme {
+			display: flex;
+			padding: 10px;
+			justify-content: space-between;
+			border: 1px solid lightgreen;
+			margin-right: 5px;
+		}
+
+		.color__scheme > span:nth-child(1) {
+			height: 20px;
+			width: 20px;
+			padding: 5px;
+			margin-right: 20px;
+			background: lightgreen;
+		}
+
+
+		.color__scheme > span:nth-child(2) {
+			font-weight: bolder;
+			color: gray;
+			margin: 0px 20px 0 0 ;
+
+		}
+
+		.insert__details {
+			display: flex;
+			justify-content: center;
+			align-self: center;
+			padding: 20px;
+			background: lightgreen;
+		}
+		.insert__details > * {
+			padding: 10px;
+		}
+
+		.insert__details label {
+			font-weight: bold;
+			color: red;
+		}
+
+		.insert__submit > button, .insert__details input, .delete__submit > button {
+			padding: 10px;
+		}
+
+		[name="search_element"] {
+			padding: 10px;
+			width: 100px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Linear Search</p>
+	<canvas class='grid' width='1000',height='400px'>
+		
+	</canvas>
+
+	<div class="arr__controllers">
+		<div>
+			<input type="number" name="search_element" class="key__search" value="0">
+			<button class="arr__search">Search</button>
+		</div>		
+	</div>
+
+	<script>
+
+	</script>
+</body>
+</html>
+
+
+	<script>
+
+// MAIN
+	arr =[];
+	max = 100;
+	time_delay = 500;
+	size = 16;
+	no_of_null = 0;
+	canvas = document.querySelector('canvas');
+	max_width = canvas.width;
+	max_height = canvas.height;
+	serach_url = 'search.html'
+	ctx = canvas.getContext("2d");
+	rect = {
+		width: 60,
+		height: 24
+	}
+
+	init();
+	animate();
+
+
+// utility
+	function randomize_an_array() {
+		arr = [];
+
+		for(let i=0; i<size - no_of_null; i++) {
+			arr[i] = Math.floor(Math.random() * max + 1);
+		}
+	}
+
+	function init() {	
+			randomize_an_array();
+			add_listeners();
+	}
+
+	function add_listeners() {
+		document.querySelector(".arr__search").addEventListener("click", () => {
+			let key = +document.querySelector(".key__search").value;
+			traverse(key);		
+		})
+	}
+
+	async function traverse(key) {	
+		let p = 1;
+		for(let i=0; i< size && p; i++) {
+			await sleep(time_delay).then(() => {
+				if(arr[i] == key) {
+					animate(i, i);
+					p = 0;
+				}
+				else {
+					animate(i, -1);
+				}
+			});
+		}
+		if(p) {
+			alert("element not found");
+		}
+	}
+
+
+
+	function clear(x1=0, y1=0, width=max_width, height=max_height) {
+			ctx.fillStyle = 'lightgreen';
+			ctx.fillRect(x1, y1, width, height)
+	}
+
+	function animate(glit_color=-1, found=-1) {
+		clear(0, 0, max_width, max_height);
+		arr.forEach((e, i) => {
+			ctx.fillStyle = "black";
+			if(i == glit_color) {
+				ctx.fillStyle = "red";
+			}	
+			if(found == i) {
+				ctx.fillStyle = "white";
+			}
+			ctx.fillRect(i * rect.width + i + 10, max_height/2, rect.width, rect.height);
+			ctx.fillStyle = 'white';
+			ctx.font = 'bold 15px ubuntu';
+			if(i == glit_color) {
+				ctx.font = 'bolder 17px ubuntu';
+			}
+			if(found == i) {
+				ctx.font = 'bolder 17px ubuntu';
+				ctx.fillStyle = "black";
+			}
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4))
+			ctx.fillStyle = 'black';
+		})
+
+		let p = [];
+		for(let i=0; i<size; i++) {
+			p.push(i);
+		}
+
+		p.forEach((e, i) => {
+			ctx.fillStyle = "red";	
+			ctx.fillRect(i * rect.width + i + 10, max_height/2 + 2 * rect.height, rect.width, rect.height * (3 / 4));
+			ctx.fillStyle = 'yellow';
+			ctx.font = 'bold 15px ubuntu'
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4) + (7.5 / 4) * rect.height)
+			ctx.fillStyle = 'black';
+		})
+		ctx.fillStyle = "red";
+		ctx.font = "bolder 15px monospace";
+		ctx.fillText("Array", 10, max_height/2 - 5)
+		ctx.fillStyle = "darkblue";
+		ctx.font = "bolder 15px monospace";
+		ctx.fillText("Index", 10, max_height/2 + 45)
+
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	</script>
+</body>
+</html>
