@@ -87,6 +87,7 @@
 
 	function add_listeners() {
 		document.querySelector(".generate").addEventListener("click", () => {
+			document.querySelector(".generate").disabled = true;
 			generate_sieve();
 		})
 	}
