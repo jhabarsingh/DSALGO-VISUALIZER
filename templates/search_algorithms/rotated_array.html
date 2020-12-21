@@ -106,22 +106,31 @@
 		
 		let pre = (mid + size - 1) % size;
 		let next = (mid + 1) % size;
-
-		if(low == high || arr[pre] > arr[mid] && arr[next] > arr[mid]) {
+		if(arr[low] < arr[high]) {
+			drawLines()
+			pw = ctx.canvas.width / (size);
+			ctx.beginPath();
+			mid = low;
+			ctx.moveTo(mid * pw, 0);
+			ctx.lineTo(mid * pw, ctx.canvas.height);
+			ctx.strokeStyle = "green";
+			ctx.lineWidth = 1;
+			ctx.stroke();
+			ctx.closePath();
+			document.querySelector(".point").innerText = mid;
+			await sleep(time_delay).then(() => {
+				alert(`This is The Starting Point`);
+			})
+			return;
+		}
+		if(arr[pre] >= arr[mid] && arr[next] >= arr[mid]) {
 			document.querySelector(".point").innerText = mid;
 			await sleep(time_delay).then(() => {
 				alert("This is The Starting Point");
 			})
+			return;
 		}
-		else if(arr[high] < arr[mid]) {
-			await sleep(time_delay).then(() => {
-				drawLines();
-			});
-			await sleep(time_delay).then(() => {
-				binary_search(next, high);
-			});
-		}
-		else if(arr[low] > arr[mid]) {
+		else if(arr[high] >= arr[mid]) {
 			await sleep(time_delay).then(() => {
 				drawLines();
 			});
@@ -134,7 +143,7 @@
 				drawLines();
 			});
 			await sleep(time_delay).then(() => {
-				binary_search(0, 0);
+				binary_search(next, high);
 			});
 		}
 	}
