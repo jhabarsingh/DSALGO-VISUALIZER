@@ -1,0 +1,6 @@
+postfix evaluation
+prefix evaluation
+kadanes 2d
+hashing
+segment tree
+
