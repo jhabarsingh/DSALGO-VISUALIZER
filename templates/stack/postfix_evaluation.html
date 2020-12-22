@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Stack</title>
+	<title>Postfix Evaluation</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -72,28 +72,47 @@
 
 		}
 
+		.number, .evaluate {
+			padding: 5px 10px;
+		}
+		.number {
+			width: 300px;
+		}
+
+		.note {
+			padding: 5px;
+			margin-top: 5px;
+			background: pink;
+			display: inline-block;
+			color: black;
+		}
+
+		span {
+			padding: 5px;
+			background: lightgreen;
+			margin-right: 5px;
+		}
+
 	</style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p>Stack</p>
+	<p>Postfix Evaluation</p>
 	<canvas class='grid' width='1000',height='400px'>
 		
 	</canvas>
 
-	<div class="stack__controllers">
-		<div class="color__scheme">
-			<span></span>
-			<span>Top</span>
-		</div>
-		<button class="stack__push">PUSH</button>
-		<button class="stack__pop">POP</button>
-		<div>
-			<input type="number" class="stack__peek__input" placeholder="Peek Value" value="0" name="peek">
-			<button class="stack__peek">PEEK</button>
-		</div>		
+		
+	<div>
+		<span>a = 1</span>
+		<span>b = 2</span>
+		<input class="number" placeholder="Postfix expression"></input>
+		<button class="evaluate">Evaluate</button>
 	</div>
+	<div class="note">
+		<b>Note: </b>Postfix expression should only contain &nbsp;&nbsp;&nbsp;<b>a, b, /, *, +, -</b>
+	</div>		
 
 	<script>
 
@@ -119,35 +138,112 @@
 		height: 24
 	}
 
+	let str = "ab/*+-";
+	let priority = {
+		"(": 0, 
+		"+": 1,
+		"-": 1,
+		"/": 2,
+		"*": 2,
+		"^": 3
+	}
+
+	stack = []
+
 	init();
 	animate();
 
 
 // utility
-	function randomize_an_array() {
-		arr = [];
-		stack = [];
-		for(let i=0; i<size; i++) {
-			arr.push(Math.floor(Math.random() * max + 1));
+	function randomize_an_array(val) {
+		size = val.length;
+		for(let i=0; i<val.length; i++) {
+			arr.push(val[i]);
 		}
 	}
 
 	function init() {	
-			randomize_an_array();
-			create_stack();
-			document.querySelector(".stack__push").addEventListener("click", () => {
-				push();
-			})
+			add_listeners();
+
+	}	
+
+	function add_listeners() {
+		document.querySelector(".evaluate").addEventListener("click", () => {
+			val = document.querySelector(".number").value;
 			
-			document.querySelector(".stack__pop").addEventListener("click", () => {
-				pop();
-			})
+			// FILTERING THE STRING
+			if(val.length > 10 || val.length <= 0){
+				alert("keep the length of expression less then 21 and greater than 0");
+				return;
+			}
+			for(let i=0; i<val.length; i++) {
+				let count = 0;
+				for(let j =0; j<str.length; j++) {
+					if(val[i] == str[j]) {
+						count++; break;
+					}
+				}
+				if(count == 0) {
+					alert("Unknown symbol detected");
+					return;
+				}
+			}
 
-			document.querySelector(".stack__peek").addEventListener("click", () => {
-				let val = +document.querySelector(".stack__peek__input").value;
-				peek(val);
-			})
+			randomize_an_array(val);
+			create_stack();
+			document.querySelector(".evaluate").disabled = true;
+			postfixEval(val);
+		})
+	}
 
+
+	async function postfixEval(s) {
+		await sleep(time_delay).then(() => {
+			animate();
+		})
+		for(let i=0; i<s.length; i++) {
+			if(s[i] == 'a' || s[i] == 'b') {
+				// val = s[i] == 'a' ? 1 : 2;
+				val = s[i];
+				stack.push(val);
+				arr.shift();	
+				await sleep(time_delay).then(() => {
+					push();
+				});
+			}
+			else {
+				
+				await sleep(time_delay).then(() => {
+					arr.shift();
+				});
+
+				if(stack.length < 2) {
+					alert("Invalid Postfix expression");
+					return;
+				}
+				else {
+					a = stack[stack.length - 1]
+					stack.pop();
+					
+					await sleep(time_delay).then(() => {
+						push();
+					});
+					
+					b = stack[stack.length - 1]
+					stack.pop();
+					
+					await sleep(time_delay).then(() => {
+						push();
+					});
+					let ans;
+					ans = "(" + a + s[i] + b + ")";
+					stack.push(ans);
+					await sleep(time_delay).then(() => {
+						push();
+					});	
+				}
+			}
+		}
 	}
 
 	function create_stack() {
@@ -184,25 +280,25 @@
 				ctx.fillStyle = "white";	
 
 			}
-			let h = max_height - rect.height - i*(rect.height/2) - i -4;
-			ctx.fillRect(max_width - stack_width + 5, h, stack_width - 10, rect.height / 2);
+			let h = max_height - rect.height - i*(rect.height * (3/4)) - i - 10;
+			ctx.fillRect(max_width - stack_width + 5, h, stack_width - 10, rect.height *(3 / 4));
 			ctx.fillStyle = 'red';
-			ctx.font = 'bold 12px ubuntu'
-			ctx.fillText(`${e}`, max_width - stack_width / 2, h + rect.height/2 - 1)
+			ctx.font = 'bolder 13px ubuntu'
+			ctx.fillText(`${e}`, max_width - stack_width / 2 - 70, h + rect.height*(3 / 4) - 1 - 3)
 			ctx.fillStyle = 'black';
 		});
 	}
 
 	function push() {
-		if(stack.length == size) {
-			alert("stack overflow");
-		}
-		else if(arr.length == 0) {
-			alert("No Element is present to push");
-			window.location.reload();
-		}
-		else {
-			stack.push(arr.shift());
+		// if(stack.length == size) {
+		// 	alert("stack overflow");
+		// }
+		// else if(arr.length == 0) {
+		// 	alert("No Element is present to push");
+		// 	window.location.reload();
+		// }
+		if(true) {
+			// stack.push(arr.shift());
 			animate();
 		}
 	}
@@ -218,7 +314,7 @@
 			}
 		}
 		else {
-			stack.splice(stack.length - 1, 1);
+			// stack.splice(stack.length - 1, 1);
 			animate();
 		}
 	}
