@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Linear Probing</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+		.controller {
+			padding: 10px 20px;
+		}
+
+		span {
+			background: lightgreen;
+			padding: 10px 20px;
+		}
+
+		span > span {
+			background: yellow;
+			padding: 5px  10px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Linear Probing</p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+	<div>
+		<span>Hash Function = <span>(x % 10)</span></span>
+		<button class="controller">Hash</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let arr = [];
+	let time_delay = 1000;
+	let count = [];
+	let pos = -1;
+
+	init();
+// Utility
+	function init() {
+		randomise_array();
+		drawArray();
+		hashing();
+		hash_table_init();
+		add_listeners();
+	}
+
+	function randomise_array() {
+		let max = 20;
+		let min = 0;
+		for(let i=0; i<size; i++) {
+			let value = Math.floor(Math.random() * (max + 1 - min ) + min);
+			arr.push(value);
+			count.push(0);
+		}
+
+	}
+
+	function add_listeners() {
+		document.querySelector(".controller").addEventListener("click", () => {
+			pos++;
+			if(pos == size) {
+				alert("No Element Available to Hash");
+				return;
+			}
+
+			else {
+				document.querySelector(".controller").disabled = true;
+				drawArray();
+				hash(arr[pos]);
+			}
+		})
+	}
+
+	async function hashing() {
+		ph = (ctx.canvas.height - 50) / size;
+		// width;
+		width = 100;
+		for(let i =0; i<size; i++) {
+			ctx.beginPath();	
+			ctx.fillStyle = "yellow";
+			ctx.fillRect(0, i * ph, pw, height);
+
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(0, i * ph, pw, height);
+			
+			
+			// ctx.moveTo(0, (i + 1) * ph);
+			// ctx.lineTo(ctx.canvas.width, (i + 1) * ph);
+			// ctx.stroke();
+
+
+			ctx.fillStyle = "red";
+			ctx.font = "bolder 15px arial";
+			ctx.fillText(i, 0 + width / 2, i * ph + ph / 2);
+			ctx.closePath();
+		}
+	}
+
+	async function hash(val) {
+		hash_fx = (val) % size;
+		if(count[hash_fx] == 0) {
+			count[hash_fx]++;
+		}
+		else {
+			while(true) {
+				i = (hash_fx) % size;
+				j = 7;
+				width = 100;
+				ph = (ctx.canvas.height - 50) / size;
+
+
+				await sleep(time_delay).then(() => {
+					ctx.beginPath();	
+					ctx.fillStyle = "blue";
+					ctx.fillRect(j * width, i * ph, width, height);
+
+					ctx.strokeStyle = "white";
+					ctx.strokeRect(j * width, i * ph, width, height);
+					
+
+					ctx.fillStyle = "white";
+					ctx.font = "bolder 15px arial";
+					ctx.fillText(val, j * width + width / 2, i * ph + ph / 2);
+					ctx.closePath();
+				})
+				await sleep(time_delay).then(() => {
+					ctx.fillStyle = "lightgreen"
+					ctx.clearRect(7 * width, 0, width, 10 * ph)
+					ctx.strokeStyle = "lightgreen";
+					ctx.strokeRect(7 * width, 0, width, 10 * ph)
+				})
+				if(count[hash_fx] == 0) {
+					count[hash_fx] = 1;
+					break;
+				}
+				hash_fx = (hash_fx + 1) % size;
+			}
+		}
+
+		i = hash_fx;
+		j = 5;
+		width = 100;
+		ph = (ctx.canvas.height - 50) / size;
+
+
+		ctx.beginPath();	
+		ctx.fillStyle = "red";
+		ctx.fillRect(j * width, i * ph, width, height);
+
+		ctx.strokeStyle = "white";
+		ctx.strokeRect(j * width, i * ph, width, height);
+		
+
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 15px arial";
+		ctx.fillText(val, j * width + width / 2, i * ph + ph / 2);
+		ctx.closePath();
+		document.querySelector(".controller").disabled = false;
+	}
+
+	function hash_table_init() {
+		j = 5;
+		width = 100;
+		ph = (ctx.canvas.height - 50) / size;
+
+
+		for(let i =0; i<size; i++) {
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(j * width, i * ph, width, height);
+		}
+	}
+
+	function drawArray() {
+		pw = ctx.canvas.width / size;
+		height = 50;
+		y = ctx.canvas.height - height;
+		for(let i =0; i<size; i++) {
+			ctx.beginPath();	
+			ctx.fillStyle = "black";
+			if(i == pos) 
+				ctx.fillStyle = "gray";
+			ctx.fillRect(i * pw, y, pw, height);
+
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(i * pw, y, pw, height);
+			
+
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 15px arial";
+			ctx.fillText(arr[i], i * pw + pw / 2, y + height / 2);
+			ctx.closePath();
+		}
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
