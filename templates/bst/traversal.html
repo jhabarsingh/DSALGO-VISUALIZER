@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>	Binary Search Tree Traversal</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p> Binary Search Tree Traversal </p>
+	<canvas class='grid' width="1300" height="600">
+		
+	</canvas>
+
+	<script>
+
+// Main
+	
+	arr = [50, 25, 20, 23, 21, 24, 40, 45, 42, 75, 60, 55, 65, 80, 85, 90]
+	size = 10;
+	time_delay = 1000;
+	max = 100;
+	width = 30;
+	let mul = 3;
+	let end = 4	;
+	let start = 10;
+	ctx = document.querySelector("canvas").getContext("2d");
+	max_width = ctx.canvas.width;
+	max_height = ctx.canvas.height;
+	
+	init();
+
+// Utility
+	
+	class Node {
+		value;
+
+	}
+
+	function init() {
+		randomize_an_array();
+		create_tree(start, ctx.canvas.width - start, 0, 0);
+		// create_grid();
+
+	}
+
+	function add_listeners() {
+
+	}
+
+	async function create_tree(x, y, y1, num) {
+		let intit_x = x;
+		let init_y = y;
+		x = (x + y) / 2;
+		y1 = y1 + width * mul;
+		
+
+		// create circles
+		
+		await sleep(time_delay).then(() => {
+			ctx.fillStyle = "yellow";
+			ctx.moveTo(x, y1);
+			ctx.arc(x, y1, width, 0, Math.PI * 2, true);
+			ctx.fill();
+			ctx.fillStyle = "black";
+		})
+
+		ctx.fillStyle = "red";
+		ctx.moveTo(x, y1);
+		ctx.arc(x, y1, width, 0, Math.PI * 2, true);
+		ctx.fill();
+		ctx.fillStyle = "black";
+		
+		if(num == end) {
+			return;
+		}
+		
+		// create left pointers
+		ctx.lineWidth = 1;
+		ctx.fillStyle = "black";
+		ctx.moveTo(x, y1);
+		ctx.lineTo((intit_x + x) / 2, y1 + width * mul);
+		ctx.stroke();	
+		create_tree(intit_x, x, y1, num+1);
+
+		// Create right pointers
+		ctx.lineWidth = 1;
+		ctx.fillStyle = "black";
+		ctx.moveTo(x, y1);
+		ctx.lineTo((init_y + x) / 2, y1 + width * mul);
+		ctx.stroke();
+		create_tree(x, init_y, y1, num+1);
+
+	}	
+
+
+
+	function randomize_an_array() {
+		for(let i=0; i<size; i++) {
+			arr.push(Math.floor(Math.random() * max + 1));
+		}
+		arr.sort((a, b) => {
+			return a - b;
+		})
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	
+	</script>
+</body>
+</html>

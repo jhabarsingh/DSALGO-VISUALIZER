@@ -135,13 +135,16 @@
 			return;
 
 		}
-		for(let ptr = i; ptr <= j; ptr++) {
-			drawSegmentCell(ptr, level, arr[ptr], start, end)
-		}
+		// for(let ptr = i; ptr <= j; ptr++) {
+		// 	drawSegmentCell(ptr, level, arr[ptr], start, end)
+		// }
+
+		ptr = Math.floor((i + j) / 2);
+		drawSegmentCell(ptr, level, arr[ptr], start, end)
 
 		let mid = Math.floor((i + j) / 2);
 
-		createSegment(i, mid, start - diff1, end - diff1, level + 1, diff1 * 1.3, diff2 / 4)
+		createSegment(i, mid, start - diff1, end - diff1, level + 1, diff1 * 2, diff2 / 4)
 		createSegment(mid + 1, j, start + mid / 2 + diff2, end + diff2, level + 1, diff1 * .001, diff2 * 2)
 	}
 
