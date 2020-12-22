@@ -92,12 +92,12 @@
 			return;
 		}
 		let mid = Math.floor((low  + high) / 2);
-
+		gap = 10;
 
 		pw = ctx.canvas.width / (size);
 		ctx.beginPath();
-		ctx.moveTo(mid * pw, 0);
-		ctx.lineTo(mid * pw, ctx.canvas.height);
+		ctx.moveTo(gap + mid * pw, 0);
+		ctx.lineTo(gap + mid * pw, ctx.canvas.height);
 		ctx.strokeStyle = "green";
 		ctx.lineWidth = 1;
 		ctx.stroke();
@@ -111,8 +111,8 @@
 			pw = ctx.canvas.width / (size);
 			ctx.beginPath();
 			mid = low;
-			ctx.moveTo(mid * pw, 0);
-			ctx.lineTo(mid * pw, ctx.canvas.height);
+			ctx.moveTo(gap + mid * pw, 0);
+			ctx.lineTo(gap + mid * pw, ctx.canvas.height);
 			ctx.strokeStyle = "green";
 			ctx.lineWidth = 1;
 			ctx.stroke();
@@ -153,29 +153,30 @@
 		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 		pw = ctx.canvas.width / (size);
 		ctx.fillStyle = "black";
+		gap = 10;
 		for(let i=0; i<size - 1; i++) {
 			ctx.beginPath();
 			ctx.lineWidth = 3;
 			ctx.strokeStyle = "white";
-			ctx.moveTo(i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height)
-			ctx.lineTo((i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height)
+			ctx.moveTo(gap + i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height)
+			ctx.lineTo(gap + (i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height)
 			
 			ctx.stroke();
 			
 			ctx.closePath();
 			ctx.beginPath();
-			ctx.arc(i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height, 10, 0, Math.PI * 2);
+			ctx.arc(gap + i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height, 10, 0, Math.PI * 2);
 			ctx.fill();
 			ctx.closePath();
 			if(i == size - 2) {
-				ctx.arc((i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height, 10, 0, Math.PI * 2);
+				ctx.arc(gap + (i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height, 10, 0, Math.PI * 2);
 				ctx.fill();
 					
 			}
 		}
 		let i = size - 1;
-		ctx.moveTo(i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height)
-		ctx.lineTo((i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height)
+		ctx.moveTo(gap + i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height)
+		ctx.lineTo(gap + (i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height)
 	}
 
 	function sleep(ms) {
