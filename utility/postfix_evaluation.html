@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Infix To Postfix</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.number, .evaluate {
+			padding: 5px 10px;
+		}
+		.number {
+			width: 300px;
+		}
+
+		.note {
+			padding: 5px;
+			margin-top: 5px;
+			background: pink;
+			display: inline-block;
+			color: black;
+		}
+
+		span {
+			padding: 5px;
+			background: lightgreen;
+			margin-right: 5px;
+		}
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Infix To Postfix</p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+	<div>
+		<span>a = 1</span>
+		<span>a = 2</span>
+		<input class="number" placeholder="Postfix expression"></input>
+		<button class="evaluate">Evaluate</button>
+	</div>
+	<div class="note">
+		<b>Note: </b>Postfix expression should only contain &nbsp;&nbsp;&nbsp;<b>a, b, /, *, +, -</b>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let time_delay = 1000;
+	let str = "ab/*+-";
+	let priority = {
+		"(": 0, 
+		"+": 1,
+		"-": 1,
+		"/": 2,
+		"*": 2,
+		"^": 3
+	}
+	init();
+// Utility
+
+	function init() {
+		add_listeners();
+	}
+
+	// TESTCASE ((a+b)/(a-b)/(a*b))
+	function add_listeners() {
+		document.querySelector(".evaluate").addEventListener("click", () => {
+			val = document.querySelector(".number").value;
+			
+			// FILTERING THE STRING
+			if(val.length > 20 || val.length <= 0){
+				alert("keep the length of expression less then 21 and greater than 0");
+				return;
+			}
+			for(let i=0; i<val.length; i++) {
+				let count = 0;
+				for(let j =0; j<str.length; j++) {
+					if(val[i] == str[j]) {
+						count++; break;
+					}
+				}
+				if(count == 0) {
+					alert("Unknown symbol detected");
+					return;
+				}
+			}
+			document.querySelector(".evaluate").disabled = true;
+			postfixEval(val);
+		})
+	}
+
+	async function postfixEval(val) {
+		
+	}
+	
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>

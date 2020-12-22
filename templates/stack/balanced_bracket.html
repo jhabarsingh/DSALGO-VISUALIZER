@@ -156,6 +156,7 @@
 			randomize_an_array();
 			create_stack();
 			document.querySelector(".stack__pop").addEventListener("click", () => {
+				document.querySelector(".stack__pop").disabled = true;
 				visualize();
 			})
 
@@ -172,10 +173,16 @@
 			else {
 				if(stack.length == 0) {
 					alert("parantheses are not balanced");
+					await sleep(time_delay).then(() => {
+						window.location.reload();
+					});
 					return;
 				}
 				if(stack[stack.length - 1] != '(') {
 					alert("parantheses are not balanced");
+					await sleep(time_delay).then(() => {
+						window.location.reload();
+					});
 					return;	
 				}
 				await sleep(time_delay).then(() => {
@@ -186,6 +193,10 @@
 		}
 		await sleep(time_delay).then(() => {
 			alert("parantheses are balanced");
+		});
+
+		await sleep(time_delay).then(() => {
+			window.location.reload();
 		});
 	}
 
