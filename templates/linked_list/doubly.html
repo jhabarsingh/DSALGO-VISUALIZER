@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Doubly Linked List</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.controllers > button {
+			padding: 10px 20px;
+			margin-top: 10px;
+		}
+
+		.insert__details {
+			display: flex;
+			justify-content: center;
+			align-self: center;
+			padding: 20px;
+			background: lightgreen;
+		}
+		.insert__details > * {
+			padding: 10px;
+		}
+
+		.insert__details label {
+			font-weight: bold;
+			color: red;
+		}
+
+		.insert__submit > button, .insert__details input, .delete__submit > button {
+			padding: 10px;
+		}
+
+		.arr__insert, .arr__delete {
+			padding: 10px 20px;
+			margin: 10px;
+		}
+
+		span {
+			padding: 10px 20px;
+			background: lightgreen;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p> Doubly Linked List</p>
+	<canvas class='grid' id="canvas" width="1000" height="400">
+		
+	</canvas>
+	<div class="arr__controllers">
+		<div>
+			<span>Insert At End And Delete From Beggining</span>
+			<button class="arr__insert">Insert</button>
+			<button class="arr__delete">Delete</button>
+		</div>		
+	</div>
+	<script>
+
+// Main
+	let arr = []
+	let size = 9;
+	time_delay = 1000;
+	let max = 100;
+	let ctx = document.querySelector("#canvas").getContext("2d");
+	ll = ['head']
+	let pos = -1;
+	init();
+
+
+// Utility
+	
+	function randomize_an_array() {
+		arr = [];
+		for(let i=0; i<size; i++) {
+			arr.push(Math.floor(Math.random() * max + 1));
+		}
+	}
+
+	function init() {
+		randomize_an_array();
+		create_array();
+		add_listeners();
+		createSinglyLinkedList(ll);
+	}
+
+	function create_array() {
+		pw = ctx.canvas.width / size;
+		height = 50;
+		for(let i=0; i<size; i++) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			if(i == pos) ctx.fillStyle = "gray";
+			ctx.fillRect(i * pw, ctx.canvas.height - height, pw, height)
+
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(i * pw, ctx.canvas.height - height, pw, height)
+			
+			ctx.fillStyle = "white";
+			ctx.lineWidth = 1
+			ctx.font = "bolder 12px ubuntu"
+			ctx.fillText(arr[i], i * pw + pw / 2, ctx.canvas.height - height + height / 2)
+			ctx.closePath();
+			ctx.fillStyle = "black";
+		
+		}
+	}
+
+
+	function add_listeners() {
+		document.querySelector(".arr__insert").addEventListener("click", () => {
+			insert_animation();
+		})
+		document.querySelector(".arr__delete").addEventListener("click", () => {
+			delete_animation();
+		})
+	} 
+
+	function insert_animation() {
+		pos++;
+		if(pos >= size) {
+			alert("No Element is present to be inserted");
+			return;
+		}
+		else {
+			ll.push(arr[pos]);	
+		}
+		create_array();
+		createSinglyLinkedList(ll);
+	}
+
+	function delete_animation() {
+		if(ll.length == 1) {
+			alert("Linked List has not Element present to be deleted");
+		}
+		else {
+			ll.splice(1, 1);
+			createSinglyLinkedList(ll);
+		}
+	}
+
+	async function createSinglyLinkedList(arr, width=70, height=40, x=20, y=100, gap=20, is_circular=false) {
+			ctx.fillStyle = "lightgreen";
+			ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height - 150);
+			ctx.save();
+			ctx.fillStyle = 'red';
+			black_tik = 5;
+			let count = 0;	
+			for(let i=0; i<arr.length; i++) {
+				await sleep(0).then(() => {
+					count = i;
+					ctx.fillRect(x + width * count + count * gap, y, width, height);
+					ctx.beginPath();
+					ctx.lineWidth = '5'
+					ctx.strokeStyle = 'maroon';
+					
+					ctx.moveTo(x + width * count + count * gap + width, y + height / 2);
+					
+					//up tick
+					ctx.lineTo(x + width * count + count * gap + width + black_tik, y + height / 2 + black_tik);
+
+					ctx.moveTo(x + width * count + count * gap + width, y + height / 2);
+					
+					//Down tick
+					ctx.lineTo(x + width * count + count * gap + width + black_tik, y + height / 2 - black_tik);
+						
+
+					ctx.moveTo(x + width * count + count * gap + width, y + height / 2);
+					
+					ctx.lineTo(x + width * count + count * gap + width + gap, y + height / 2);
+					
+					ctx.lineTo(x + width * count + count * gap + width + gap - black_tik, y + height / 2 - black_tik);
+					ctx.moveTo(x + width * count + count * gap + width + gap, y + height / 2);
+
+					ctx.lineWidth = 3
+					ctx.fillStyle = "white";
+					ctx.lineTo(x + width * count + count * gap + width + gap - black_tik, y + height / 2 + black_tik);
+					ctx.stroke();
+					ctx.fillStyle = 'white';
+					ctx.font = 'bold 20px ubuntu';	
+					ctx.fillText(arr[i], x + width * count + count * gap + 15, y + height / 2 + 5)
+					ctx.fillStyle = 'red';
+
+					// ptr index
+					// if(count != size - 1) {
+					// 	ctx.fillStyle = "white";
+					// 	ctx.fillRect(x + width * count + count * gap, y + 60, width -10, height -10);
+					// 	ctx.fillStyle = 'red';
+					// 	ctx.font = 'bold 20px ubuntu';	
+					// 	ctx.fillText(i, x + width * count + count * gap + 15, y + height / 2 + 5 + 55)
+					// 	ctx.fillStyle = 'red';
+					// }
+				}) 
+			}	
+			count++;
+			ctx.beginPath();
+			ctx.fillStyle = 'black';
+			ctx.fillRect(x + width * count + count * gap, y, width, height);
+			ctx.fillStyle = 'white';
+			ctx.font = 'bold 12px ubuntu';	
+			ctx.fillText("nullptr", x + width * count + count * gap + 7, y + height / 2);
+			ctx.fillStyle = 'lightgreen';
+			count = count + 1;
+			ctx.fillRect(x + width * count + count * gap - gap, y, width, height)	
+			// ctx.fillStyle = 'black';
+			// ctx.font = "bolder 20px sans-serif"
+			// ctx.fillText("Pointer Address", 110, height * 5.5);
+			ctx.closePath();	
+			ctx.reset();
+		}
+
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
+		}
+
+	</script>
+</body>
+</html>
