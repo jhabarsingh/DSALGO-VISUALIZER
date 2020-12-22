@@ -1,4 +1,3 @@
-kadanes 2d
 hashing
 segment tree
 
