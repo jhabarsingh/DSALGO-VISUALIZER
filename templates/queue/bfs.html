@@ -89,7 +89,7 @@
 					
 				}
 
-				create_graph(bfs_edge);
+				await create_graph(bfs_edge);
 				
 				for(let i=0; i<t.length; i++) {
 					await sleep(time_delay).then(() => {
@@ -115,24 +115,32 @@
 		while(s.length != 0) {
 			x = s.shift();
 			t.push(x);
+
 			for(let j=0; j<size; j++) {
 				if(!visited[j] && edge[x][j]) {
 					bfs_edge[x][j]  = 1;
 					bfs_edge[j][x]  = 1;	
+					
 					await sleep(time_delay).then(() => {
+						console.log(x, j);
 						createLine(x, j, "white");
 						createBox(x);
 						createBox(j);
 						createText(x);
 						createText(j);
-						s.push(j);
 					})
+
+					s.push(j);
 					visited[j] = true;
 				
 				}
 			} 
 
 		}
+
+		await sleep(time_delay).then(() => {
+			
+		})
 	}
 	
 	async function createShell(i, val) {
