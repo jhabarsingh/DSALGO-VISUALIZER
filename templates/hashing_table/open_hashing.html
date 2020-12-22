@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Open Hashing</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+		.controller {
+			padding: 10px 20px;
+		}
+
+		span {
+			background: lightgreen;
+			padding: 10px 20px;
+		}
+
+		span > span {
+			background: yellow;
+			padding: 5px  10px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Open Hashing</p>
+	<canvas class='grid' width="1000" height="600">
+		
+	</canvas>
+	<div>
+		<span>Hash Function = <span>(x % 10)</span></span>
+		<button class="controller">Hash</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let arr = [];
+	let time_delay = 1000;
+	let count = [];
+	let pos = -1;
+
+	init();
+// Utility
+	function init() {
+		randomise_array();
+		drawArray();
+		hashing();
+		add_listeners();
+	}
+
+	function randomise_array() {
+		let max = 20;
+		let min = 0;
+		for(let i=0; i<size; i++) {
+			let value = Math.floor(Math.random() * (max + 1 - min ) + min);
+			arr.push(value);
+			count.push(0);
+		}
+
+	}
+
+	function add_listeners() {
+		document.querySelector(".controller").addEventListener("click", () => {
+			pos++;
+			if(pos == size) {
+				alert("No Element Available to Hash");
+				return;
+			}
+
+			else {
+				drawArray();
+				hash(arr[pos]);
+			}
+		})
+	}
+
+	async function hashing() {
+		ph = (ctx.canvas.height - 50) / size;
+		// width;
+		width = 100;
+		for(let i =0; i<size; i++) {
+			ctx.beginPath();	
+			ctx.fillStyle = "yellow";
+			ctx.fillRect(0, i * ph, pw, height);
+
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(0, i * ph, pw, height);
+			
+			
+			ctx.moveTo(0, (i + 1) * ph);
+			ctx.lineTo(ctx.canvas.width, (i + 1) * ph);
+			ctx.stroke();
+
+
+			ctx.fillStyle = "red";
+			ctx.font = "bolder 15px arial";
+			ctx.fillText(i, 0 + width / 2, i * ph + ph / 2);
+			ctx.closePath();
+		}
+	}
+
+	function hash(val) {
+		hash_fx = (val) % size;
+		i = hash_fx;
+		j = ++count[i];
+		width = 100;
+		ph = (ctx.canvas.height - 50) / size;
+
+
+		ctx.beginPath();	
+		ctx.fillStyle = "red";
+		ctx.fillRect(j * width, i * ph, width, height);
+
+		ctx.strokeStyle = "white";
+		ctx.strokeRect(j * width, i * ph, width, height);
+		
+
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 15px arial";
+		ctx.fillText(val, j * width + width / 2, i * ph + ph / 2);
+		ctx.closePath();
+	}
+
+	function drawArray() {
+		pw = ctx.canvas.width / size;
+		height = 50;
+		y = ctx.canvas.height - height;
+		for(let i =0; i<size; i++) {
+			ctx.beginPath();	
+			ctx.fillStyle = "black";
+			if(i == pos) 
+				ctx.fillStyle = "gray";
+			ctx.fillRect(i * pw, y, pw, height);
+
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(i * pw, y, pw, height);
+			
+
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 15px arial";
+			ctx.fillText(arr[i], i * pw + pw / 2, y + height / 2);
+			ctx.closePath();
+		}
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
