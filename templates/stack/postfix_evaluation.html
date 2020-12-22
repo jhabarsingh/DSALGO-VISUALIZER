@@ -147,9 +147,9 @@
 		"*": 2,
 		"^": 3
 	}
-
+	aaaa = 0;
 	stack = []
-
+	t = []
 	init();
 	animate();
 
@@ -205,6 +205,7 @@
 			if(s[i] == 'a' || s[i] == 'b') {
 				// val = s[i] == 'a' ? 1 : 2;
 				val = s[i];
+				t.push(s[i] == 'a' ? 1 : 2);
 				stack.push(val);
 				arr.shift();	
 				await sleep(time_delay).then(() => {
@@ -222,14 +223,14 @@
 					return;
 				}
 				else {
-					a = stack[stack.length - 1]
+					b = stack[stack.length - 1]
 					stack.pop();
 					
 					await sleep(time_delay).then(() => {
 						push();
 					});
 					
-					b = stack[stack.length - 1]
+					a = stack[stack.length - 1]
 					stack.pop();
 					
 					await sleep(time_delay).then(() => {
@@ -237,13 +238,52 @@
 					});
 					let ans;
 					ans = "(" + a + s[i] + b + ")";
+
+					q = t[t.length - 1];
+					p = t[t.length - 2];
+					if(s[i] == '+')
+						aaaa = p + q;
+					
+					else if(s[i] == '-')
+						aaaa = p - q;
+					
+					else if(s[i] == '*')
+						aaaa = p * q;
+					
+					else if(s[i] == '/')
+						aaaa = p / q;
+					
+					t.pop();
+					t.pop();
+					t.push(aaaa);
+
+
 					stack.push(ans);
+					if(s[i] == '+')
+						aaaa = a=='a' ? 1 : 2 +  b=='a' ? 1: 2
+					
+					else if(s[i] == '-')
+						aaaa = a=='a' ? 1 : 2 -  b=='a' ? 1: 2
+					
+					else if(s[i] == '*')
+						aaaa = a=='a' ? 1 : 2 *  b=='a' ? 1: 2
+					
+					else if(s[i] == '/')
+						aaaa = a=='a' ? 1 : 2 /  b=='a' ? 1: 2
+
 					await sleep(time_delay).then(() => {
 						push();
 					});	
+
 				}
 			}
 		}
+
+		stack.pop();
+		stack.push(t[0]);
+		await sleep(time_delay).then(() => {
+			push();
+		});	
 	}
 
 	function create_stack() {

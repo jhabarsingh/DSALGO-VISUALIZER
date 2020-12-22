@@ -156,10 +156,10 @@
 	}
 
 	stack = []
-
+	aaaa = 0;
 	init();
 	animate();
-
+	t = []
 
 // utility
 	function randomize_an_array(val) {
@@ -221,6 +221,7 @@
 				// val = s[i] == 'a' ? 1 : 2;
 				val = s[i];
 				stack.push(val);
+				t.push(s[i] == 'a' ? 1 : 2);
 				arr.shift();	
 				await sleep(time_delay).then(() => {
 					push();
@@ -251,14 +252,39 @@
 						push();
 					});
 					let ans;
-					ans = "(" + a + s[i] + b + ")";
+					ans = "(" + b + s[i] + a + ")";
+					p = t[t.length - 1];
+					q = t[t.length - 1 - 1];
+					if(s[i] == '+')
+						aaaa = p + q;
+					
+					else if(s[i] == '-')
+						aaaa = p - q;
+					
+					else if(s[i] == '*')
+						aaaa = p * q;
+					
+					else if(s[i] == '/')
+						aaaa = p / q;
+					
+					t.pop();
+					t.pop();
+					t.push(aaaa);
 					stack.push(ans);
+
 					await sleep(time_delay).then(() => {
 						push();
 					});	
 				}
 			}
 		}
+
+		stack.pop();
+		stack.push(t[0]);
+		await sleep(time_delay).then(() => {
+			push();
+		});	
+
 	}
 
 	function create_stack() {
