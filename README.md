@@ -27,6 +27,8 @@
   4. Binary Search
   5. Linear Search
   6. Array Partitioning
+  7. Linear Search
+  8. Rain Water Trapping
 
 **STACK ALGORITHMS**
   1. Balanced Bracket
@@ -35,11 +37,13 @@
   4. Postfix Evaluation
   5. Prefix Evaluation
   6. Maximum Area Under The Histogram
+  7. Min Stack O(1)
 
 **MATRIX ALGORITHMS**
   1. Transpose
   2. Kadanes 2D
   3. Sorted Matrix Search
+  4. Sparse Matrix
 
 **QUEUE ALGORITHMS**
   1. BFS
@@ -84,9 +88,12 @@
   6. Merge Sort
   7. Counting Sort
 
-**SEARCH ALGORITHMS**
+**BINARY SEARCH ALGORITHMS**
   1. Binary Search
-  2. Linear Search
+  2. Start Pont Of Rotated Array
+  3. Find Peak Element
+  4. Minimum Page Allocation
+  5. Biotonic Array Search
 
 **RECURSION ALGORITHMS**
   1. Factorial 
@@ -103,6 +110,7 @@
 **DIVIDE AND CONQUER PARADIGM**
   1. Merge Sort
   2. Quick Sort
+  3. Counting Inversion
 
 **GREEDY PARADIGM**
   1. Prims
