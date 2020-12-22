@@ -28,6 +28,9 @@
 			color: gray;
 		}
 
+		.visualise {
+			padding: 10px 20px;
+		}
 
 	</style>
 	<meta charset="utf-8">
@@ -38,7 +41,9 @@
 	<canvas class='grid' width="1100" height="550">
 		
 	</canvas>
-
+	<div>
+		<button class="visualise">Visualise</button>
+	</div>
 	<script>
 
 // Main
@@ -49,15 +54,15 @@
 	let pw = (ctx.canvas.width - right) / size;
 	let ph = (ctx.canvas.height - bottom )/ size;
 	let arr = [];
-	let params = [1, 2, 3, 4, 5, 6]
+	let params = [0, 0, 0, 0, 0, 0]
 	let time_delay = 1000;
 	init();
 // Utility
-	function init() {
+	async function init() {
 		init_array();
 		add_listeners();
-		animate_array(0, 0);
-		twoDKadanes();
+		await animate_array(0, 0);
+		await add_listeners();
 	}
 
 	async function twoDKadanes() {
@@ -78,7 +83,7 @@
 					await sleep(time_delay).then(() => {
 						animate_array(i, j);
 						sum_array(kad);
-						kadane_array(getKadane(kad));
+						kadane_array(getKadane(kad, i, j));
 						parameters();
 					})
 				}
@@ -90,7 +95,7 @@
 					await sleep(time_delay).then(() => {
 						animate_array(i, j);
 						sum_array(kad);
-						kadane_array(getKadane(kad));
+						kadane_array(getKadane(kad, i, j));
 						parameters();
 					})
 				}
@@ -111,11 +116,19 @@
 		}
 	}
 
-	function add_listeners() {
+	async function add_listeners() {
+		document.querySelector(".visualise").addEventListener("click", () => {
+				document.querySelector(".visualise").disabled = true;
+				async function get() {
+					await twoDKadanes();
+					await final_animate_array(params[2], params[3], params[4], params[5] );
+				}
+				get();
+		})
 
 	}
 
-	function getKadane(arr) {
+	function getKadane(arr, ii, jj) {
 		let kad = []
 
 			//["currentSum", "maxSum", "maxLeft", "maxRight", "maxUp", "maxBottom"];
@@ -133,15 +146,24 @@
 				pos = i;
 			}
  		}
- 		params[5] = pos;
 
- 		while(pos >= 0) {
- 			if(arr[pos] == kad[pos]) {
-				params[4] = pos;
- 				break;
- 			}
- 			pos--;
+ 		params[0] = kad[pos];
+ 		
+
+ 		if(params[0] > params[1]) {
+ 			params[1] = params[0];
+ 			params[5] = pos;
+ 			while(pos >= 0) {
+	 			if(arr[pos] == kad[pos]) {
+					params[4] = pos;
+	 				break;
+	 			}
+	 			pos--;
+	 		}
+	 		params[2] = ii;
+	 		params[3] = jj;
  		}
+ 		
 		return kad;
 	}
 
@@ -150,6 +172,21 @@
 			for(let j=0; j<size; j++) {
 				ctx.fillStyle = "black";
 				if(j >= l && j <= r) ctx.fillStyle = "gray";
+				ctx.fillRect(j * pw, i * ph, pw, ph);
+				ctx.strokeStyle = "white";
+				ctx.strokeRect(j * pw, i * ph, pw, ph);
+				ctx.fillStyle = "white";
+				ctx.font = "bolder 17px arial";
+				ctx.fillText(arr[i][j], j * pw + pw / 2, i * ph + ph / 2)
+			}
+		}
+	}
+
+	function final_animate_array(l, r, u, d) {
+		for(let i=0; i<size; i++) {
+			for(let j=0; j<size; j++) {
+				ctx.fillStyle = "black";
+				if(j >= l && j <= r && i>=u && i<=d) ctx.fillStyle = "red";
 				ctx.fillRect(j * pw, i * ph, pw, ph);
 				ctx.strokeStyle = "white";
 				ctx.strokeRect(j * pw, i * ph, pw, ph);
