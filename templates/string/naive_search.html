@@ -155,6 +155,7 @@
 
 	function add_listeners() {
 		document.querySelector(".visualize").addEventListener("click", () => {
+			document.querySelector(".visualize").disabled = true;
 			animate();
 		})
 	}
