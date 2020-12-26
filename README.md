@@ -186,7 +186,7 @@
  1. You can create an issue if you find any bug.
  2. You can work on an existing issue and Send PR.
  3. You can add another data structure or Algorithm to the existing project and Send a PR.
- 4. Even if you find any grammatical or spelling mistake then also you can create an issue.>
+ 4. Even if you find any grammatical or spelling mistake then also you can create an issue.
 
 > *I would be glad to see a notification saying `User {xyz} created a Pull Request`.
 I promise to review it.*
