@@ -1,2 +1,6 @@
+kmp
+naive search
+boyree moore
+find peak element
 segment tree
 
