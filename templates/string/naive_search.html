@@ -28,6 +28,10 @@
 			color: gray;
 		}
 
+		.visualize {
+			padding: 10px 20px;
+		}
+
 
 	</style>
 	<meta charset="utf-8">
@@ -38,7 +42,9 @@
 	<canvas class='grid' width="1000" height="550">
 		
 	</canvas>
-
+	<div>
+		<button class="visualize">Compare</button>
+	</div>
 	<script>
 
 // Main
@@ -47,16 +53,110 @@
 	let arr = [];
 	let time_delay = 1000;
 	let str = "ABABDABACDABABCABAB";
+	size = str.length;
 	let substr = "ABABCABAB";
+	let ssize = substr.length;
 
 	init();
 // Utility
 	function init() {
+		drawArray(0, 0);
 		add_listeners()
 	}
 
-	function add_listeners() {
+	function drawArray(i, j) {
+		console.log(i, j);
+		pw = ctx.canvas.width / size;
+		h = 70;
+		gap = 10;
+		for(let k = 0; k<size; k++) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			if(k >= i && k <=(i + j)) {
+				ctx.fillStyle = "yellow";	
+			}
+			ctx.fillRect(k * pw, 0 * h, pw, h);
+			
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(k * pw, 0 * h, pw, h);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(str[k], k * pw + pw / 2, 0 * h + h / 2);
+			
 
+			///
+
+			ctx.fillStyle = "gray";
+			if(k == i) {
+				ctx.fillStyle = "brown";	
+			}
+			ctx.fillRect(k * pw, 3 * h, pw, h);
+			
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(k * pw, 3 * h, pw, h);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(k, k * pw + pw / 2, 3 * h + h / 2);
+
+
+
+			ctx.closePath();
+		}
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 1 * h + gap, pw * size, h)
+		ctx.strokeStyle = "lightgreen";
+		ctx.strokeRect(0, 1 * h + gap, pw * size, h)
+		for(let k = 0; k<ssize; k++) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			if(k <=(j)) {
+				ctx.fillStyle = "yellow";	
+				if(substr[k] != str[k + i]) {
+					ctx.fillStyle = "red";		
+				}
+			}
+			ctx.fillRect((i + k) * pw, 1 * h + gap, pw, h);	
+			ctx.strokeStyle = "white";
+			ctx.strokeRect((i + k) * pw, 1 * h + gap, pw, h);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(substr[k], (i + k) * pw + pw / 2, 1 * h + h / 2 + gap);
+			
+
+				
+			ctx.closePath();
+		}
+	}
+
+	async function animate() {
+		for(let i=0; i<(size - ssize + 1); i++) {
+
+			for(let j=0; j<ssize; j++) {
+				
+				if(str[i + j] != substr[j]) {
+					await sleep(time_delay).then(() => {
+						drawArray(i, j);
+					});
+					break;
+				}
+				else {
+					await sleep(time_delay).then(() => {
+						drawArray(i, j);
+					});
+				}
+			}
+		}
+
+		alert("Element Found at index 10");
+	}
+
+	function add_listeners() {
+		document.querySelector(".visualize").addEventListener("click", () => {
+			animate();
+		})
 	}
 
 	function sleep(ms) {
