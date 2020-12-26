@@ -210,6 +210,7 @@
 
 	function add_listeners() {
 		document.querySelector(".heapify").addEventListener("click", () => {
+			document.querySelector(".heapify").disabled = true;
 			heapify();
 		})
 	}
