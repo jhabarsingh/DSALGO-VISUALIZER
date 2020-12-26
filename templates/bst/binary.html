@@ -28,6 +28,9 @@
 			color: gray;
 		}
 
+		button {
+			padding: 10px 20px;
+		}
 
 	</style>
 	<meta charset="utf-8">
@@ -38,7 +41,9 @@
 	<canvas class='grid' width="1300" height="600">
 		
 	</canvas>
-
+	<div>
+		<button class="insert">Insert</button>
+	</div>
 	<script>
 
 // Main
@@ -50,31 +55,71 @@
 	let mul = 3;
 	let end = 4	;
 	let start = 10;
+
+
+	class Node {
+		xx = '';
+		yy = '';
+		value = '';
+		left;
+		right;
+	}
+	let root = new Node();
 	ctx = document.querySelector("canvas").getContext("2d");
 	max_width = ctx.canvas.width;
 	max_height = ctx.canvas.height;
-	
+	pos = -1;
 	init();
 
 // Utility
 	
-	class Node {
-		value;
 
-	}
 
 	function init() {
-		randomize_an_array();
-		create_tree(start, ctx.canvas.width - start, 0, 0);
+		// randomize_an_array();
+		draw_array();
+		boot = root;
+		create_tree(start, ctx.canvas.width - start, 0, 0, boot);
 		// create_grid();
-
+		add_listeners();
 	}
 
 	function add_listeners() {
-
+		document.querySelector(".insert").addEventListener("click", () => {
+			pos++;
+			if(pos >= arr.length) {
+				alert("No Element is present to insert in BST");
+			}
+			draw_array();
+			insert_tree(root, arr[pos]);
+		})
 	}
 
-	function create_tree(x, y, y1, num) {
+
+	function draw_array() {
+		let size = arr.length;
+		let pw = ctx.canvas.width / size;
+		let h = 50;
+		for(let i=0; i<size; i++) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			if(pos == i) {
+				ctx.fillStyle = "gray";
+			}
+			ctx.fillRect(i * pw, ctx.canvas.height - h, pw, h);
+
+			ctx.strokeStyle = "white";	
+			ctx.strokeRect(i * pw, ctx.canvas.height - h, pw, h);
+
+
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 14px arial"
+			ctx.fillText(arr[i], i * pw + pw / 2, ctx.canvas.height - h + h / 2);
+			ctx.closePath();
+		}
+	}
+
+	function create_tree(x, y, y1, num, root) {
 		let intit_x = x;
 		let init_y = y;
 		x = (x + y) / 2;
@@ -87,17 +132,25 @@
 		ctx.fill();
 		ctx.fillStyle = "black";
 
+		root.xx = x;
+		root.yy = y1;
+		root.value = "";
+		root.next = new Node();
+		root.pre = new Node();
+		
 		if(num == end) {
+			delete root;
 			return;
 		}
 		
+
 		// create left pointers
 		ctx.lineWidth = 1;
 		ctx.fillStyle = "black";
 		ctx.moveTo(x, y1);
 		ctx.lineTo((intit_x + x) / 2, y1 + width * mul);
 		ctx.stroke();	
-		create_tree(intit_x, x, y1, num+1);
+		create_tree(intit_x, x, y1, num+1, root.pre);
 
 		// Create right pointers
 		ctx.lineWidth = 1;
@@ -105,21 +158,30 @@
 		ctx.moveTo(x, y1);
 		ctx.lineTo((init_y + x) / 2, y1 + width * mul);
 		ctx.stroke();
-		create_tree(x, init_y, y1, num+1);
+		create_tree(x, init_y, y1, num+1, root.next);
 
 	}	
 
-	function insert_tree(index) {
 
-	}
+	function insert_tree(root, value) {
+		if(root.value == "") {
+			ctx.fillStye = "yellow";
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 16px ubuntu";
+			ctx.fillText(value, root.xx - 10, root.yy);
+			root.value = value;
+			return;
+		}
+		if(root.value > value) {
+			insert_tree(root.pre, value);
+		}
+		else {
+			insert_tree(root.next, value);
+		}
 
-	function delete_tree() {
+	}	
 
-	}
 
-	function search_tree() {
-
-	}
 
 	function randomize_an_array() {
 		for(let i=0; i<size; i++) {
