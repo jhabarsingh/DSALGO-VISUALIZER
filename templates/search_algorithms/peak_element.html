@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Finding Any One Peak Element</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+
+		.visualise, .point {
+			padding: 10px 20px;
+		}
+
+		.point {
+			background: lightgreen;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Finding Any One Peak Element</p>
+	<canvas class='grid' width="1000" height="550">
+		
+	</canvas>
+	<div>
+		<span>Peak Point &nbsp;<span class="point">-1</span></span>
+		<button class="visualise">Find Peak</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let arr = [];
+	max = 20
+	let time_delay = 1000;
+
+	init();
+// Utility
+	function init() {
+		min = 1;
+		for(let i=0; i<size; i++) {
+			temp = Math.floor(Math.random() * (max - min + 1) + min); 
+			arr[i] = temp;
+		}
+		// arr.sort((a, b) => a-b);
+
+		rotated = Math.floor(Math.random() * (9 - 0) + 0);
+		
+		temp = []
+		for(let i = 0; i<size; i++) {
+			temp[i] = arr[(i + rotated) % size];
+		}
+		arr = temp;
+		drawLines();
+		add_listeners();
+	}
+
+	function add_listeners() {
+		document.querySelector(".visualise").addEventListener("click", () => {
+			document.querySelector(".visualise").disabled = true;
+			binary_search(0, size - 1);
+		})
+	}
+
+	async function binary_search(low, high) {
+		if(low > high) {
+			return;
+		}
+		let mid = Math.floor((low  + high) / 2);
+		gap = 10;
+
+		pw = ctx.canvas.width / (size);
+		ctx.beginPath();
+		ctx.moveTo(gap + mid * pw, 0);
+		ctx.lineTo(gap + mid * pw, ctx.canvas.height);
+		ctx.strokeStyle = "green";
+		ctx.lineWidth = 1;
+		ctx.stroke();
+		ctx.closePath();
+		
+		if(mid != 0 || mid != size - 1) {
+			if(arr[mid] >= arr[mid - 1] && arr[mid] >= arr[mid + 1]) {
+				await sleep(time_delay).then(() => {
+					drawLines();
+					drawLines();
+					pw = ctx.canvas.width / (size);
+					ctx.beginPath();
+					ctx.moveTo(gap + mid * pw, 0);
+					ctx.lineTo(gap + mid * pw, ctx.canvas.height);
+					ctx.strokeStyle = "green";
+					ctx.lineWidth = 1;
+					ctx.stroke();
+					ctx.closePath();
+					document.querySelector(".point").innerText = mid;
+				});
+				await sleep(time_delay).then(() => {
+					alert(`This is The Peak Element`);
+				})
+				return;
+			}
+			else if(arr[mid + 1] >= arr[mid]) {
+				await sleep(time_delay).then(() => {
+					drawLines();
+				});
+				await sleep(time_delay).then(() => {
+					binary_search(mid + 1, high);
+				});
+			}
+			else {
+				await sleep(time_delay).then(() => {
+					drawLines();
+				});
+				await sleep(time_delay).then(() => {
+					binary_search(low, mid - 1);
+				});
+			}
+			document.querySelector(".point").innerText = mid;
+		}
+		else {
+			if(mid == 0 && arr[0] >= arr[1]) {
+				ctx.beginPath();
+				ctx.moveTo(gap + mid * pw, 0);
+				ctx.lineTo(gap + mid * pw, ctx.canvas.height);
+				ctx.strokeStyle = "green";
+				ctx.lineWidth = 1;
+				ctx.stroke();
+				ctx.closePath();
+			}
+			else {
+				ctx.moveTo(gap + mid * pw, 0);
+				ctx.lineTo(gap + mid * pw, ctx.canvas.height);
+				ctx.strokeStyle = "green";
+				ctx.lineWidth = 1;
+				ctx.stroke();
+				ctx.closePath();
+			}
+			document.querySelector(".point").innerText = mid;
+			await sleep(time_delay).then(() => {
+				alert(`This is The Peak Element`);
+			})
+			return;
+		} 
+
+		// let next = (mid + 1) % size;
+		// if(arr[low] < arr[high]) {
+		// 	drawLines()
+		// 	pw = ctx.canvas.width / (size);
+		// 	ctx.beginPath();
+		// 	mid = low;
+		// 	ctx.moveTo(gap + mid * pw, 0);
+		// 	ctx.lineTo(gap + mid * pw, ctx.canvas.height);
+		// 	ctx.strokeStyle = "green";
+		// 	ctx.lineWidth = 1;
+		// 	ctx.stroke();
+		// 	ctx.closePath();
+		// 	document.querySelector(".point").innerText = mid;
+		// 	await sleep(time_delay).then(() => {
+		// 		alert(`This is The Starting Point`);
+		// 	})
+		// 	return;
+		// }
+		// if(arr[pre] >= arr[mid] && arr[next] >= arr[mid]) {
+		// 	document.querySelector(".point").innerText = mid;
+		// 	await sleep(time_delay).then(() => {
+		// 		alert("This is The Starting Point");
+		// 	})
+		// 	return;
+		// }
+		// else if(arr[high] >= arr[mid]) {
+		// 	await sleep(time_delay).then(() => {
+		// 		drawLines();
+		// 	});
+		// 	await sleep(time_delay).then(() => {
+		// 		binary_search(low, pre);
+		// 	});
+		// }
+		// else {
+		// 	await sleep(time_delay).then(() => {
+		// 		drawLines();
+		// 	});
+		// 	await sleep(time_delay).then(() => {
+		// 		binary_search(next, high);
+		// 	});
+		// }
+	}
+
+	function drawLines() {
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+		pw = ctx.canvas.width / (size);
+		ctx.fillStyle = "black";
+		gap = 10;
+		for(let i=0; i<size - 1; i++) {
+			ctx.beginPath();
+			ctx.lineWidth = 3;
+			ctx.strokeStyle = "white";
+			ctx.moveTo(gap + i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height)
+			ctx.lineTo(gap + (i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height)
+			
+			ctx.stroke();
+			
+			ctx.closePath();
+			ctx.beginPath();
+			ctx.arc(gap + i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height, 10, 0, Math.PI * 2);
+			ctx.fill();
+			ctx.closePath();
+			if(i == size - 2) {
+				ctx.arc(gap + (i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height, 10, 0, Math.PI * 2);
+				ctx.fill();
+					
+			}
+		}
+		let i = size - 1;
+		ctx.moveTo(gap + i * pw, ctx.canvas.height - (arr[i] / max) * ctx.canvas.height)
+		ctx.lineTo(gap + (i + 1) * pw, ctx.canvas.height - (arr[i + 1] / max) * ctx.canvas.height)
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
