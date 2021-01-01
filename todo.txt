@@ -9,3 +9,8 @@ sudoku
 deletion
 traversal 
 rotation
+
+//binary search
+peak element
+minimum page allocation
+biotonic array
