@@ -28,87 +28,215 @@
 			color: gray;
 		}
 
+		button {
+			padding: 10px 20px;
+		}
+
+		[name="traversal_type"] {
+			padding: 10px 20px;
+		}
+		.option {
+			padding: 0px 10px;
+			margin: 0px 10px;
+		}
 
 	</style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p> Binary Search Tree Traversal </p>
+	<p> Binary Search Tree Traversal</p>
 	<canvas class='grid' width="1300" height="550">
 		
 	</canvas>
+	<div>
+		<select name="traversal_type" class="traversal_type">
+			<option  class="option"  value="inorder"selected>Inorder</option>
+			<option class="option"  value="preorder">Preorder</option>
+			<option class="option" value="postorder" >Postorder</option>
+		</select>
+		<button class="insert">Traverse</button>
+	</div>
 
 	<script>
 
 // Main
 	
-	arr = [50, 25, 20, 23, 21, 24, 40, 45, 42, 75, 60, 55, 65, 80, 85, 90]
-	size = 10;
-	time_delay = 1000;
+	arr = [50, 25, 20, 23, 21, 24, 40, 45, 42, 75, 60, 55, 65, 80, 85, 90, 78, 76, 79, 18, 19, 17, 27, 26, 28, 46, 54, 56, 64, 66, 84]
+	size = arr.length;
 	max = 100;
 	width = 30;
 	let mul = 3;
 	let end = 4	;
 	let start = 10;
+	inorder = [];
+	preorder = [];
+	postorder = [];
+	let time_delay = 1000;
+	class Node {
+		xx = '';
+		yy = '';
+		value = '';
+		left;
+		right;
+	}
+	let root = new Node();
 	ctx = document.querySelector("canvas").getContext("2d");
 	max_width = ctx.canvas.width;
 	max_height = ctx.canvas.height;
-	
+	pos = -1;
 	init();
 
 // Utility
 	
-	class Node {
-		value;
 
-	}
 
 	function init() {
-		randomize_an_array();
-		create_tree(start, ctx.canvas.width - start, 0, 0);
+		// randomize_an_array();
+		boot = root;
+		draw_array([]);
+		create_tree(start, ctx.canvas.width - start, 0, 0, boot);
 		// create_grid();
+		add_listeners();
+	}	
 
-	}
-
-	function add_listeners() {
-
-	}
-
-	async function create_tree(x, y, y1, num) {
-		let intit_x = x;
-		let init_y = y;
-		x = (x + y) / 2;
-		y1 = y1 + width * mul;
-		
-
-		// create circles
-		
+	async function temp_animation(x, y1, val) {
 		await sleep(time_delay).then(() => {
+			ctx.beginPath();
 			ctx.fillStyle = "yellow";
 			ctx.moveTo(x, y1);
 			ctx.arc(x, y1, width, 0, Math.PI * 2, true);
 			ctx.fill();
 			ctx.fillStyle = "black";
+			ctx.fillText(val, x - 5, y1)
+			ctx.closePath();
 		})
 
+		await sleep(time_delay).then(() => {
+			ctx.beginPath();
+			ctx.fillStyle = "red";
+			ctx.moveTo(x, y1);
+			ctx.arc(x, y1, width, 0, Math.PI * 2, true);
+			ctx.fill();
+			ctx.fillStyle = "white";
+			ctx.fillText(val, x - 10, y1)
+			ctx.fillStyle = "red";
+			ctx.closePath();
+		})
+	}
+	async function inorderfun(root) {
+		if(typeof(root) == "undefined" || root.value == "") {
+			return;
+		}
+		await inorderfun(root.pre);
+		await sleep(time_delay).then(() => {
+			temp_animation(root.xx, root.yy, root.value);
+		})
+		await inorderfun(root.next);
+			
+	}
+
+	async function preorderfun(root) {
+		if(typeof(root) == "undefined" || root.value == "") {
+			return;
+		}
+		await preorderfun(root.pre);
+		await preorderfun(root.next);
+		await sleep(time_delay).then(() => {
+			temp_animation(root.xx, root.yy, root.value);
+		})
+	}
+
+	async function postorderfun(root) {
+		if(typeof(root) == "undefined" || root.value == "") {
+			return;
+		}
+		await sleep(time_delay).then(() => {
+			temp_animation(root.xx, root.yy, root.value);
+		})
+		await postorderfun(root.pre);
+		await postorderfun(root.next);
+	}
+
+	function add_listeners() {
+		for(let i=0; i<arr.length; i++) {
+			insert_tree(root, arr[i]);
+		}
+
+		document.querySelector(".insert").addEventListener("click", () => {
+			type = document.querySelector(".traversal_type").value
+			document.querySelector(".insert").disabled = true;
+			if(type == "inorder") {
+				inorderfun(root);
+			}
+
+			if(type == "preorder") {
+				preorderfun(root);
+			}
+
+			if(type == "postorder") {
+				postorderfun(root);
+			}
+		})
+	}
+
+
+	function draw_array(arr) {
+		let size = arr.length;
+		let pw = ctx.canvas.width / size;
+		let h = 50;
+		for(let i=0; i<size; i++) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			if(pos == i) {
+				ctx.fillStyle = "gray";
+			}
+			ctx.fillRect(i * pw, ctx.canvas.height - h, pw, h);
+
+			ctx.strokeStyle = "white";	
+			ctx.strokeRect(i * pw, ctx.canvas.height - h, pw, h);
+
+
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 14px arial"
+			ctx.fillText(arr[i], i * pw + pw / 2, ctx.canvas.height - h + h / 2);
+			ctx.closePath();
+		}
+		ctx.strokeStyle = "white";	
+	}
+
+	function create_tree(x, y, y1, num, root) {
+		let intit_x = x;
+		let init_y = y;
+		x = (x + y) / 2;
+		y1 = y1 + width * mul;
+		
+		// create circles
 		ctx.fillStyle = "red";
 		ctx.moveTo(x, y1);
 		ctx.arc(x, y1, width, 0, Math.PI * 2, true);
 		ctx.fill();
 		ctx.fillStyle = "black";
+
+		root.xx = x;
+		root.yy = y1;
+		root.value = "";
+		root.next = new Node();
+		root.pre = new Node();
 		
 		if(num == end) {
+			delete root;
 			return;
 		}
 		
+
 		// create left pointers
 		ctx.lineWidth = 1;
 		ctx.fillStyle = "black";
 		ctx.moveTo(x, y1);
 		ctx.lineTo((intit_x + x) / 2, y1 + width * mul);
 		ctx.stroke();	
-		create_tree(intit_x, x, y1, num+1);
+		create_tree(intit_x, x, y1, num+1, root.pre);
 
 		// Create right pointers
 		ctx.lineWidth = 1;
@@ -116,7 +244,26 @@
 		ctx.moveTo(x, y1);
 		ctx.lineTo((init_y + x) / 2, y1 + width * mul);
 		ctx.stroke();
-		create_tree(x, init_y, y1, num+1);
+		create_tree(x, init_y, y1, num+1, root.next);
+
+	}	
+
+
+	function insert_tree(root, value) {
+		if(root.value == "") {
+			ctx.fillStye = "yellow";
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 16px ubuntu";
+			ctx.fillText(value, root.xx - 10, root.yy);
+			root.value = value;
+			return;
+		}
+		if(root.value > value) {
+			insert_tree(root.pre, value);
+		}
+		else {
+			insert_tree(root.next, value);
+		}
 
 	}	
 
