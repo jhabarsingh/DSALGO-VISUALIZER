@@ -64,7 +64,7 @@
 	function init() {
 		min = 1;
 		for(let i=0; i<size; i++) {
-			temp = Math.floor(Math.random() * (max - min + 1) + min); 
+			temp = Math.floor(Math.random() * (18 - min + 1) + min); 
 			arr[i] = temp;
 		}
 		// arr.sort((a, b) => a-b);
@@ -103,7 +103,7 @@
 		ctx.stroke();
 		ctx.closePath();
 		
-		if(mid != 0 || mid != size - 1) {
+		if(mid != 0 && mid != size - 1) {
 			if(arr[mid] >= arr[mid - 1] && arr[mid] >= arr[mid + 1]) {
 				await sleep(time_delay).then(() => {
 					drawLines();
@@ -139,7 +139,6 @@
 					binary_search(low, mid - 1);
 				});
 			}
-			document.querySelector(".point").innerText = mid;
 		}
 		else {
 			if(mid == 0 && arr[0] >= arr[1]) {
@@ -166,47 +165,6 @@
 			return;
 		} 
 
-		// let next = (mid + 1) % size;
-		// if(arr[low] < arr[high]) {
-		// 	drawLines()
-		// 	pw = ctx.canvas.width / (size);
-		// 	ctx.beginPath();
-		// 	mid = low;
-		// 	ctx.moveTo(gap + mid * pw, 0);
-		// 	ctx.lineTo(gap + mid * pw, ctx.canvas.height);
-		// 	ctx.strokeStyle = "green";
-		// 	ctx.lineWidth = 1;
-		// 	ctx.stroke();
-		// 	ctx.closePath();
-		// 	document.querySelector(".point").innerText = mid;
-		// 	await sleep(time_delay).then(() => {
-		// 		alert(`This is The Starting Point`);
-		// 	})
-		// 	return;
-		// }
-		// if(arr[pre] >= arr[mid] && arr[next] >= arr[mid]) {
-		// 	document.querySelector(".point").innerText = mid;
-		// 	await sleep(time_delay).then(() => {
-		// 		alert("This is The Starting Point");
-		// 	})
-		// 	return;
-		// }
-		// else if(arr[high] >= arr[mid]) {
-		// 	await sleep(time_delay).then(() => {
-		// 		drawLines();
-		// 	});
-		// 	await sleep(time_delay).then(() => {
-		// 		binary_search(low, pre);
-		// 	});
-		// }
-		// else {
-		// 	await sleep(time_delay).then(() => {
-		// 		drawLines();
-		// 	});
-		// 	await sleep(time_delay).then(() => {
-		// 		binary_search(next, high);
-		// 	});
-		// }
 	}
 
 	function drawLines() {

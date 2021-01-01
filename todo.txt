@@ -2,7 +2,6 @@ kmp
 boyree moore
 find peak element
 segment tree
-tower of hanoi
 sudoku
 
 // bst
