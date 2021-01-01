@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Towe Of Hanoi</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.solve {
+			padding: 10px 30px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Towe Of Hanoi</p>
+	<canvas class='grid' width="1000" height="550">
+		
+	</canvas>
+	<div>
+		<button class="solve">
+			Solve
+		</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 5;
+	width =  20;
+	height = 400;
+	time_delay = 100;
+	size = 4;
+	init();
+// Utility
+
+	function init() {
+		s = [4, 3, 2, 1];
+		d = [];
+		h = [];
+		stepsToSolveHanoiT(size, s, h, d);
+		console.log(s);
+		console.log(h);
+		console.log(d);
+	}
+
+
+	async function stepsToSolveHanoiT(size, s, h, d) {
+		if (size >= 1) {
+
+		    // Move a tower of height-1 to the buffer peg, using the destination peg.
+		    stepsToSolveHanoiT(size - 1, s, d, h);
+
+		    // Move the remaining disk to the destination peg.
+		   	d.push(s[s.length - 1]);
+		   	s.pop();
+		    // Move the tower of `size-1` from the `buffer peg` to the `destination peg` using the `source peg`.        
+		    stepsToSolveHanoiT(size - 1, h, s, d);
+		  }
+		  
+		  return;
+	}
+
+	
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
