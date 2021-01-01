@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Finding Any One Peak Element</title>
+	<title>Peak Element in Biotonic Array</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -42,7 +42,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p>Finding Any One Peak Element</p>
+	<p>Peak Element in Biotonic Array</p>
 	<canvas class='grid' width="1000" height="550">
 		
 	</canvas>
@@ -85,7 +85,13 @@
 	function add_listeners() {
 		document.querySelector(".visualise").addEventListener("click", () => {
 			document.querySelector(".visualise").disabled = true;
-			binary_search(0, size - 1);
+			async function get() {
+				await sleep(time_delay).then(() => {
+					alert("you can apply binary search on the left side of  peak element and then to the right of peak element to search an element in a biotonic array");
+				})
+				await binary_search(0, size - 1);
+			}
+			get();
 		})
 	}
 

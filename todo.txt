@@ -1,6 +1,5 @@
 kmp
 boyree moore
-find peak element
 segment tree
 sudoku
 
@@ -10,6 +9,4 @@ traversal
 rotation
 
 //binary search
-peak element
 minimum page allocation
-biotonic array

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Towe Of Hanoi</title>
+	<title>Tower Of Hanoi</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -42,7 +42,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p>Towe Of Hanoi</p>
+	<p>Tower Of Hanoi</p>
 	<canvas class='grid' width="1000" height="550">
 		
 	</canvas>
@@ -67,6 +67,13 @@
 // Utility
 
 	function init() {
+		pw = ctx.canvas.width / 4;
+		w = 10;
+		hh = 400;
+		for(let i=0; i<3; i++) {
+			ctx.fillStyle = "brown";
+			ctx.fillRect((i + 1) * pw - w, ctx.canvas.height - hh, w + w, hh);
+		}
 		add_listeners();
 	}
 
@@ -87,6 +94,7 @@
 			for(let i = size; i>0; i--) {
 				s.push(i);
 			}
+			document.querySelector(".solve").disabled = true;
 			stepsToSolveHanoiT(size, s, h, d);
 		})
 	}
