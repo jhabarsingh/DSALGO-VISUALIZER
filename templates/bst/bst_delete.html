@@ -160,29 +160,59 @@
 			ctx.closePath();
 		})
 	}
-	async function deleted(root, number) {
-		if(type(root) == "undefined" || root.value == "") {
+
+	function findMin(root) {
+		temp = root;
+		while(temp.pre != "undefined" && temp.pre.value != "") {
+			temp = temp.pre;
+		}
+		val = temp.value;
+		temp.value = "";
+		delete temp;
+		return val;
+	}
+
+	async function deleted(root, number, boot) {
+		if(typeof(root) == "undefined" || root.value == "") {
 			return root;
 		}
 		if(root.value == number) {
-			if(typeof(root.next) == "undefined" && typeof(root.next) == "undefined") {
+			if((root.next.value =="" || typeof(root.next) == "undefined") && (root.pre.value=="" || typeof(root.next) == "undefined")) {
+				// await inorders(boot);
+				delete root;
 				return "undefined";
 			}
-			else if(typeof(root.next) == "undefined") {
-				return root.pre;
+			else if(typeof(root.next) == "undefined" || root.next.value=="") {
+				// await inorders(boot);
+				del = root;
+				p = root.pre;
+				delete root;
+				return p;
 			}
-			else if(typeof(root.pre) == "undefined") {
-				return root.next;
+			else if(typeof(root.pre) == "undefined" || root.pre.value=="") {
+				// await inorders(boot);
+				del = root;
+				p = root.next;
+				delete root;
+				return p;
 			}
 			else {
-
+				a = findMin(root.next);
+				root.value = a;
+				return root;
 			}
 		}
 		else if(root.value < number) {
-			root = await deleted(root.next, number);
+			await sleep(time_delay).then(() => {
+				temp_animation(root.xx, root.yy, root.value);
+			})
+			root.next = await deleted(root.next, number, boot);
 		}
 		else {
-			root = await deleted(root.pre, number);	
+			await sleep(time_delay).then(() => {
+				temp_animation(root.xx, root.yy, root.value);
+			})
+			root.pre = await deleted(root.pre, number, boot);	
 		}
 	}
 
@@ -194,15 +224,20 @@
 
 		document.querySelector(".delete").addEventListener("click", () => {
 			number = document.querySelector(".del").value
+			document.querySelector(".delete").disabled = true;
 			if(number.length == 0) {
 				alert("Enter the number");
-				return;
+				return;	
 			}
 
-			root = deleted(root, +number);
+			tree_deletion_animation(number);
 		})
 	}
 
+	async function tree_deletion_animation(number) {
+		root = await deleted(root, +number, root);
+		await inorders(root);
+	}
 
 	function draw_array(arr) {
 		let size = arr.length;
@@ -226,6 +261,27 @@
 			ctx.closePath();
 		}
 		ctx.strokeStyle = "white";	
+	}
+
+	async function tempAnimation(x, y1, val) {
+		ctx.beginPath();
+		ctx.fillStyle = "black";
+		ctx.moveTo(x, y1);
+		ctx.arc(x, y1, width, 0, Math.PI * 2, true);
+		ctx.fill();
+		ctx.fillStyle = "white";
+		ctx.fillText(val, x - 10, y1)
+		ctx.fillStyle = "red";
+		ctx.closePath();
+	}
+
+	async function inorders(root) {
+		if(typeof(root) == "undefined" || root.value == "") {
+			return;
+		}
+		await inorders(root.pre);
+        tempAnimation(root.xx, root.yy, root.value);
+		await inorders(root.next);
 	}
 
 	function create_tree(x, y, y1, num, root) {
