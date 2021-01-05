@@ -77,7 +77,61 @@
 		add_listeners()
 	}
 
-	function drawHash() {
+	async function compare() {
+		pw = ctx.canvas.width / size;
+		h = 70;
+		y = ctx.canvas.height - 100;
+		let i;
+		k = ssize + 2;
+		for(i=0; i<ssize; i++ ){
+			// await sleep(time_delay).then(() => {
+				k = 1 + k
+			
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				if(hashString.length - 1 <= i) {
+					if(hashString[i] != substr[i]) {
+						ctx.fillStyle = "red";			
+					}
+				}
+				ctx.fillRect(k * pw, y, pw, h);
+				
+				ctx.strokeStyle = "white";
+				ctx.strokeRect(k * pw, y, pw, h);
+				
+				ctx.fillStyle = "white";
+				ctx.font = "bolder 13px ubuntu"
+				ctx.fillText(substr[i], k * pw + pw / 2, y + h / 2);
+
+				ctx.closePath();
+			// })	
+		}
+
+		y = ctx.canvas.height - 200;
+		k = ssize + 2;
+		for(i=0; i<hashString.length; i++ ){
+			// await sleep(time_delay).then(() => {
+				k += 1;
+			
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				if(hashString[i] != substr[i]) {
+					ctx.fillStyle = "red";			
+				}
+				ctx.fillRect(k * pw, y, pw, h);
+				
+				ctx.strokeStyle = "white";
+				ctx.strokeRect(k * pw, y, pw, h);
+				
+				ctx.fillStyle = "white";
+				ctx.font = "bolder 13px ubuntu"
+				ctx.fillText(hashString[i], k * pw + pw / 2, y + h / 2);
+				ctx.closePath();
+			// })		
+		}
+	}
+
+	async function drawHash() {
 		pw = ctx.canvas.width / size;
 		h = 70;
 		y = ctx.canvas.height - 100;
@@ -106,6 +160,8 @@
 		ctx.fillStyle = "white";
 		ctx.font = "bolder 13px ubuntu"
 		ctx.fillText(ascii_sstr, i * pw + pw / 2, y + h / 2);
+		ctx.fillStyle = "black";
+		ctx.fillText("SUBSTR", 100, ctx.canvas.height - 10);
 
 		ctx.closePath();
 		i = 0;
@@ -134,12 +190,18 @@
 		ctx.fillStyle = "white";
 		ctx.font = "bolder 13px ubuntu"
 		ctx.fillText(ascii_str, i * pw + pw / 2, y + h / 2);
+		i++;
 
+		if(ascii_sstr == ascii_str) {
+				await sleep(time_delay).then(() => {
+					compare();
+				})
+		}
 		ctx.closePath();
 
 	}
 
-	function drawArray(i, j) {
+	async function drawArray(i, j) {
 		pw = ctx.canvas.width / size;
 		h = 70;
 		gap = 10;
@@ -165,14 +227,14 @@
 			if(k == i) {
 				ctx.fillStyle = "brown";	
 			}
-			ctx.fillRect(k * pw, 3 * h, pw, h);
+			ctx.fillRect(k * pw, 2* h, pw, h);
 			
 			ctx.strokeStyle = "white";
-			ctx.strokeRect(k * pw, 3 * h, pw, h);
+			ctx.strokeRect(k * pw, 2* h, pw, h);
 			
 			ctx.fillStyle = "white";
 			ctx.font = "bolder 13px ubuntu"
-			ctx.fillText(k, k * pw + pw / 2, 3 * h + h / 2);
+			ctx.fillText(k, k * pw + pw / 2,2 * h + h / 2);
 
 
 
@@ -187,31 +249,38 @@
 	async function animate() {
 		let j = 0;
 		for(let i=0; i<size; i++) {
-			drawHash();
+			hashString = ""
+			for(let k=j; k<=i; k++) {
+				hashString += str[k];
+			}
 			if(i < ssize - 1) {
 				await sleep(time_delay).then(() => {
 						drawArray(j, i);
+						drawHash();
+			
 				});
 			}
 			else if(i == ssize - 1) {
 				await sleep(time_delay).then(() => {
 					drawArray(j, i);
+					drawHash();
+			
 					j++;
 				});
 			}
 			else {
 				await sleep(time_delay).then(() => {
 					drawArray(j, i);
+					drawHash();
+			
 					j++;
 				});
 			}
-
-			hashString = ""
-			for(let k=j; k<=i; k++) {
-				hashString += str[k];
-			}
-			
 		}
+
+		await sleep(time_delay).then(() => {
+			alert("found the substring at index 14");
+		})
 
 	}
 
