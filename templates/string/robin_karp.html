@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Rabin Karp</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.visualize {
+			padding: 10px 20px;
+		}
+
+		.instruction {
+			padding: 10px 20px 10px 0px;
+			background: lightgreen;
+		}
+		.instruction > span {
+			background: green;
+			font-weight: bolder;
+			color: white;
+			padding: 10px 20px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Rabin Karp</p>
+	<canvas class='grid' width="1000" height="550">
+		
+	</canvas>
+	<div>
+		<span class="instruction"><span>Hash Function :</span>  Sum of ASCII</span>
+		<button class="visualize">Compare</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let arr = [];
+	let time_delay = 1000;
+	let str = "ABABDABACDABABCABAB";
+	size = str.length;
+	let substr = "CABAB";
+	let ssize = substr.length;
+
+	init();
+// Utility
+	function init() {
+		drawArray(0, 0);
+		add_listeners()
+	}
+
+	function drawArray(i, j) {
+		console.log(i, j);
+		pw = ctx.canvas.width / size;
+		h = 70;
+		gap = 10;
+		for(let k = 0; k<size; k++) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			if(k >= i && k <=(j)) {
+				ctx.fillStyle = "yellow";	
+			}
+			ctx.fillRect(k * pw, 0 * h, pw, h);
+			
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(k * pw, 0 * h, pw, h);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(str[k], k * pw + pw / 2, 0 * h + h / 2);
+			
+
+			///
+
+			ctx.fillStyle = "gray";
+			if(k == i) {
+				ctx.fillStyle = "brown";	
+			}
+			ctx.fillRect(k * pw, 3 * h, pw, h);
+			
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(k * pw, 3 * h, pw, h);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(k, k * pw + pw / 2, 3 * h + h / 2);
+
+
+
+			ctx.closePath();
+		}
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 1 * h + gap, pw * size, h)
+		ctx.strokeStyle = "lightgreen";
+		ctx.strokeRect(0, 1 * h + gap, pw * size, h)
+	}
+
+	async function animate() {
+		let j = 0;
+		for(let i=0; i<size; i++) {
+			if(i < ssize - 1) {
+				await sleep(time_delay).then(() => {
+						drawArray(j, i);
+				});
+			}
+			else if(i == ssize - 1) {
+				await sleep(time_delay).then(() => {
+					drawArray(j, i);
+					j++;
+				});
+			}
+			else {
+				await sleep(time_delay).then(() => {
+					drawArray(j, i);
+					j++;
+				});
+			}
+		}
+
+	}
+
+	function add_listeners() {
+		document.querySelector(".visualize").addEventListener("click", () => {
+			document.querySelector(".visualize").disabled = true;
+			animate();
+		})
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
