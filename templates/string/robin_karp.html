@@ -67,7 +67,9 @@
 	size = str.length;
 	let substr = "CABAB";
 	let ssize = substr.length;
-
+	let hashString = "";
+	let ascii_sstr = 0;
+	let ascii_str = 0;
 	init();
 // Utility
 	function init() {
@@ -75,8 +77,69 @@
 		add_listeners()
 	}
 
+	function drawHash() {
+		pw = ctx.canvas.width / size;
+		h = 70;
+		y = ctx.canvas.height - 100;
+		let i;
+		ascii_sstr = 0;
+		for(i=0; i<ssize; i++ ){
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			
+			ctx.fillRect(i * pw, y, pw, h);
+			
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(i * pw, y, pw, h);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(substr[i], i * pw + pw / 2, y + h / 2);
+
+			ctx.closePath();
+			ascii_sstr += substr.charCodeAt(i);		
+		}
+
+		ctx.beginPath();
+		ctx.fillStyle = "blue";
+		ctx.fillRect(i * pw, y, pw * 1.5, h);
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 13px ubuntu"
+		ctx.fillText(ascii_sstr, i * pw + pw / 2, y + h / 2);
+
+		ctx.closePath();
+		i = 0;
+		ascii_str = 0;
+		y = ctx.canvas.height - 200;
+		for(i=0; i<hashString.length; i++ ){
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			
+			ctx.fillRect(i * pw, y, pw, h);
+			
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(i * pw, y, pw, h);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(hashString[i], i * pw + pw / 2, y + h / 2);
+
+			ctx.closePath();
+			ascii_str += hashString.charCodeAt(i);	
+			ctx.closePath();		
+		}
+		ctx.beginPath();
+		ctx.fillStyle = "blue";
+		ctx.fillRect(i * pw, y, pw * 1.5, h);
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 13px ubuntu"
+		ctx.fillText(ascii_str, i * pw + pw / 2, y + h / 2);
+
+		ctx.closePath();
+
+	}
+
 	function drawArray(i, j) {
-		console.log(i, j);
 		pw = ctx.canvas.width / size;
 		h = 70;
 		gap = 10;
@@ -124,6 +187,7 @@
 	async function animate() {
 		let j = 0;
 		for(let i=0; i<size; i++) {
+			drawHash();
 			if(i < ssize - 1) {
 				await sleep(time_delay).then(() => {
 						drawArray(j, i);
@@ -141,6 +205,12 @@
 					j++;
 				});
 			}
+
+			hashString = ""
+			for(let k=j; k<=i; k++) {
+				hashString += str[k];
+			}
+			
 		}
 
 	}
