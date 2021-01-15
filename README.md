@@ -60,8 +60,9 @@
   5. Queue Using Linked List
 
 **BINARY SEARCH TREE ALGORITHMS**
-  1. Traversal (Inorder, Preorder, Postorder)
-  2. AVL Rotations (LL, LR, RR, RL)
+  1. BST Implementation
+  2. Traversal (Inorder, Preorder, Postorder)
+  3. AVL Rotations (LL, LR, RR, RL)
 
 **GRAPH ALGORITHMS**
   1.  BFS
@@ -87,7 +88,8 @@
   5. Quick Sort
   6. Merge Sort
   7. Counting Sort
-
+  8. Shell Sort
+  
 **BINARY SEARCH ALGORITHMS**
   1. Binary Search
   2. Start Pont Of Rotated Array
@@ -133,10 +135,11 @@
   10. Ladders Problem
 
 **STRING ALGORITHMS**
-  1. KMP
-  2. Robin Karp
-  3. Boyer Moore
-  4. Z Function
+  1. Naive Matching
+  2. KMP
+  3. Robin Karp
+  4. Boyer Moore
+  5. Z Function
 
 **DISJOINT SET ALGORITHMS**
   1. Union
