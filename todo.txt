@@ -5,7 +5,6 @@ sudoku
 
 // bst
 deletion
-traversal 
 rotation
 
 //binary search
