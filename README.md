@@ -18,7 +18,7 @@
  9.  String 
  10. Disjoint Set
  11. Hashing Table
- 12. Segment Tree
+ <!--12. Segment Tree -->
 
 **ARRAY ALGORITHMS**
   1. Kadanes
@@ -148,11 +148,13 @@
 **HASHING TABLES ALGORITHMS**
   1. Open Hahing
   2. Closed Hashing
-
+<!--
 **SEGMENT TREE ALGORITHMS**
   1. Range Query 
   2. Update Query
+-->
 
+<!--
 **QUESTIONS**
   1.  Array
   2.  Matrix
@@ -169,7 +171,7 @@
   13. Trie
   14. Dynamic Programming
   15. Bit Manipulation
- 
+--> 
 
 **TIME COMPLEXITY**
   1. Big-Oh (O)
