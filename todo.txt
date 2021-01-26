@@ -1,6 +1,5 @@
 kmp
 boyree moore
-segment tree
 sudoku
 
 // bst
