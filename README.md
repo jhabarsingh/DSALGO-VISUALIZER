@@ -1,5 +1,5 @@
 <p align="center">
- <img style="margin:auto" width="300" src="https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/main/logo/logo.png?raw=true" />
+ <img style="margin:auto" width="300" src="https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/main/logo/logo_2.png?raw=true" />
  <!-- <h2 align="center">DSALGO VISUALIZER </h2> -->
 </p>
 <img width="100%" src="https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/main/git_home/gif.gif?raw=true" />
