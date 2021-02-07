@@ -1,10 +1,23 @@
-kmp
-boyree moore
-sudoku
+// string
+-> kmp
+-> boyree moore
+
+// Back Tracking
+-> sudoku
 
 // bst
-deletion
-rotation
+-> deletion
+-> rotation
 
 //binary search
-minimum page allocation
+-> minimum page allocation
+
+// sort
+ -> bubble
+ -> shell
+ -> selection
+ -> quick
+ -> merge
+ -> heap
+ -> insertion
+ 
