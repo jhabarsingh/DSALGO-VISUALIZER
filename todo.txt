@@ -7,7 +7,6 @@
 
 // bst
 -> deletion
--> rotation
 
 // sort
  -> bubble
