@@ -66,7 +66,6 @@
 **BINARY SEARCH TREE ALGORITHMS**
   1. BST Implementation
   2. Traversal (Inorder, Preorder, Postorder)
-  3. AVL Rotations (LL, LR, RR, RL)
 
 **GRAPH ALGORITHMS**
   1.  BFS
@@ -98,8 +97,7 @@
   1. Binary Search
   2. Start Pont Of Rotated Array
   3. Find Peak Element
-  4. Minimum Page Allocation
-  5. Biotonic Array Search
+  4. Biotonic Array Search
 
 **RECURSION ALGORITHMS**
   1. Factorial 
@@ -143,7 +141,6 @@
   2. KMP
   3. Robin Karp
   4. Boyer Moore
-  5. Z Function
 
 **DISJOINT SET ALGORITHMS**
   1. Union
