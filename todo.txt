@@ -9,9 +9,6 @@
 -> deletion
 -> rotation
 
-//binary search
--> minimum page allocation
-
 // sort
  -> bubble
  -> shell
@@ -21,3 +18,7 @@
  -> heap
  -> insertion
  
+ // Divide And Conquer
+ -> merge
+ -> quick
+ -> counting
