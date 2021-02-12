@@ -21,7 +21,8 @@
 
 		p:nth-child(1) {
 			padding: 10px 20px;
-			text-align: center;
+			text-alig
+			n: center;
 			font-family: ubuntu;
 			font-weight: bolder;
 			font-size: 25px;
@@ -52,7 +53,7 @@
 // Main
 	let ctx = document.querySelector("canvas").getContext("2d");
 	size = 9;
-	time_delay = 1000;
+	time_delay = 500;
 	width = ctx.canvas.width / size;
 	height = ctx.canvas.height / size;
 	let sudoku = [
@@ -81,7 +82,7 @@
 		}
 		create_grid();
 		document.querySelector(".solve").addEventListener("click", () => {
-			solve_sudoku(0, 0);
+			solve_sudoku(0);
 		})
 	}
 
@@ -97,70 +98,66 @@
 		// Presnt in 3 X 3 Grid
 		for(let i = 3 * l; i<(3 * (l + 1)); i++) {
 			for(let j = 3 * r; j<(3 * (r + 1)); j++) {
-				if(sudoku_solver[i][j] == value) return false;
+				if(sudoku[i][j] == value) return false;
 			}
 		}
 
 		// Present in same Row, Col;
-
 		for(let i=0; i<size; i++) {
-			if(sudoku_solver[i][y] == value) return false;
-			if(sudoku_solver[x][i] == value) return false;
+			if(sudoku[i][y] == value) return false;
+			if(sudoku[x][i] == value) return false;
 		}
 		return true;
 
 	}
 
-	async function solve_sudoku(i, j) {
-		if(i == size - 1 && j == size - 1) {
+	async function solve_sudoku(num) {
+		if(done) return false;
+		if(num == size*size) {
 			done = true;
+			return;
 		}
-		if(done) return;
-		x = i;
-		y = j;
-		if(x < 0 || y < 0 || y >=size || x >= size) return;
-		let stack = [9, 8, 7, 6, 5, 4, 3, 2, 1]
-		while(stack.length != 0) {
-			let e = stack[stack.length - 1];
-			stack.pop();
-			console.log(x, y, e)
-			if(sudoku[x][y]) {
-				if((y + 1) % 10 == 0)
-					await solve_sudoku(x + 1, 0)
-				else 
-					await solve_sudoku(x, y + 1);
-			}
-			if(sudoku_checker(e, x, y)) {
-				await sleep(time_delay).then(() => {
-					ctx.beginPath();
-					ctx.fillStyle = "lightgreen";
-					ctx.fillRect(j * width, i * height, width, height);	
-					ctx.fillStyle = "black";
-					ctx.font = "bolder 20px arial"
-					ctx.fillText(e, j * width + width / 2, i * height + height / 2);
-					ctx.strokeStyle = "white";
-					ctx.strokeRect(j * width, i * height, width , height );
-					ctx.stroke();
-					ctx.closePath();
-				})
-				sudoku_solver[x][y] = e;
-				if((y + 1) % 10 == 0)
-					await solve_sudoku(x + 1, 0)
-				else 
-					await solve_sudoku(x, y + 1)
-				sudoku_solver[x][y] = 0;
-				await sleep(time_delay).then(() => {
-					ctx.beginPath();
-					ctx.fillStyle = "lightgreen";
-					ctx.fillRect(j * width, i * height, width, height);	
-					ctx.strokeStyle = "white";
-					ctx.strokeRect(j * width, i * height, width , height );
-					ctx.stroke();
-					ctx.closePath();
-				})
-			}
+		
+		if(sudoku[Math.floor(num / 9)][num % 9] != 0) {
+			return solve_sudoku(num + 1);
 		}
+	   else {
+	    	let i = Math.floor(num / 9);
+			let j = (num % 9);
 
+			for(let e=1; e<=size; e++) {
+				if(done) return;
+				if(sudoku_checker(e, i, j)) {
+					await sleep(time_delay).then(() => {
+						ctx.beginPath();
+						ctx.fillStyle = "lightgreen";
+						ctx.fillRect(j * width, i * height, width, height);	
+						ctx.fillStyle = "black";
+						ctx.font = "bolder 20px arial"
+						ctx.fillText(e, j * width + width / 2, i * height + height / 2);
+						ctx.strokeStyle = "white";
+						ctx.strokeRect(j * width, i * height, width , height );
+						ctx.stroke();
+						ctx.closePath();
+					})
+					sudoku[i][j] = e; 
+					await solve_sudoku(num + 1);
+					sudoku[i][j] = 0;
+					if(!done) {
+						await sleep(time_delay).then(() => {
+							ctx.beginPath();
+							ctx.fillStyle = "lightgreen";
+							ctx.fillRect(j * width, i * height, width, height);	
+							ctx.strokeStyle = "white";
+							ctx.strokeRect(j * width, i * height, width , height );
+							ctx.stroke();
+							ctx.closePath();
+						});
+					}
+				}
+			}
+	    }
+	    return false;
 	}
 
 	function create_grid() {
