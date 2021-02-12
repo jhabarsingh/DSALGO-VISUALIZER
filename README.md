@@ -140,7 +140,7 @@
   1. Naive Matching
   2. KMP
   3. Robin Karp
-  4. Boyer Moore
+  4. Z Algorithm
 
 **DISJOINT SET ALGORITHMS**
   1. Union
