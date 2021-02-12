@@ -2,12 +2,6 @@
 -> kmp
 -> boyree moore
 
-// Back Tracking
--> sudoku
-
-// bst
--> deletion
-
 // sort
  -> bubble
  -> shell
