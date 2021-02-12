@@ -59,12 +59,6 @@
 		
 	</canvas>
 	<div>
-		<!-- <select name="traversal_type" class="traversal_type">
-			<option  class="option"  value="inorder"selected>Inorder</option>
-			<option class="option"  value="preorder">Preorder</option>
-			<option class="option" value="postorder" >Postorder</option>
-		</select>
-		<button class="insert">Traverse</button> -->
 		<input type="number" name="" class="del">
 		<button class="delete">Delete</button>
 	</div>
@@ -74,6 +68,7 @@
 // Main
 	
 	arr = [50, 25, 20, 23, 21, 24, 40, 45, 42, 75, 60, 55, 65, 80, 85, 90, 78, 76, 79, 18, 19, 17, 27, 26, 28, 46, 54, 56, 64, 66, 84]
+	let set = [];
 	size = arr.length;
 	max = 100;
 	width = 30;
@@ -103,117 +98,56 @@
 
 
 	function init() {
-		// randomize_an_array();
-		boot = root;
 		draw_array([]);
-		create_tree(start, ctx.canvas.width - start, 0, 0, boot);
-		// create_grid();
+		create_tree(start, ctx.canvas.width - start, 0, 0, root);
 		add_listeners();
 	}	
 
-	async function temp_animation(x, y1, val) {
-		await sleep(time_delay).then(() => {
-			ctx.beginPath();
-			ctx.fillStyle = "yellow";
-			ctx.moveTo(x, y1);
-			ctx.arc(x, y1, width, 0, Math.PI * 2, true);
-			ctx.fill();
-			ctx.fillStyle = "black";
-			ctx.fillText(val, x - 5, y1)
-			ctx.closePath();
-		})
-
-		await sleep(time_delay).then(() => {
-			ctx.beginPath();
-			ctx.fillStyle = "red";
-			ctx.moveTo(x, y1);
-			ctx.arc(x, y1, width, 0, Math.PI * 2, true);
-			ctx.fill();
-			ctx.fillStyle = "white";
-			ctx.fillText(val, x - 10, y1)
-			ctx.fillStyle = "red";
-			ctx.closePath();
-		})
-	}
-	
-	async function temp_animation(x, y1, val) {
-		await sleep(time_delay).then(() => {
-			ctx.beginPath();
-			ctx.fillStyle = "yellow";
-			ctx.moveTo(x, y1);
-			ctx.arc(x, y1, width, 0, Math.PI * 2, true);
-			ctx.fill();
-			ctx.fillStyle = "black";
-			ctx.fillText(val, x - 5, y1)
-			ctx.closePath();
-		})
-
-		await sleep(time_delay).then(() => {
-			ctx.beginPath();
-			ctx.fillStyle = "red";
-			ctx.moveTo(x, y1);
-			ctx.arc(x, y1, width, 0, Math.PI * 2, true);
-			ctx.fill();
-			ctx.fillStyle = "white";
-			ctx.fillText(val, x - 10, y1)
-			ctx.fillStyle = "red";
-			ctx.closePath();
-		})
-	}
-
 	function findMin(root) {
 		temp = root;
-		while(temp.pre != "undefined" && temp.pre.value != "") {
+		while(typeof(temp.pre) != "undefined" && temp.pre.value != "") {
 			temp = temp.pre;
 		}
-		val = temp.value;
+		let value = temp.value;
 		temp.value = "";
-		delete temp;
-		return val;
+		return value;
 	}
 
-	async function deleted(root, number, boot) {
-		if(typeof(root) == "undefined" || root.value == "") {
-			return root;
+	function deleted(node, number) {
+		if(typeof(node) == "undefined" || node.value == "") {
+			return node;
 		}
-		if(root.value == number) {
-			if((root.next.value =="" || typeof(root.next) == "undefined") && (root.pre.value=="" || typeof(root.next) == "undefined")) {
-				// await inorders(boot);
-				delete root;
-				return "undefined";
+		if(node.value == number) {
+			if((node.next.value =="" || typeof(node.next) == "undefined") && (node.pre.value=="" || typeof(node.next) == "undefined")) {
+				node.value =  "";
+				return node;
 			}
-			else if(typeof(root.next) == "undefined" || root.next.value=="") {
-				// await inorders(boot);
-				del = root;
-				p = root.pre;
-				delete root;
-				return p;
+			else if(typeof(node.next) == "undefined" || node.next.value=="") {
+				node.value = node.pre.value;
+				node.pre.value = "";
+				return node;
 			}
-			else if(typeof(root.pre) == "undefined" || root.pre.value=="") {
-				// await inorders(boot);
-				del = root;
-				p = root.next;
-				delete root;
-				return p;
+			else if(typeof(node.pre) == "undefined" || node.pre.value=="") {
+				node.value = node.next.value;
+				node.next.value = "";
+				return node;
 			}
 			else {
-				a = findMin(root.next);
-				root.value = a;
-				return root;
+				minVal = findMin(node.next);
+				node.value = minVal;
+				return node;
 			}
 		}
-		else if(root.value < number) {
-			await sleep(time_delay).then(() => {
-				temp_animation(root.xx, root.yy, root.value);
-			})
-			root.next = await deleted(root.next, number, boot);
+		
+		else if(node.value < number) {
+			
+			node.next = deleted(node.next, number);
 		}
+		
 		else {
-			await sleep(time_delay).then(() => {
-				temp_animation(root.xx, root.yy, root.value);
-			})
-			root.pre = await deleted(root.pre, number, boot);	
+			node.pre = deleted(node.pre, number);	
 		}
+		return node;
 	}
 
 
@@ -229,14 +163,14 @@
 				alert("Enter the number");
 				return;	
 			}
-
-			tree_deletion_animation(number);
+			root = deleted(root, +number);
+			console.log(root)
+			clear();
+			creator(start, ctx.canvas.width - start, 0, 0, root);
+			inorderfun(root);
+			document.querySelector(".delete").disabled = false;
+			
 		})
-	}
-
-	async function tree_deletion_animation(number) {
-		root = await deleted(root, +number, root);
-		await inorders(root);
 	}
 
 	function draw_array(arr) {
@@ -275,15 +209,6 @@
 		ctx.closePath();
 	}
 
-	async function inorders(root) {
-		if(typeof(root) == "undefined" || root.value == "") {
-			return;
-		}
-		await inorders(root.pre);
-        tempAnimation(root.xx, root.yy, root.value);
-		await inorders(root.next);
-	}
-
 	function create_tree(x, y, y1, num, root) {
 		let intit_x = x;
 		let init_y = y;
@@ -295,11 +220,16 @@
 		ctx.moveTo(x, y1);
 		ctx.arc(x, y1, width, 0, Math.PI * 2, true);
 		ctx.fill();
+		
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 16px ubuntu";
+		ctx.fillText(root.value, root.xx - 10, root.yy);
+
 		ctx.fillStyle = "black";
 
 		root.xx = x;
 		root.yy = y1;
-		root.value = "";
+		if(!root.value) root.value = "";
 		root.next = new Node();
 		root.pre = new Node();
 		
@@ -324,8 +254,64 @@
 		ctx.lineTo((init_y + x) / 2, y1 + width * mul);
 		ctx.stroke();
 		create_tree(x, init_y, y1, num+1, root.next);
+	}
 
-	}	
+	function creator(x, y, y1, num, root) {
+		let intit_x = x;
+		let init_y = y;
+		x = (x + y) / 2;
+		y1 = y1 + width * mul;
+		
+		// create circles
+		ctx.fillStyle = "red";
+		ctx.moveTo(x, y1);
+		ctx.arc(x, y1, width, 0, Math.PI * 2, true);
+		ctx.fill();
+		
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 16px ubuntu";
+		ctx.fillText(root.value, root.xx - 10, root.yy);
+
+		ctx.fillStyle = "black";
+
+		
+		if(num == end) {
+			delete root;
+			return;
+		}
+		
+
+		// create left pointers
+		ctx.lineWidth = 1;
+		ctx.fillStyle = "black";
+		ctx.moveTo(x, y1);
+		ctx.lineTo((intit_x + x) / 2, y1 + width * mul);
+		ctx.stroke();	
+		creator(intit_x, x, y1, num+1, root.pre);
+
+		// Create right pointers
+		ctx.lineWidth = 1;
+		ctx.fillStyle = "black";
+		ctx.moveTo(x, y1);
+		ctx.lineTo((init_y + x) / 2, y1 + width * mul);
+		ctx.stroke();
+		creator(x, init_y, y1, num+1, root.next);
+
+	}
+
+	function inorderfun(root) {
+		if(typeof(root) == "undefined" || root.value == "") {
+			return;
+		}
+		// BODY
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 16px ubuntu";
+			ctx.fillText(root.value, root.xx - 10, root.yy);
+		//
+		inorderfun(root.pre);
+		inorderfun(root.next);
+			
+	}
 
 
 	function insert_tree(root, value) {
@@ -361,6 +347,13 @@
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 	
+	function clear() {
+		ctx.beginPath();
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+		ctx.closePath();
+	}
+
 	</script>
 </body>
 </html>
