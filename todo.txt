@@ -1,6 +1,6 @@
 // string
 -> kmp
--> boyree moore
+-> Z Function
 
 // sort
  -> bubble
