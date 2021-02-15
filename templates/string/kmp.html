@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>KMP Search</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.visualize {
+			padding: 10px 20px;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>KMP Search</p>
+	<canvas class='grid' width="1000" height="550">
+		
+	</canvas>
+	<div>
+		<button class="visualize">Compare</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let arr = [];
+	let time_delay = 1000;
+	let str = "ABABDABACDABABCABAB";
+	size = str.length;
+	let substr = "ABABCABAB";
+	let ssize = substr.length;
+	let lcs = [];
+	init();
+// Utility
+	function init() {
+		for(let i=0; i<ssize; i++) {
+			lcs.push(0);
+		}
+		getKmpArray();
+		drawArray(0, 0);
+		drawLcs(0, 350);
+		add_listeners()
+	}
+
+	function drawLcs(x, y) {
+		let h = 50;
+		let i = x;
+		for(let k = 0; k<ssize; k++) {
+			// Substr
+
+			gap = 10;
+			ctx.beginPath();
+			ctx.fillStyle = "blue";
+			ctx.fillRect((i + k) * pw, y + gap, pw, h);	
+			ctx.strokeStyle = "white";
+			ctx.strokeRect((i + k) * pw, y + gap, pw, h);			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(substr[k], (i + k) * pw + pw / 2, y + h / 2 + gap);
+			
+			// LCS
+
+			gap = 60;
+			ctx.fillStyle = "red";
+			ctx.fillRect((i + k) * pw, y + gap, pw, h / 2);	
+			ctx.strokeStyle = "white";
+			ctx.strokeRect((i + k) * pw, y + gap, pw, h / 2);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(lcs[k], (i + k) * pw + pw / 2, y + h / 4 + 4 + gap);
+
+			ctx.closePath();
+		}
+		
+		ctx.fillStyle = "red";
+		ctx.font = "bolder 16px ubuntu"	
+		let k = ssize;
+		ctx.fillText("LCS ARRAY", (i + k) * pw + pw / 2, y + h / 4 + 4 + gap);
+
+	}
+
+	function getKmpArray() {
+		let i = 1;
+	    let len = 0;
+	    while(i < ssize) {
+	        if(substr[len] == substr[i]) {
+	            lcs[i] = len + 1;
+	            len += 1;
+	            i++;
+	        }
+	        else {
+	            if(len == 0) {
+	                lcs[i] = 0;
+	                i++;
+	            }
+	            else {
+	                len = lcs[len - 1];
+	            }
+	        }
+	    }
+	}
+
+	function drawArray(i, j) {
+		console.log(i, j);
+		pw = ctx.canvas.width / size;
+		h = 70;
+		gap = 10;
+		for(let k = 0; k<size; k++) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			if(k >= i && k <=(i + j)) {
+				ctx.fillStyle = "yellow";	
+			}
+			ctx.fillRect(k * pw, 0 * h, pw, h);
+			
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(k * pw, 0 * h, pw, h);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(str[k], k * pw + pw / 2, 0 * h + h / 2);
+			
+
+			///
+
+			// ctx.fillStyle = "gray";
+			// if(k == i) {
+			// 	ctx.fillStyle = "brown";	
+			// }
+			// ctx.fillRect(k * pw, 3 * h, pw, h);
+			
+			// ctx.strokeStyle = "white";
+			// ctx.strokeRect(k * pw, 3 * h, pw, h);
+			
+			// ctx.fillStyle = "white";
+			// ctx.font = "bolder 13px ubuntu"
+			// ctx.fillText(k, k * pw + pw / 2, 3 * h + h / 2);
+
+
+
+			ctx.closePath();
+		}
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 1 * h + gap, pw * size, h)
+		ctx.strokeStyle = "lightgreen";
+		ctx.strokeRect(0, 1 * h + gap, pw * size, h)
+		for(let k = 0; k<ssize; k++) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			if(k <=(j)) {
+				ctx.fillStyle = "yellow";	
+				if(substr[k] != str[k + i]) {
+					ctx.fillStyle = "red";		
+				}
+			}
+			ctx.fillRect((i + k) * pw, 1 * h + gap, pw, h);	
+			ctx.strokeStyle = "white";
+			ctx.strokeRect((i + k) * pw, 1 * h + gap, pw, h);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(substr[k], (i + k) * pw + pw / 2, 1 * h + h / 2 + gap);
+			
+
+				
+			ctx.closePath();
+		}
+	}
+
+	async function animate() {
+		let i = 0;
+		let j = 0;
+		while(i<(size - ssize + 1)) {
+
+			while(j<ssize) {
+				
+				if(str[i + j] != substr[j]) {
+					await sleep(time_delay).then(() => {
+						drawArray(i, j);
+					});
+					break;
+				}
+				else {
+					await sleep(time_delay).then(() => {
+						drawArray(i, j);
+					});
+				}
+				j++;
+			}
+			j = lcs[j - 1];
+			i++;
+		}
+
+		alert("Element Found at index 10");
+	}
+
+	function add_listeners() {
+		document.querySelector(".visualize").addEventListener("click", () => {
+			document.querySelector(".visualize").disabled = true;
+			animate();
+		})
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
