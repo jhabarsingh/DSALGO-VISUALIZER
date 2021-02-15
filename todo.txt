@@ -1,4 +1,4 @@
-// string
+// string -> 15 feb
 -> kmp
 -> Z Function
 
