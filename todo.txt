@@ -2,7 +2,7 @@
 -> kmp
 -> Z Function
 
-// sort
+// sort  -> 16 feb
  -> bubble
  -> shell
  -> selection
