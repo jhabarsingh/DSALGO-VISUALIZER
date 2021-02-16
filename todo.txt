@@ -15,3 +15,5 @@
  -> merge
  -> quick
  -> counting
+
+// Change animation of parition algorithm
