@@ -1,7 +1,3 @@
-// string -> 15 feb
--> kmp
--> Z Function
-
 // sort  -> 16 feb
  -> bubble
  -> shell
