@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>InsertionMerge Sort</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		button {
+			margin-top: 10px;
+			padding: 10px 30px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Merge Sort</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<div>
+		<button class="sort">Sort</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 40;
+	let arr = [];
+	let max = 50;
+	let time_delay = 500;
+
+
+	init();
+// Utility
+
+	function initialize_array() {
+		let min = 10;
+		for(let i=0; i<size; i++) {
+			let p = Math.floor(Math.random() * (max - min) + min);
+			arr.push(p);
+		}
+	}
+
+	async function animation(color) {
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+		let pw = ctx.canvas.width / size;
+		for(let i=0; i<size; i++) {
+			ctx.beginPath();
+
+			ctx.fillStyle = "black";
+			if(i == color) {
+					ctx.fillStyle = "red";
+			}
+			ctx.fillRect(i * pw, ctx.canvas.height  - (arr[i] * (ctx.canvas.height / max)), pw, arr[i] * (ctx.canvas.height / max));
+
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(i * pw, ctx.canvas.height - (arr[i] * (ctx.canvas.height / max)), pw, arr[i] * (ctx.canvas.height / max));
+
+			ctx.closePath();
+		}
+	}
+
+	function init() {
+		initialize_array();
+		animation();
+		add_listeners()
+	}
+
+	function add_listeners() {
+		document.querySelector("button").addEventListener("click", () => {	
+			document.querySelector("button").disabled = true;
+			sort(0, size - 1);
+			animation(-1);
+		})
+	}
+
+	async function sort(low, high) {
+		if(low >= high) return;
+		console.log(low, high);
+		let mid = Math.floor((low + high) / 2);
+		await sort(low, mid);
+		await sort(mid + 1, high);
+		merge(low, mid, high);
+		await sleep(time_delay).then(() => {
+			animation(-1);
+		});
+	}
+
+
+	function merge(low, mid, high) {
+		temp = [];
+		for(let i=0; i<(high - low + 1); i++) temp.push(0);
+		let i = low;
+		let j = mid + 1;
+		let counter = 0;
+		console.log(i, mid, j, high);
+		while(i <= mid && j <= high) {
+			if(arr[i] < arr[j]) {
+				temp[counter] = arr[i];
+				i++;
+			}
+			else {
+				temp[counter] = arr[j];
+				j++;
+			}
+			counter++;
+ 		}
+
+		while(i <= mid) {
+			temp[counter++] = arr[i++];
+		}
+
+		while(j <= high) {
+			temp[counter++] = arr[j++];
+		}
+		counter = 0;
+		for(i=low; i<=(high); i++) {
+			arr[i] = temp[counter++];
+		}
+		
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
