@@ -147,9 +147,12 @@
   1. Union
   2. Find
 
-**HASHING TABLES ALGORITHMS**
+**HASHING TABLE ALGORITHMS**
   1. Open Hahing
   2. Closed Hashing
+     1. Linear Probing
+     2. Quadratic Probing
+     3. Double Hashing
 <!--
 **SEGMENT TREE ALGORITHMS**
   1. Range Query 
