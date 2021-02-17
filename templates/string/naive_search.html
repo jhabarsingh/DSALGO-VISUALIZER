@@ -39,7 +39,7 @@
 </head>
 <body>
 	<p>Naive Search</p>
-	<canvas class='grid' width="1000" height="550">
+	<canvas class='grid' width="1000" height="500">
 		
 	</canvas>
 	<div>
@@ -84,24 +84,6 @@
 			ctx.font = "bolder 13px ubuntu"
 			ctx.fillText(str[k], k * pw + pw / 2, 0 * h + h / 2);
 			
-
-			///
-
-			// ctx.fillStyle = "gray";
-			// if(k == i) {
-			// 	ctx.fillStyle = "brown";	
-			// }
-			// ctx.fillRect(k * pw, 3 * h, pw, h);
-			
-			// ctx.strokeStyle = "white";
-			// ctx.strokeRect(k * pw, 3 * h, pw, h);
-			
-			// ctx.fillStyle = "white";
-			// ctx.font = "bolder 13px ubuntu"
-			// ctx.fillText(k, k * pw + pw / 2, 3 * h + h / 2);
-
-
-
 			ctx.closePath();
 		}
 		ctx.fillStyle = "lightgreen";
