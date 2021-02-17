@@ -52,7 +52,7 @@
 	let size = 30;
 	let arr = [];
 	let max = 50;
-	let time_delay = 200;
+	let time_delay = 1000;
 
 
 	init();
@@ -96,15 +96,52 @@
 	function add_listeners() {
 		document.querySelector("button").addEventListener("click", () => {
 			document.querySelector("button").disabled = true;
-			sort();
+			async function get() {
+				await sort(0, size - 1);
+				await animation(-1);
+			}
+
+			get();
 		})
 	}
 
-	async function sort() {
+	function partition(low, high) {
+		let i = low;
+		let j = low;
+		let pivot = arr[high];
+		while(j < high) {
+			if(arr[j] > pivot) {
+				j++;
+			}
+			else {
+				let temp = arr[j];
+				arr[j] = arr[i];
+				arr[i] = temp;
+
+				i++;
+				j++;
+			}
+		}
+
+		temp = arr[j];
+		arr[j] = arr[i];
+		arr[i] = temp;
+
+		return i;
+	}
+
+	async function sort(low , high) {
+		if(low >= high) return;
+		console.log(low, high);
+		let mid = Math.floor((low + high) / 2);
+
+		let x = partition(low, high);
 		
 		await sleep(time_delay).then(() => {
-			animation(-1);
+			animation(x);
 		})
+		await sort(low, x - 1);
+		await sort(x + 1, high);
 	}
 
 
