@@ -95,6 +95,7 @@
 
 	function add_listeners() {
 		document.querySelector("button").addEventListener("click", () => {
+			document.querySelector("button").disabled = true;
 			sort();
 		})
 	}
