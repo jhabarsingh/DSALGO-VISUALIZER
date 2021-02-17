@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Z FuntionKMP Search</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.visualize {
+			padding: 10px 20px;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Z Funtion</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<div>
+		<button class="visualize">Z Function</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let arr = [];
+	let time_delay = 1500;
+	let str = "ABABCABDABACDABABCAB";
+	let substr = "ABABCAB";
+	str = substr + "$" + str;
+	size = str.length;
+	
+	let ssize = substr.length;
+	let lcs = [];
+	init();
+// Utility
+	function init() {
+		for(let i=0; i<size; i++) {
+			lcs.push(0);
+		}
+		drawArray(0, 0);
+		drawLcs(0, 350);
+		add_listeners()
+	}
+
+	async function drawLcs(x, y) {
+		y = 100;
+		let h = 100;
+		let i = x;
+		for(let k = 0; k<size; k++) {
+			// LCS
+
+			gap = 60;
+			ctx.fillStyle = "red";
+			ctx.fillRect((i + k) * pw, y + gap, pw, h / 2);	
+			ctx.strokeStyle = "white";
+			ctx.strokeRect((i + k) * pw, y + gap, pw, h / 2);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			ctx.fillText(lcs[k], (i + k) * pw + pw / 2, y + h / 4 + 4 + gap);
+
+			ctx.closePath();
+		}
+		
+		ctx.fillStyle = "green";
+		ctx.font = "bolder 20px ubuntu"	
+		let k = ssize;
+		ctx.fillText("Z ARRAY", (i + k) * pw + pw / 2, y + h / 4 + 4 + gap + 50);
+
+	}
+
+	async function getKmpArray() {
+		let n = str.length; 
+	    let L, R, k; 
+	  	let y2 = 60;
+	  	let y1 = 100;
+	    L = R = 0; 
+	    for (let i = 1; i < n; ++i) 
+	    { 
+	    	await sleep(time_delay).then(() => {
+				drawArray(i, 0);
+			});
+
+	        if (i > R) 
+	        { 
+	            L = R = i; 
+	  			
+	  			await sleep(time_delay).then(() => {
+					draw(L, y2, "blue", "L")
+				});
+
+	            while (R<n && str[R-L] == str[R]) { 
+	                await sleep(time_delay).then(() => {
+						draw(R, y1, "green", "R")
+					});
+	                R++; 
+	            }
+	            
+	            await sleep(time_delay).then(() => {
+					draw(R, y1, "green", "R")
+				});
+
+	            
+	            lcs[i] = R-L; 
+	            R--;
+
+	            await sleep(time_delay).then(() => {
+					draw(R, y1, "green", "R")
+				});  
+	        } 
+	        else
+	        { 
+	            k = i-L; 
+	  			
+	            if (lcs[k] < R-i+1) 
+	                lcs[i] = lcs[k]; 
+	  
+	            else
+	            { 
+	                L = i; 
+	                await sleep(time_delay).then(() => {
+						draw(L, y2, "blue", "L")
+					});
+	                while (R<n && str[R-L] == str[R]){ 
+	                    await sleep(time_delay).then(() => {
+							draw(R, y1, "green", "R")
+						});
+	                    R++; 
+	                }
+	                
+	                await sleep(time_delay).then(() => {
+						draw(R, y1, "green", "R")
+					});
+
+	                lcs[i] = R-L; 
+	                R--;
+	                await sleep(time_delay).then(() => {
+						draw(R, y1, "green", "R")
+					}); 
+	            } 
+	        }
+
+			await drawLcs(0, 350); 
+	    } 
+
+	    drawMatchArray();
+	}
+
+	function drawArray(i, j) {
+		pw = ctx.canvas.width / size;
+		h = 50;
+		gap = 10;
+		for(let k = 0; k<size; k++) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			if(k >= i && k <=(i + j)) {
+				ctx.fillStyle = "yellow";	
+			}
+			if(str[k] == '$') {
+				ctx.fillStyle = "red";
+			}
+			ctx.fillRect(k * pw, 0 * h, pw, h);
+			
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(k * pw, 0 * h, pw, h);
+			
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 13px ubuntu"
+			if(str[k] == '$') {
+				ctx.font = "bolder 25px ubuntu"
+			}
+			if(str[k] == '$') {
+				ctx.fillText(str[k], k * pw + pw / 2 - 5, 0 * h + h * (3 / 5));
+			}
+			else 
+				ctx.fillText(str[k], k * pw + pw / 2, 0 * h + h / 2);
+			
+			ctx.closePath();
+		}
+	}
+
+	function drawMatchArray() {
+		pw = ctx.canvas.width / size;
+		h = 50;
+		gap = 10;
+		let k = ssize + 1;
+
+		while(k < size) {
+			if(lcs[k] == ssize) {
+				t = k
+				while(k < t + ssize) {
+					ctx.beginPath();
+					ctx.fillStyle = "yellow";
+					ctx.fillRect(k * pw, 0 * h, pw, h);
+					ctx.strokeStyle = "white";
+					ctx.strokeRect(k * pw, 0 * h, pw, h);
+					ctx.fillStyle = "black";
+					ctx.font = "bolder 13px ubuntu"
+					ctx.fillText(str[k], k * pw + pw / 2, 0 * h + h / 2);
+					ctx.closePath();
+					k++;
+				}
+			}	
+			else {
+				ctx.beginPath();
+				ctx.fillStyle = "black";
+				ctx.fillRect(k * pw, 0 * h, pw, h);
+				ctx.strokeStyle = "white";
+				ctx.strokeRect(k * pw, 0 * h, pw, h);
+				ctx.closePath();
+				ctx.fillStyle = "white";
+				ctx.font = "bolder 13px ubuntu"
+				ctx.fillText(str[k], k * pw + pw / 2, 0 * h + h / 2);
+				k++;
+			}
+		}
+	}
+
+	function draw(i, y, color, variable) {
+		let h = ctx.canvas.width / size;
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, y, ctx.canvas.width, h);
+		ctx.strokeStyle = "lightgreen";
+		ctx.strokeRect(0, y, ctx.canvas.width, h);
+		
+		ctx.fillStyle = color;
+		pw = ctx.canvas.width / size;
+		ctx.fillRect(pw * i, y, pw, h);
+		
+		ctx.fillStyle = "white";
+		ctx.fillText(variable, pw * i + pw / 2, y + h / 2);
+		
+		ctx.fillStyle = "lightgreen";
+
+
+	}
+
+	function add_listeners() {
+		document.querySelector(".visualize").addEventListener("click", () => {
+			document.querySelector(".visualize").disabled = true;	
+			// animate();
+			getKmpArray();
+		})
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
