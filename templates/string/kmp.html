@@ -39,7 +39,7 @@
 </head>
 <body>
 	<p>KMP Search</p>
-	<canvas class='grid' width="1000" height="550">
+	<canvas class='grid' width="1000" height="500">
 		
 	</canvas>
 	<div>
@@ -51,7 +51,7 @@
 	let ctx = document.querySelector("canvas").getContext("2d");
 	let size = 10;
 	let arr = [];
-	let time_delay = 1000;
+	let time_delay = 1500;
 	let str = "ABABDABACDABABCABAB";
 	size = str.length;
 	let substr = "ABABCABAB";
@@ -129,7 +129,6 @@
 	}
 
 	function drawArray(i, j) {
-		console.log(i, j);
 		pw = ctx.canvas.width / size;
 		h = 70;
 		gap = 10;
@@ -148,24 +147,6 @@
 			ctx.font = "bolder 13px ubuntu"
 			ctx.fillText(str[k], k * pw + pw / 2, 0 * h + h / 2);
 			
-
-			///
-
-			// ctx.fillStyle = "gray";
-			// if(k == i) {
-			// 	ctx.fillStyle = "brown";	
-			// }
-			// ctx.fillRect(k * pw, 3 * h, pw, h);
-			
-			// ctx.strokeStyle = "white";
-			// ctx.strokeRect(k * pw, 3 * h, pw, h);
-			
-			// ctx.fillStyle = "white";
-			// ctx.font = "bolder 13px ubuntu"
-			// ctx.fillText(k, k * pw + pw / 2, 3 * h + h / 2);
-
-
-
 			ctx.closePath();
 		}
 		ctx.fillStyle = "lightgreen";
@@ -188,9 +169,6 @@
 			ctx.fillStyle = "white";
 			ctx.font = "bolder 13px ubuntu"
 			ctx.fillText(substr[k], (i + k) * pw + pw / 2, 1 * h + h / 2 + gap);
-			
-
-				
 			ctx.closePath();
 		}
 	}
@@ -198,28 +176,29 @@
 	async function animate() {
 		let i = 0;
 		let j = 0;
-		while(i<(size - ssize + 1)) {
+		while(i < size) {
 
-			while(j<ssize) {
-				
-				if(str[i + j] != substr[j]) {
-					await sleep(time_delay).then(() => {
-						drawArray(i, j);
-					});
-					break;
-				}
-				else {
-					await sleep(time_delay).then(() => {
-						drawArray(i, j);
-					});
-				}
+			if(str[i] == substr[j]) {
+				i++;
 				j++;
 			}
-			j = lcs[j - 1];
-			i++;
+			else {
+				if(j != 0) {
+					j = lcs[j - 1];
+				}
+				else {
+					i++;
+				}
+			}
+			await sleep(time_delay).then(() => {
+				let a = i - j;
+				let b = j;
+				drawArray(a, b);
+			});
 		}
-
-		alert("Element Found at index 10");
+		await sleep(time_delay).then(() => {
+			alert("Element Found at index 10");
+		});
 	}
 
 	function add_listeners() {
