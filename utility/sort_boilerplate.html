@@ -49,10 +49,10 @@
 
 // Main
 	let ctx = document.querySelector("canvas").getContext("2d");
-	let size = 20;
+	let size = 30;
 	let arr = [];
 	let max = 50;
-	let time_delay = 500;
+	let time_delay = 200;
 
 
 	init();
@@ -66,7 +66,7 @@
 		}
 	}
 
-	async function animation() {
+	async function animation(color) {
 		ctx.fillStyle = "lightgreen";
 		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
@@ -75,6 +75,9 @@
 			ctx.beginPath();
 
 			ctx.fillStyle = "black";
+			if(i == color) {
+					ctx.fillStyle = "red";
+			}
 			ctx.fillRect(i * pw, ctx.canvas.height  - (arr[i] * (ctx.canvas.height / max)), pw, arr[i] * (ctx.canvas.height / max));
 
 			ctx.strokeStyle = "white";
@@ -87,7 +90,7 @@
 	function init() {
 		initialize_array();
 		animation();
-		add_listeners()
+		add_listeners(-1)
 	}
 
 	function add_listeners() {
@@ -105,7 +108,7 @@
 					arr[j] = temp;
 				}
 				await sleep(time_delay).then(() => {
-					animation();
+					animation(j);
 				})
 			}
 		}
