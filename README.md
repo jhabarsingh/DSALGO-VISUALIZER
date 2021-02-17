@@ -110,7 +110,8 @@
   2. Maze Generator
   3. Sudoku
   4. Knight Tour
-
+  5. Graph Coloring
+  
 **DIVIDE AND CONQUER PARADIGM**
   1. Merge Sort
   2. Quick Sort
