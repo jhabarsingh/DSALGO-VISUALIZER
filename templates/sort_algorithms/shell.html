@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shell Sort</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		button {
+			margin-top: 10px;
+			padding: 10px 30px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Shell Sort</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<div>
+		<button class="sort">Sort</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 30;
+	let arr = [];
+	let max = 50;
+	let time_delay = 200;
+
+
+	init();
+// Utility
+
+	function initialize_array() {
+		let min = 10;
+		for(let i=0; i<size; i++) {
+			let p = Math.floor(Math.random() * (max - min) + min);
+			arr.push(p);
+		}
+	}
+
+	async function animation(color) {
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+		let pw = ctx.canvas.width / size;
+		for(let i=0; i<size; i++) {
+			ctx.beginPath();
+
+			ctx.fillStyle = "black";
+			if(i == color) {
+					ctx.fillStyle = "red";
+			}
+			ctx.fillRect(i * pw, ctx.canvas.height  - (arr[i] * (ctx.canvas.height / max)), pw, arr[i] * (ctx.canvas.height / max));
+
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(i * pw, ctx.canvas.height - (arr[i] * (ctx.canvas.height / max)), pw, arr[i] * (ctx.canvas.height / max));
+
+			ctx.closePath();
+		}
+	}
+
+	function init() {
+		initialize_array();
+		animation();
+		add_listeners(-1)
+	}
+
+	function add_listeners() {
+		document.querySelector("button").addEventListener("click", () => {
+			document.querySelector("button").disabled = true;
+			sort();
+		})
+	}
+
+	async function sort() {
+		let gap = size / 2;
+
+		while(gap != 0) {
+			let i = gap;
+
+			while(i < size) {
+				let j = i;
+
+				while(j >= gap && arr[j] < arr[j - gap]) {
+					let temp = arr[j];
+					arr[j] = arr[j - gap];
+					arr[j - gap] = temp;
+					j -= gap
+					await sleep(time_delay).then(() => {
+						animation(j);
+					})
+				}
+				i += gap;
+				await sleep(time_delay).then(() => {
+					animation(i);
+				})
+			}
+
+			gap = Math.floor(gap / 2);
+		}
+		await sleep(time_delay).then(() => {
+			animation(-1);
+		})
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
