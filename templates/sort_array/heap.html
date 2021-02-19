@@ -346,31 +346,35 @@
 		ha.push(heap[0]);
 		animate(-1, true);
 		temp = heap[first]
-		heap[first] = heap[h_size  -1]
+		heap[first] = heap[h_size - 1]
 		heap[h_size - 1] = temp;
 		document.querySelector(".arr__delete").disabled = true;
 		lchild = 2 * first + 1;
 		rchild = 2 * first + 2;
 		heap[h_size - 1] = "\\0";
 
-		max = (heap[lchild] > heap[rchild]) ? lchild : rchild;
+		max = 0;
 		await create_heap(0, 0, 4, 0, max_width , 10, 0, 0);
+		
 		while(heap[max] != "\\0" && max < size) {
-				await sleep(time_delay).then(() => {
-					temp = heap[first];
-					heap[first] = heap[max]
-					heap[max] = temp;
-					first = max;
-				})
 				await create_heap(0, 0, 4, 0, max_width , 10, 0, max);		
 				lchild = 2 * first + 1;
 				rchild = 2 * first + 2;
-				max = (heap[lchild] > heap[rchild]) ? lchild : rchild;
-				if(lchild == "\\0") {
-					max = rchild;
-				} 
-				if(rchild == "\\0") {
+				if(heap[rchild] != "\\0") 
+					max = (heap[lchild] > heap[rchild]) ? lchild : rchild; 
+				else
 					max = lchild;
+
+				if(heap[max] > heap[first]) {
+					await sleep(time_delay).then(() => {
+						temp = heap[first];
+						heap[first] = heap[max]
+						heap[max] = temp;
+						first = max;
+					})
+				}
+				else {
+					break;
 				}
 		}
 		h_size--;
