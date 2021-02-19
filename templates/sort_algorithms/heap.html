@@ -52,7 +52,7 @@
 	let size = 30;
 	let arr = [];
 	let max = 50;
-	let time_delay = 300;
+	let time_delay = 10;
 
 
 	init();
@@ -138,7 +138,7 @@
 			let rchild = 2 * i + 2;
 			if(lchild >= size && rchild >= size) {
 				i++;
-				continue;
+				break;
 			}
 			else if(rchild >= size) {
 				if(arr[i] < arr[lchild]) {
@@ -185,7 +185,7 @@
 					arr[lchild] = temp;
 					i = lchild;
 				}
-				else break;
+				break;
 			} 
 			else {
 				let p = arr[lchild] > arr[rchild] ? lchild : rchild;
