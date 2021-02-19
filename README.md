@@ -25,14 +25,14 @@
  <!--12. Segment Tree -->
 
 **ARRAY ALGORITHMS**
-  1. Kadanes
-  2. Prefix Sum
-  3. Sliding Window
-  4. Binary Search
-  5. Linear Search
-  6. Array Partitioning
-  7. Linear Search
-  8. Rain Water Trapping
+  1. [Kadanes](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/kadane.html)
+  2. [Prefix Sum](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/prefix_sum.html)
+  3. [Sliding Window](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/sliding_windows.html)
+  4. [Binary Search](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/search_algorithms/binary.html)
+  5. [Linear Search](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/linear.html)
+  6. [Array Partitioning](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/partition.html)
+  7. [Linear Search](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/linear.html)
+  8. [Rain Water Trapping](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/rain_water.html)
 
 **STACK ALGORITHMS**
   1. Balanced Bracket
