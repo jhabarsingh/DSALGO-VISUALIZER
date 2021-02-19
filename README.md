@@ -13,15 +13,15 @@
 **DATA STRUCTURES**
  1.  [Array](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array.html)
  2.  [Matrix](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/matrix.html)
- 3.  [Stack] (http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/stack.html)
- 4.  [Queue] (http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/queue.html)
- 5.  [Heap] (http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/heap.html)
- 6.  [Linked List] (http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/linkedlist.html)
- 7.  [Binary Search Tree] (http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/tree.html)
- 8.  [Graph] (http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graph.html)
- 9.  [String] (http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/string.html) 
- 10. [Disjoint Set] (http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/disjoint.html)
- 11. [Hashing Table] (http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table.html)
+ 3.  [Stack](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/stack.html)
+ 4.  [Queue](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/queue.html)
+ 5.  [Heap](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/heap.html)
+ 6.  [Linked List](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/linkedlist.html)
+ 7.  [Binary Search Tree](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/tree.html)
+ 8.  [Graph](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graph.html)
+ 9.  [String](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/string.html) 
+ 10. [Disjoint Set](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/disjoint.html)
+ 11. [Hashing Table](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table.html)
  <!--12. Segment Tree -->
 
 **ARRAY ALGORITHMS**
