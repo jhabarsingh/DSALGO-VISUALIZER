@@ -1,6 +1,6 @@
 **NOTE:** CURRENLTY WORKING ON IT
 
-# ⚡️ [![GitHub](https://img.shields.io/github/license/jhabarsingh/DSALGO-VISUALIZER?color=blue)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/master/LICENSE) [![GitHub stars](https://img.shields.io/github/stars/jhabarsingh/DSALGO-VISUALIZER)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/stargazers)  [![GitHub contributors](https://img.shields.io/github/contributors/jhabarsingh/DSALGO-VISUALIZER.svg)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/graphs/contributors)   [![GitHub issues](https://img.shields.io/github/issues/jhabarsingh/DSALGO-VISUALIZER.svg)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/issues)
+# DS ALGO  ⚡️ [![GitHub](https://img.shields.io/github/license/jhabarsingh/DSALGO-VISUALIZER?color=blue)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/master/LICENSE) [![GitHub stars](https://img.shields.io/github/stars/jhabarsingh/DSALGO-VISUALIZER)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/stargazers)  [![GitHub contributors](https://img.shields.io/github/contributors/jhabarsingh/DSALGO-VISUALIZER.svg)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/graphs/contributors)   [![GitHub issues](https://img.shields.io/github/issues/jhabarsingh/DSALGO-VISUALIZER.svg)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/issues)
 
 <p align="center">
  <img style="margin:auto" width="300" src="https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/main/logo/logo_2.png?raw=true" />
