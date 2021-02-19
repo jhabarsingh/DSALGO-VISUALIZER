@@ -190,17 +190,22 @@
 
 
 	async function bubble_sort() {
-		for(let i=0; i< size; i++) {
-			for(let j=0; j < (size - i - 1); j++) {
-				await sleep(time_delay).then(() => {
-					animate(j, j+1);
-				})
-				if(arr[j] > arr[j + 1]) {
-					temp = arr[j];
-					arr[j] = arr[j+1];
-					arr[j+1] = temp;
+		for(let i=0; i < size; i++) {
+			let pos = i;
+			for(let j = i + 1; j < size; j++) {
+				if(arr[j] < arr[pos]) {
+					pos = j;
+					await sleep(time_delay).then(() => {
+						animate(j, pos);
+					})
 				}
 			}
+			let temp = arr[pos];
+			arr[pos] = arr[i];
+			arr[i] = temp;
+			await sleep(time_delay).then(() => {
+				animate(i, pos);
+			})
 		}
 		animate();
 	}
