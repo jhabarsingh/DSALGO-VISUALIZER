@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "aditya28sarin",
+      "name": "Aditya Sarin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48805315?v=4",
+      "profile": "https://thetechnomaniac.com",
+      "contributions": [
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "DSALGO-VISUALIZER",
+  "projectOwner": "jhabarsingh",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
