@@ -11,50 +11,50 @@
 ### <a href="https://jhabarsingh.github.io/DSALGO-VISUALIZER/" >DSALGO VISUALIZER INCLUDES</a>
 
 **DATA STRUCTURES**
- 1.  Array
- 2.  Matrix
- 3.  Stack
- 4.  Queue
- 5.  Heap
- 6.  Linked List
- 7.  Binary Search Tree
- 8.  Graph
- 9.  String 
- 10. Disjoint Set
- 11. Hashing Table
+ 1.  [Array](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array.html)
+ 2.  [Matrix](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/matrix.html)
+ 3.  [Stack](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/stack.html)
+ 4.  [Queue](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/queue.html)
+ 5.  [Heap](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/heap.html)
+ 6.  [Linked List](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/linkedlist.html)
+ 7.  [Binary Search Tree](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/tree.html)
+ 8.  [Graph](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graph.html)
+ 9.  [String](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/string.html) 
+ 10. [Disjoint Set](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/disjoint.html)
+ 11. [Hashing Table](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table.html)
  <!--12. Segment Tree -->
 
 **ARRAY ALGORITHMS**
-  1. Kadanes
-  2. Prefix Sum
-  3. Sliding Window
-  4. Binary Search
-  5. Linear Search
-  6. Array Partitioning
-  7. Linear Search
-  8. Rain Water Trapping
+  1. [Kadanes](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/kadane.html)
+  2. [Prefix Sum](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/prefix_sum.html)
+  3. [Sliding Window](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/sliding_windows.html)
+  4. [Binary Search](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/search_algorithms/binary.html)
+  5. [Linear Search](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/linear.html)
+  6. [Array Partitioning](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/partition.html)
+  7. [Linear Search](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/linear.html)
+  8. [Rain Water Trapping](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/array/rain_water.html)
 
 **STACK ALGORITHMS**
-  1. Balanced Bracket
-  2. Infix  To Postfix
-  3. Infix To Prefix
-  4. Postfix Evaluation
-  5. Prefix Evaluation
-  6. Maximum Area Under The Histogram
-  7. Min Stack O(1)
+  1. [Balanced Bracket](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/stack/balanced_bracket.html)
+  2. [Infix  To Postfix](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/stack/infix_to_postfix.html)
+  3. [Infix To Prefix](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/stack/infix_to_prefix.html)
+  4. [Postfix Evaluation](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/stack/postfix_evaluation.html)
+  5. [Prefix Evaluation](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/stack/prefix_evaluation.html)
+  6. [Maximum Area Under The Histogram](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/stack/max_area_hist.html)
+  7. [Min Stack O(1)](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/stack/min_stack.html)
 
 **MATRIX ALGORITHMS**
-  1. Transpose
-  2. Kadanes 2D
-  3. Sorted Matrix Search
-  4. Sparse Matrix
+  1. [Transpose](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/matrix/transpose.html)
+  2. [Kadanes 2D](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/matrix/kadanes.html)
+  3. [Sorted Matrix Search](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/matrix/binary_search.html)
+  4. [Sparse Matrix](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/matrix/sparse_matrix.html)
 
 **QUEUE ALGORITHMS**
-  1. BFS
+  1. [BFS](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/queue/bfs.html)
 
 **HEAP ALGORITHMS**
-  1. Heapify
-  2. Heap Sort
+  1. [Heapify](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/heap/heapify.html)
+  2. [Heap Sort](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/heap/heap_sort.html)
 
 **LINKED LIST ALGORITHMS**
   1. Singly Linked List
