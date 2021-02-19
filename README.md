@@ -213,7 +213,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://thetechnomaniac.com"><img src="https://avatars.githubusercontent.com/u/48805315?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aditya Sarin</b></sub></a><br /><a href="https://github.com/jhabarsingh/DSALGO-VISUALIZER/commits?author=aditya28sarin" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/aditya28sarin"><img src="https://avatars.githubusercontent.com/u/48805315?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aditya Sarin</b></sub></a><br /><a href="https://github.com/jhabarsingh/DSALGO-VISUALIZER/commits?author=aditya28sarin" title="Documentation">📖</a></td>
   </tr>
 </table>
 
