@@ -1,9 +1,12 @@
-**NOTE:** CURRENLTY WORKING ON IT 
+**NOTE:** CURRENLTY WORKING ON IT
+
+# ⚡️ [![GitHub](https://img.shields.io/github/license/jhabarsingh/DSALGO-VISUALIZER?color=blue)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/master/LICENSE) [![GitHub stars](https://img.shields.io/github/stars/jhabarsingh/DSALGO-VISUALIZER)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/stargazers)  [![GitHub contributors](https://img.shields.io/github/contributors/jhabarsingh/DSALGO-VISUALIZER.svg)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/graphs/contributors)   [![GitHub issues](https://img.shields.io/github/issues/jhabarsingh/DSALGO-VISUALIZER.svg)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/issues)
 
 <p align="center">
  <img style="margin:auto" width="300" src="https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/main/logo/logo_2.png?raw=true" />
  <!-- <h2 align="center">DSALGO VISUALIZER </h2> -->
 </p>
+
 <img width="100%" src="https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/main/git_home/gif.gif?raw=true" />
 
 > **<a href="https://jhabarsingh.github.io/DSALGO-VISUALIZER/" >Ds Algo visualizer</a>** is made for the students who want to learn **Data structures and algorithms** with Animations. This project includes all the important data structures that are  being used widely. <!-- Even 450+ questions are included that you can solve simuntaneouly to make a strong grip over each of these data structures and algorithms.-->
