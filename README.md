@@ -1,4 +1,7 @@
 **NOTE:** CURRENLTY WORKING ON IT
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # ⚡️ [![GitHub](https://img.shields.io/github/license/jhabarsingh/DSALGO-VISUALIZER?color=blue)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/master/LICENSE) [![GitHub stars](https://img.shields.io/github/stars/jhabarsingh/DSALGO-VISUALIZER)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/stargazers)  [![GitHub contributors](https://img.shields.io/github/contributors/jhabarsingh/DSALGO-VISUALIZER.svg)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/graphs/contributors)   [![GitHub issues](https://img.shields.io/github/issues/jhabarsingh/DSALGO-VISUALIZER.svg)](https://github.com/jhabarsingh/DSALGO-VISUALIZER/issues)
 
@@ -203,3 +206,23 @@
 
 > *I would be glad to see a notification saying `User {xyz} created a Pull Request`.
 I promise to review it.*
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://thetechnomaniac.com"><img src="https://avatars.githubusercontent.com/u/48805315?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aditya Sarin</b></sub></a><br /><a href="https://github.com/jhabarsingh/DSALGO-VISUALIZER/commits?author=aditya28sarin" title="Documentation">📖</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
