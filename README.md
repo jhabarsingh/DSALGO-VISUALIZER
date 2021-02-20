@@ -60,102 +60,105 @@
   2. [Heap Sort](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/heap/heap_sort.html)
 
 **LINKED LIST ALGORITHMS**
-  1. Singly Linked List
-  2. Doubly Linked List
-  3. Circular Linked List
-  4. Stack Using Linked List
-  5. Queue Using Linked List
+  1. [Singly Linked List](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/linked_list/singly.html)
+  2. [Doubly Linked List](http://jhabarsingbh.me/DSALGO-Vanilla/templates/linked_list/doubly.html)
+  3. [Circular Linked List](http://jhabarsingbh.me/DSALGO-Vanilla/templates/linked_list/circular_singly.html)
+  4. [Circular Doubly List](http://jhabarsingbh.me/DSALGO-Vanilla/templates/linked_list/circular_doubly.html)
+  5. [Stack Using Linked List](http://jhabarsingbh.me/DSALGO-Vanilla/templates/linked_list/linked_stack.html)
+  6. [Queue Using Linked List](http://jhabarsingbh.me/DSALGO-Vanilla/templates/linked_list/linked_queue.html)
 
 **BINARY SEARCH TREE ALGORITHMS**
-  1. BST Implementation
-  2. Traversal (Inorder, Preorder, Postorder)
+  1. [BST Implementation](http://jhabarsingbh.me/DSALGO-Vanilla/templates/bst/binary.html)
+  2. [Traversal (Inorder, Preorder, Postorder)](http://jhabarsingbh.me/DSALGO-Vanilla/templates/bst/traversal.html)
 
 **GRAPH ALGORITHMS**
-  1.  BFS
-  2.  DFS
-  3.  Flood Fill
-  4.  Color Filling
-  5.  DFS Maze
-  6.  Cycle Detection (BFS / DFS)
-  7.  Prims
-  8.  Kruskals
-  9.  Topological Sort
-  10. Bellman Ford
-  11. Floyd Warshall
-  12. Graph Coloring
-  13. Snake And Ladders
-  14. Travelling Salesman
+  1.  [BFS](http://jhabarsingbh.me/DSALGO-Vanilla/templates/graphs/)
+  2.  [DFS](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/)
+  3.  [Flood Fill](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/flood_fill.html)
+  4.  [Color Filling](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/color_filling.html)
+  5.  [DFS Maze](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/create_dfs_maze.html)
+  6.  [Cycle Detection (BFS / DFS)](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/detect_cycle.html)
+  7.  [Prims](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/prims.html)
+  8.  [Kruskals](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/kruskals.html)
+  9.  [Topological Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/topological.html)
+  10. [Bellman Ford](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/bellman_ford.html)
+  11. [Floyd Warshall](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/floyd_warshall.html)
+  12. [Graph Coloring](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/graph_coloring.html)
+  13. [Snake And Ladders](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/snake_and_ladder.html)
+  14. [Travelling Salesman](http://jhabarsingh.me/DSALGO-Vanilla/templates/graphs/travelling_salesman.html)
   
  **SORTING ALGORITHMS**
-  1. Heap Sort
-  2. Bubble Sort
-  3. Selection Sort
-  4. Insertion Sort
-  5. Quick Sort
-  6. Merge Sort
-  7. Counting Sort
-  8. Shell Sort
+  1. [Heap Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/sort_algorithms/heap.html)
+  2. [Bubble Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/sort_algorithms/bubble.html)
+  3. [Selection Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/sort_algorithms/selection.html)
+  4. [Insertion Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/sort_algorithms/insertion.html)
+  5. [Quick Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/sort_algorithms/quick.html)
+  6. [Merge Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/sort_algorithms/merge.html)
+  7. [Counting Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/sort_algorithms/counting.html)
+  8. [Shell Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/sort_algorithms/shell.html)
   
 **BINARY SEARCH ALGORITHMS**
-  1. Binary Search
-  2. Start Pont Of Rotated Array
-  3. Find Peak Element
-  4. Biotonic Array Search
+  1. [Binary Search](http://jhabarsingh.me/DSALGO-Vanilla/templates/search_algorithms/binary.html)
+  2. [Start Pont Of Rotated Array](http://jhabarsingh.me/DSALGO-Vanilla/templates/search_algorithms/rotated_array.html)
+  3. [Find Peak Element](http://jhabarsingh.me/DSALGO-Vanilla/templates/search_algorithms/peak_element.html)
+  4. [Biotonic Array Search](http://jhabarsingh.me/DSALGO-Vanilla/templates/search_algorithms/biotonic_array.html)
+  5. [Minimum Page Allocation](http://jhabarsingh.me/DSALGO-Vanilla/templates/search_algorithms/minimum_page_allocation.html)
 
 **RECURSION ALGORITHMS**
-  1. Factorial 
-  2. H Tree Animation
-  3. Snow Flakes Animation
-  4. Tower Of Hanoi
+  1. [Factorial ](http://jhabarsingh.me/DSALGO-Vanilla/templates/recursion/factorial.html)
+  2. [H Tree Animation](http://jhabarsingh.me/DSALGO-Vanilla/templates/recursion/h_tree.html)
+  3. [Snow Flakes Animation](http://jhabarsingh.me/DSALGO-Vanilla/templates/recursion/snow_flakes.html)
+  4. [Tower Of Hanoi](http://jhabarsingh.me/DSALGO-Vanilla/templates/recursion/tower_of_hanoi.html)
 
 **BACKTRACKING ALGORITHMS**
-  1. N-Queen
-  2. Maze Generator
-  3. Sudoku
-  4. Knight Tour
-  5. Graph Coloring
+  1. [N-Queen](http://jhabarsingh.me/DSALGO-Vanilla/templates/backtracking/n_queen.html)
+  2. [Maze Generator](http://jhabarsingh.me/DSALGO-Vanilla/templates/backtracking/maze.html)
+  3. [Sudoku](http://jhabarsingh.me/DSALGO-Vanilla/templates/backtracking/sudoku.html)
+  4. [Knight Tour](http://jhabarsingh.me/DSALGO-Vanilla/templates/backtracking/knight_tour.html)
+  5. [Graph Coloring](http://jhabarsingh.me/DSALGO-Vanilla/templates/backtracking/graph_coloring.html)
   
 **DIVIDE AND CONQUER PARADIGM**
-  1. Merge Sort
-  2. Quick Sort
-  3. Counting Inversion
+  1. [Merge Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/divide_and_conquer/merge.html)
+  2. [Quick Sort](http://jhabarsingh.me/DSALGO-Vanilla/templates/divide_and_conquer/quick.html)
+  3. [Counting Inversion](http://jhabarsingh.me/DSALGO-Vanilla/templates/divide_and_conquer/counting_inversion.html)
 
 **GREEDY PARADIGM**
-  1. Prims
-  2. Kruskals
-  3. Fractional Knapsack
-  4. Counting Money
-  5. Job Scheduling
-  6. Huffman Coding
+  1. [Prims](http://jhabarsingh.me/DSALGO-Vanilla/templates/greedy/prims.html)
+  2. [Kruskals](http://jhabarsingh.me/DSALGO-Vanilla/templates/greedy/kruskals.html)
+  3. [Fractional Knapsack](http://jhabarsingh.me/DSALGO-Vanilla/templates/greedy/knapsack.html)
+  4. [Counting Money](http://jhabarsingh.me/DSALGO-Vanilla/templates/greedy/counting_money.html)
+  5. [Job Scheduling](http://jhabarsingh.me/DSALGO-Vanilla/templates/greedy/job_schedulling.html)
+  6. [Huffman Coding](http://jhabarsingh.me/DSALGO-Vanilla/templates/greedy/huffman_coding.html)
  
 **DYNAMIC PROGRAMMING PARADIGM**
-  1.  Travelling Salesman
-  2.  0/1 Knapsack
-  3.  Unbounded Knapsack
-  4.  Subset Sum
-  5.  Cutting Rod
-  6.  Coin Change
-  7.  Longest Common Subsequence
-  8.  Matrix Chain Multipication 
-  9.  Levenshtein Distance 
-  10. Ladders Problem
+  1.  [Travelling Salesman](http://jhabarsingh.me/DSALGO-Vanilla/templates/dynamic/travelling_salesman.html)
+  2.  [0/1 Knapsack](http://jhabarsingh.me/DSALGO-Vanilla/templates/dynamic/0_1_knapsack.html)
+  3.  [Unbounded Knapsack](http://jhabarsingh.me/DSALGO-Vanilla/templates/dynamic/unbounded_0_1_knapsack.html)
+  4.  [Subset Sum](http://jhabarsingh.me/DSALGO-Vanilla/templates/dynamic/subset_sum.html)
+  5.  [Cutting Rod](http://jhabarsingh.me/DSALGO-Vanilla/templates/dynamic/cutting_rod.html)
+  6.  [Coin Change](http://jhabarsingh.me/DSALGO-Vanilla/templates/dynamic/coin_change_making.html)
+  7.  [Longest Common Subsequence](http://jhabarsingh.me/DSALGO-Vanilla/templates/dynamic/longest_common_sequence.html)
+  8.  [Matrix Chain Multipication ](http://jhabarsingh.me/DSALGO-Vanilla/templates/dynamic/matrix_chain_multiplication.html)
+  9.  [Levenshtein Distance ](http://jhabarsingh.me/DSALGO-Vanilla/templates/dynamic/levenshtein.html)
+  10. [Ladders Problem](http://jhabarsingh.me/DSALGO-Vanilla/templates/dynamic/ladder.html)
 
 **STRING ALGORITHMS**
-  1. Naive Matching
-  2. KMP
-  3. Robin Karp
-  4. Z Algorithm
+  1. [Naive Matching](http://jhabarsingh.me/DSALGO-Vanilla/templates/string/naive_search.html)
+  2. [KMP](http://jhabarsingh.me/DSALGO-Vanilla/templates/string/kmp.html)
+  3. [Robin Karp](http://jhabarsingh.me/DSALGO-Vanilla/templates/string/robin_karp.html)
+  4. [Z Algorithm](http://jhabarsingh.me/DSALGO-Vanilla/templates/string/z_function.html)
+  5. [Boyer Moore](http://jhabarsingh.me/DSALGO-Vanilla/templates/string/boyer_moore.html)
 
 **DISJOINT SET ALGORITHMS**
-  1. Union
-  2. Find
+  1. [Union](http://jhabarsingh.me/DSALGO-Vanilla/templates/disjoint_set/union.html)
+  2. [Find](http://jhabarsingh.me/DSALGO-Vanilla/templates/disjoint_set/find.html)
 
 **HASHING TABLE ALGORITHMS**
-  1. Open Hahing
-  2. Closed Hashing
-     1. Linear Probing
-     2. Quadratic Probing
-     3. Double Hashing
+  1. [Open Hahing](http://jhabarsingh.me/DSALGO-Vanilla/templates/hashing_table/open_hashing.html)
+  2. [Closed Hashing](http://jhabarsingh.me/DSALGO-Vanilla/templates/hashing_table/closed_hashing.html)
+     1. [Linear Probing](http://jhabarsingh.me/DSALGO-Vanilla/templates/hashing_table/closed_hashing/linear_probing.html)
+     2. [Quadratic Probing](http://jhabarsingh.me/DSALGO-Vanilla/templates/hashing_table/closed_hashing/quadratic_probing.html)
+     3. [Double Hashing](http://jhabarsingh.me/DSALGO-Vanilla/templates/hashing_table/closed_hashing/double_probing.html)
 <!--
 **SEGMENT TREE ALGORITHMS**
   1. Range Query 
