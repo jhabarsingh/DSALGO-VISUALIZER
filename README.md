@@ -158,7 +158,7 @@
   2. [Closed Hashing](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table/closed_hashing.html)
      1. [Linear Probing](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table/closed_hashing/linear_probing.html)
      2. [Quadratic Probing](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table/closed_hashing/quadratic_probing.html)
-     3. [Double Hashing](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table/closed_hashing/double_probing.html)
+     3. [Double Hashing](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table/closed_hashing/double_hashing.html)
 <!--
 **SEGMENT TREE ALGORITHMS**
   1. Range Query 
