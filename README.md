@@ -185,15 +185,15 @@
 --> 
 
 **TIME COMPLEXITY**
-  1. Big-Oh (O)
-  2. Big-Omege (Ω)
-  3. Big Theta (θ)
+  1. [Big-Oh (O)](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/time_complexity.html)
+  2. [Big-Omege (Ω)](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/time_complexity.html)
+  3. [Big Theta (θ)](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/time_complexity.html)
 
 **NUMBER THEORY**
-  1. Sieve Of Eratosthenes
-  2. GCD (Eucledian)
-  3. Extended Eucledian
-  4. Binary Exponentiation
+  1. [Sieve Of Eratosthenes](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/number_theory/sieve_of_eratosthenes.html)
+  2. [GCD (Eucledian)](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/number_theory/gcd.html)
+  3. [Extended Eucledian](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/number_theory/extended_eucledian.html)
+  4. [Binary Exponentiation](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/number_theory/binary_exponentiation.html)
 
 ## <a href="https://medium.com/mindsdb/contributing-to-an-open-source-project-how-to-get-started-6ba812301738">How To Contribure</a>
 > When I thought of commencing this project the first doubt that came to mind was that Should I use Javascript Framework (REACT) or VISUALIZER Js To create this project and finally I decided to use VISUALIZER Js and the reason I came to this conclusion was that I wanted to keep this project simple so that more and more people could contribute and learn from it.
