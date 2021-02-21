@@ -217,7 +217,7 @@ Thanks goes to these wonderful people
 <table>
   <tr>
     <td align="center"><a href="https://github.com/aditya28sarin"><img src="https://avatars.githubusercontent.com/u/48805315?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Aditya Sarin</b></sub></a><br /><a href="https://github.com/jhabarsingh/DSALGO-VISUALIZER/commits?author=aditya28sarin" title="Documentation">📖</a></td>
-    <td align="center"><a href="http://simp.ly/p/tL9qSQ"><img src="https://avatars.githubusercontent.com/u/27912312?v=4?s=100" width="100px;" alt=""/><br /><sub><b>XHunter</b></sub></a><br /><a href="https://github.com/jhabarsingh/DSALGO-VISUALIZER/commits?author=SwampDolphin97" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/SwampDolphin97"><img src="https://avatars.githubusercontent.com/u/27912312?v=4?s=100" width="100px;" alt=""/><br /><sub><b>XHunter</b></sub></a><br /><a href="https://github.com/jhabarsingh/DSALGO-VISUALIZER/commits?author=SwampDolphin97" title="Documentation">📖</a></td>
   </tr>
 </table>
 
