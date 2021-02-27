@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Merge Sort</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+	
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			width: 1000px;
+			position: relative;
+			height: 400px;
+			background: lightgreen;
+			margin: 40px auto;
+			display: flex;
+			flex-wrap: wrap;
+			outline: 1px solid red;
+		}
+
+		p, p:nth-child(1) {
+			padding: 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 20px;
+		}
+
+		.arr__controllers {
+			max-width: 500px;
+			margin: auto;
+			display: flex;
+			justify-content: space-around;
+		}
+
+		.arr__delete, .arr__insert, .arr__search {
+			padding: 10px 30px;
+		}
+
+		.arr__peek__input {
+			width: 60px;
+			padding: 10px;
+		}
+
+		.color__scheme {
+			display: flex;
+			padding: 10px;
+			justify-content: space-between;
+			border: 1px solid lightgreen;
+			margin-right: 5px;
+		}
+
+		.color__scheme > span:nth-child(1) {
+			height: 20px;
+			width: 20px;
+			padding: 5px;
+			margin-right: 20px;
+			background: lightgreen;
+		}
+
+
+		.color__scheme > span:nth-child(2) {
+			font-weight: bolder;
+			color: gray;
+			margin: 0px 20px 0 0 ;
+
+		}
+
+		.insert__details {
+			display: flex;
+			justify-content: center;
+			align-self: center;
+			padding: 20px;
+			background: lightgreen;
+		}
+		.insert__details > * {
+			padding: 10px;
+		}
+
+		.insert__details label {
+			font-weight: bold;
+			color: red;
+		}
+
+		.insert__submit > button, .insert__details input, .delete__submit > button {
+			padding: 10px;
+		}
+
+		.arr__visualize {
+			padding : 10px;
+		}
+
+		.arr__controllers > select {
+			padding: 10px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Merge Sort</p>
+	<canvas class='grid' width='1000',height='400px'>
+		
+	</canvas>
+
+	<div class="arr__controllers">
+		<select class="select__value">
+			<option value="10">10ms </option>
+			<option value="100">100ms</option>
+			<option value="200">200ms</option>
+			<option value="500">500ms</option>
+			<option selected value="1000">1000ms</option>
+			<option selected value="2000">2000ms</option>
+		</select>
+		<div>
+			<button class="arr__visualize">Visualize</button>
+		</div>		
+	</div>
+
+	<script>
+
+	</script>
+</body>
+</html>
+
+
+	<script>
+
+// MAIN
+	arr =[];
+	max = 100;
+	time_delay = 1000;
+	size = 16;
+	canvas = document.querySelector('canvas');
+	max_width = canvas.width;
+	max_height = canvas.height;
+	serach_url = 'search.html'
+	ctx = canvas.getContext("2d");
+	rect = {
+		width: 60,
+		height: 24
+	}
+	counts = 0;
+
+	init();
+	animate();
+
+
+// utility
+	function randomize_an_array() {
+		for(let i=0; i<size; i++) {
+			arr[i] = Math.floor(Math.random() * max + 1);
+		}
+	}
+
+	function init() {	
+			randomize_an_array();
+			add_listeners();
+			if(localStorage.getItem("array_sort_time")) {
+				time_delay = +localStorage.getItem("array_sort_time");
+			}
+			document.querySelector(`[value="${time_delay}"]`).selected = true;
+	}
+
+	function add_listeners() {
+
+		document.querySelector(".arr__visualize").addEventListener("click", () => {
+			document.querySelector(".arr__visualize").disabled = true;
+			async function get() {
+				await sleep(time_delay).then(() => sort(0, size - 1));
+				animate(-1, -1);
+			}
+			get();
+		})
+
+		document.querySelector(".select__value").addEventListener("click", (e) => {
+			p = +e.target.value;
+			localStorage.setItem("array_sort_time", p);
+			window.location.reload();
+		})
+	}
+
+
+
+	function clear(x1=0, y1=0, width=max_width, height=max_height) {
+			ctx.fillStyle = 'lightgreen';
+			ctx.fillRect(x1, y1, width, height)
+	}
+
+
+	async function sort(low, high) {
+		if(low >= high) return;
+		console.log(low, high);
+		let mid = Math.floor((low + high) / 2);
+		
+		await sleep(time_delay).then(() => {
+			animate(low, high);
+		});
+
+		// await sleep(time_delay).then(() => {
+		await sort(low, mid);
+		// });
+
+		// await sleep(time_delay).then(() => {
+			await sort(mid + 1, high);
+		// });
+		merge(low, mid, high);
+		await sleep(time_delay).then(() => {
+			animate(low, high);
+		});
+	}
+
+
+	function merge(low, mid, high) {
+		temp = [];
+		for(let i=0; i<(high - low + 1); i++) temp.push(0);
+		let i = low;
+		let j = mid + 1;
+		let counter = 0;
+		while(i <= mid && j <= high) {
+			if(arr[i] < arr[j]) {
+				temp[counter] = arr[i];
+				i++;
+			}
+			else {
+				temp[counter] = arr[j];
+				j++;
+			}
+			counter++;
+ 		}
+
+		while(i <= mid) {
+			temp[counter++] = arr[i++];
+		}
+
+		while(j <= high) {
+			temp[counter++] = arr[j++];
+		}
+		counter = 0;
+		for(i=low; i<=(high); i++) {
+			arr[i] = temp[counter++];
+		}
+		
+	}
+
+	function create_copy_array(arr) {
+		arr.forEach((e, i) => {
+			ctx.fillStyle = "black";	
+			ctx.fillRect(i * rect.width + i + 10, 15, rect.width, rect.height - 4);
+			ctx.fillStyle = 'white';
+			ctx.font = 'bold 15px ubuntu'
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, rect.height + 5)
+			ctx.fillStyle = 'black';
+		})
+	}
+	
+	function line(x1, x2, y1, y2) {
+		ctx.beginPath();
+		ctx.moveTo(x1, y1);
+		ctx.lineTo(x2, y2);
+		ctx.stroke();
+	}
+
+	function animate(m=-1, n=-1) {
+		clear(0, 40, max_width, max_height);
+		if(counts == 0) {
+			create_copy_array(arr);
+		
+		}
+		counts++;
+		arr.forEach((e, i) => {
+			ctx.fillStyle = "black";
+			if(i >= m && i <= n) {
+				ctx.fillStyle = "gray";
+			}
+			ctx.fillRect(i * rect.width + i + 10, max_height/2, rect.width, rect.height);
+			ctx.fillStyle = 'white';
+			ctx.font = 'bold 15px ubuntu'	
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4))
+			ctx.fillStyle = 'black';
+		})
+
+		let p = [];
+		for(let i=0; i<size; i++) {
+			p.push(i);
+		}
+
+		p.forEach((e, i) => {
+			ctx.fillStyle = "red";	
+			ctx.fillRect(i * rect.width + i + 10, max_height/2 + 2 * rect.height, rect.width, rect.height * (3 / 4));
+			ctx.fillStyle = 'yellow';
+			ctx.font = 'bold 15px ubuntu'
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4) + (7.5 / 4) * rect.height)
+			ctx.fillStyle = 'black';
+		})
+		ctx.fillStyle = "red";
+		ctx.font = "bolder 15px monospace";
+		ctx.fillText("Array", 10, max_height/2 - 20)
+		ctx.fillStyle = "darkblue";
+		ctx.font = "bolder 15px monospace";
+		ctx.fillText("Index", 10, max_height/2 + 45)
+
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+	</script>
+</body>
+</html>
