@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Graph Coloring</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		.grid {
+			position: relative;
+			background: lightgreen;
+			margin: 10px auto;
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		p:nth-child(1) {
+			padding: 10px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			display: flex;
+			justify-content: space-around;
+			font-size: 20px;
+		}
+
+		p > span {
+			text-transform: uppercase;
+			color: gray;
+		}
+		.head__button {
+			padding: 5px 30px;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>
+		<span>Graph Coloring</span>
+		<span>
+			<button class="head__button dfs">Color Graph</button>
+		</span>	
+	</p>
+	
+	<canvas class='grid' width="1000", height="550">
+		
+
+	</canvas>
+
+	<script>
+
+// Main
+
+	arr = ['a', 'b', 'c', 'd', 'e', 'f'];
+	color = [];
+	options = ['red', 'gray', 'orange', 'yellow', 'blue', 'violet']
+	each = []
+	size = arr.length;
+	edge = [];
+	bfs_edge = [];
+	dfs_edge = [];
+	dimension = 30;
+	rel = 15;
+	ctx = document.querySelector("canvas").getContext("2d");
+	time_delay = 1000;
+	dx = ctx.canvas.width / size;
+	dy = ctx.canvas.height / size;
+	ctx.save();
+	init_color();
+	create_edges();
+	create_graph();
+	init();
+	flag = 0;
+	
+// Utility
+	
+	function init_color() {
+		for(let i=0; i<size; i++) 
+			color.push("white");
+	}
+
+
+	function init() {
+		document.querySelector(".dfs").addEventListener("click", () => {
+			document.querySelector(".dfs").disabled = true;
+			async function get() {
+				// CODE OF GRAPH COLORING
+				await graph_color(0);
+				create_graph();
+			}
+			get();
+		})
+	}
+
+	function check(i, colors) {
+		for(let pos = 0; pos < size; pos++) {
+			if(edge[i][pos]) {
+				if(pos == i) continue;
+				if(color[pos] == colors) return false;
+			}
+		}
+		return true;
+	}
+
+
+	async function graph_color(i) {
+		if(flag == 1) return;
+		if(i == size) {
+			flag = 1;
+			return;
+		}
+
+		for(let pos = 0; pos < size; pos++) {
+			if(check(i, options[pos])) {
+				if(flag == 1) return;
+				color[i] = options[pos];
+				await sleep(time_delay).then(() => {
+					createBox(i);
+				})
+				await graph_color(i + 1);
+				if(flag == 1) return;
+				color[i] = "white";
+				await sleep(time_delay).then(() => {
+					createBox(i);
+				})
+			}
+		}
+	}
+
+	function create_edges() {
+		count = 0;	
+		for(let i=0; i<size; i++) {
+			let temp = [];
+			let dfs_temp = [];
+			let bfs_temp = [];
+			for(let i=0; i<size; i++) {
+				temp.push(0);
+				dfs_temp.push(0);
+				bfs_temp.push(0);
+			}
+			edge.push(temp);
+			dfs_edge.push(dfs_temp);
+			bfs_edge.push(bfs_temp);
+		}
+
+		for(let i = 0; i< size; i++) {
+			each.push(Math.floor(Math.random() * (size - 1)) + 1)
+		}
+
+		for(let i=0; i< size; i++) {
+			
+			for(let j=i; j< size; j++) {
+				let p = (Math.floor(Math.random() * 2 + 1) - 1) != 0 ? 1: 0;
+				edge[i][j] = p;
+				edge[j][i] = p;
+				count ++;
+			}	
+		}
+	}
+
+	function createLine(i, j, color="black") {
+		ctx.beginPath();
+		ctx.strokeStyle = color;
+		let x = each[i] * dx + dimension / 2 + rel;
+		let y = i * dy + dimension / 2 + rel;
+		ctx.moveTo(x, y);
+		ctx.lineWidth = 4;
+		x = each[j] * dx + dimension / 2 + rel;
+		y = j * dy + dimension / 2 + rel;
+		ctx.lineTo(x, y);
+		ctx.stroke();
+		ctx.closePath();
+	}
+
+	function createBox(i) {
+		ctx.beginPath();
+		ctx.moveTo(each[i] * dx, i* dy);
+		let x = each[i] * dx + (dimension / 2) + rel;
+		let y = i * dy + dimension / 2 + rel;
+		ctx.arc(x , y , dimension ,0 , Math.PI * 2);
+		ctx.fillStyle = color[i]
+		ctx.fill();
+		ctx.closePath();
+		ctx.fillStyle = "white";
+	}
+
+	function createText(i, color="white") {
+		ctx.beginPath();
+		ctx.moveTo(each[i] * dx, i* dy);
+		let x = each[i] * dx + (dimension / 2) + rel;
+		let y = i * dy + dimension / 2 + rel;
+		ctx.fillStyle = color;
+		ctx.font = 'bolder 25px ubuntu'
+		ctx.moveTo(each[i] * dx, i* dy);	
+		ctx.fillText(arr[i],x, y);
+		ctx.closePath();
+	}
+
+	async function create_graph() {
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+		for(let i=0; i< size; i++) {
+			for(let j=i; j< size; j++) {
+				if(+edge[i][j] == 1) {
+					createLine(i, j)
+				}
+			}	
+		}
+		for(let i=0; i< size; i++) {
+			createBox(i);
+		}
+
+		ctx.fillStyle = "lightgreen"
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
