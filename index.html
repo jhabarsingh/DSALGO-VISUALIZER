@@ -473,7 +473,8 @@
      	// POP UP
  
      	function pop_up() {
-     		if(+localStorage.getItem('first_time') === 1 && false) {
+               localStorage.setItem('first_time', 1)
+     		if(+localStorage.getItem('first_time') === 1) {
      		    let cross;
 				let slider;
 				let info;
@@ -531,9 +532,6 @@
 	     			document.querySelector('.body__bin').innerHTML = '';
 	     		})
 
-	     	}
-	     	else {
-	     		debugger;
 	     	}
      	}
 
