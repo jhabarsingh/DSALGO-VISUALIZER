@@ -171,6 +171,7 @@
 	function add_listeners() {
 
 		document.querySelector(".arr__visualize").addEventListener("click", () => {
+			document.querySelector(".arr__visualize").disabled = true;
 			bubble_sort();
 		})
 
