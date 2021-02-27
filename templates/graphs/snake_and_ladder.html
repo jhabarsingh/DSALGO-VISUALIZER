@@ -33,6 +33,20 @@
 			padding: 10px 30px;
 		}
 
+		.mai {
+			padding: 10px 20px;
+		}
+		.first {
+			background: lightblue;
+			padding: 10px 20px;
+		}
+
+		.sec {
+			background: black;
+			padding: 10px 20px;
+			color: white;
+		}
+
 	</style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -43,6 +57,22 @@
 		
 	</canvas>
 	<div>
+		<span class='mai'>
+			<span class='mai'>
+				<span class="first">
+					Current Position
+				</span>
+				<span class="sec sec1">
+					1
+				</span>
+			</span>
+			<span class="first">
+				Dice Number: 
+			</span>
+			<span class="sec sec2">
+				
+			</span>
+		</span>
 		<button class="queen">
 			Shuffle The Dice
 		</button>
@@ -58,20 +88,29 @@
 	time_delay = 500;
 	width = ctx.canvas.width;
 	height = ctx.canvas.height;
-	let size = 8;
+	let size = 10;
 	let queenImage = new Image();
 	queenImage.src = "../../images/goti.png"
 	let arr = [];
-	let queen = [];
+	let queen = 1;
 	init();		
+	currentPos = 0;
+	currentNum = "";
 // Utility
+	function shuffle() {
+		min = 1;
+		max = 6;
+		currentNum = Math.floor(Math.random() * (max + 1- min)) + min;
+		document.querySelector(".sec2").innerText = currentNum;
+
+		currentPos += currentNum;
+		document.querySelector(".sec1").innerText = currentPos;
+
+	}
 
 	function init() {
 		queenImage.onload = function () {
 			create_grid();
-			for(let i=0; i< size ;i++) {
-				queen.push(-1);
-			}
 			set_queen();		
 		};	
 		
@@ -85,7 +124,9 @@
 
 		document.querySelector(".queen").addEventListener("click", () => {
 			document.querySelector(".queen").disabled = true;
-			back_track(0);
+			shuffle();
+			document.querySelector(".queen").disabled = false;
+			
 		})
 	}
 
@@ -95,67 +136,23 @@
 		for(let i=0; i< size; i++) {
 			ctx.drawImage(queenImage, 1 * x + 30, y * i, 60, 50);
 			for(let j=0; j< size + 1; j++) {
+				ctx.beginPath();
 				ctx.fillStyle = (i + j) % 2 ? "white" : "yellow";
 				ctx.fillRect(j * x, y * i, x, y);
+				ctx.fillStyle = "black";
+				ctx.font = "bold 12px arial";
+				ctx.fillText(i * size + j + 1, j * x + x / 2, y * i + y / 2);
+				ctx.closePath();
 			}
 		}
 	}
 
-	function check(row, col) {
-	    let i, j; 
-	  
-	    /* Check this row on left side */
-	    for (i = 0; i < row; i++) 
-	        if (arr[i][col]) 
-	            return false; 
-	  
-	    /* Check upper diagonal on left side */
-	    for (i = row, j = col; i >= 0 && j >= 0; i--, j--) 
-	        if (arr[i][j]) 
-	            return false; 
-	  
-	    /* Check lower diagonal on left side */
-	    for (i = row, j = col; i >= 0 && j < size; i--, j++) 
-	        if (arr[i][j]) 
-	            return false; 
-	  
-    	return true; 
-	}
+	
 
-	async function back_track(current) {
-		// console.log(current)
-		if(current == size) {
-			console.log(queen);
-			return true;
-		}
-		for(let i=0; i< size; i++) {
-				if(check(current, i)) {	
-					arr[current][i] = 1;
-					queen[current] = i;
-					await sleep(time_delay).then(() => {
-						create_grid();
-						set_queen();
-					})
-					let p = await back_track(current + 1);
-					if(p) {
-						// console.log(current, i)
-						return true;
-					} else {
-						arr[current][i] = 0;
-						queen[current] = -1;	
-
-					} 
-				}
-		}
-		return false
-	}
-
-	function set_queen() {
+	function set_queen(i=0, j=0) {
 		let x = width / size
 		let y = height / size;
-		for(let i=0; i<size; i++) {
-			ctx.drawImage(queenImage, x * queen[i] , i * y , width / size, height / size);
-		}
+		ctx.drawImage(queenImage, x * i , j * y , width / size, height / size);
 	}
 
 	function sleep(ms) {
