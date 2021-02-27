@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Insertion Sort</title>
+	<title>Merge Sort</title>
 	<style>
 		html, * {
 			box-sizing: border-box;
@@ -106,7 +106,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body>
-	<p>Insertion Sort</p>
+	<p>Merge Sort</p>
 	<canvas class='grid' width='1000',height='400px'>
 		
 	</canvas>
@@ -118,6 +118,7 @@
 			<option value="200">200ms</option>
 			<option value="500">500ms</option>
 			<option selected value="1000">1000ms</option>
+			<option selected value="2000">2000ms</option>
 		</select>
 		<div>
 			<button class="arr__visualize">Visualize</button>
@@ -166,12 +167,18 @@
 			if(localStorage.getItem("array_sort_time")) {
 				time_delay = +localStorage.getItem("array_sort_time");
 			}
+			document.querySelector(`[value="${time_delay}"]`).selected = true;
 	}
 
 	function add_listeners() {
 
 		document.querySelector(".arr__visualize").addEventListener("click", () => {
-			insertion_sort();
+			document.querySelector(".arr__visualize").disabled = true;
+			async function get() {
+				await sleep(time_delay).then(() => sort(0, size - 1));
+				animate(-1, -1);
+			}
+			get();
 		})
 
 		document.querySelector(".select__value").addEventListener("click", (e) => {
@@ -189,23 +196,59 @@
 	}
 
 
-	async function insertion_sort() {
-		for(let i=1; i < size; i++) {
-			let pos = i;
-			let temp = arr[i];
-			while(pos > 0 && (arr[pos - 1] > temp)) {
-				arr[pos] = arr[pos - 1];
-				await sleep(time_delay).then(() => {
-					animate(i, pos);
-				})
-				pos--;
+	async function sort(low, high) {
+		if(low >= high) return;
+		console.log(low, high);
+		let mid = Math.floor((low + high) / 2);
+		
+		await sleep(time_delay).then(() => {
+			animate(low, high);
+		});
+
+		// await sleep(time_delay).then(() => {
+		await sort(low, mid);
+		// });
+
+		// await sleep(time_delay).then(() => {
+			await sort(mid + 1, high);
+		// });
+		merge(low, mid, high);
+		await sleep(time_delay).then(() => {
+			animate(low, high);
+		});
+	}
+
+
+	function merge(low, mid, high) {
+		temp = [];
+		for(let i=0; i<(high - low + 1); i++) temp.push(0);
+		let i = low;
+		let j = mid + 1;
+		let counter = 0;
+		while(i <= mid && j <= high) {
+			if(arr[i] < arr[j]) {
+				temp[counter] = arr[i];
+				i++;
 			}
-			arr[pos] = temp;
-			await sleep(time_delay).then(() => {
-				animate(i, pos);
-			})
+			else {
+				temp[counter] = arr[j];
+				j++;
+			}
+			counter++;
+ 		}
+
+		while(i <= mid) {
+			temp[counter++] = arr[i++];
 		}
-		animate();
+
+		while(j <= high) {
+			temp[counter++] = arr[j++];
+		}
+		counter = 0;
+		for(i=low; i<=(high); i++) {
+			arr[i] = temp[counter++];
+		}
+		
 	}
 
 	function create_copy_array(arr) {
@@ -235,27 +278,13 @@
 		counts++;
 		arr.forEach((e, i) => {
 			ctx.fillStyle = "black";
-			if((m == i && m >= 0) || (n == i && m >= 0)) {
-				ctx.fillStyle = "red";
+			if(i >= m && i <= n) {
+				ctx.fillStyle = "gray";
 			}
-			if((m == i && m >= 0) || (n == i && m >= 0)) {
-				ctx.fillRect(i * rect.width + i + 10, max_height/2 - rect.height/2, rect.width, rect.height);
-			}
-			else {
-				ctx.fillRect(i * rect.width + i + 10, max_height/2, rect.width, rect.height);
-			}
+			ctx.fillRect(i * rect.width + i + 10, max_height/2, rect.width, rect.height);
 			ctx.fillStyle = 'white';
-			ctx.font = 'bold 15px ubuntu'
-
-			if((m == i && m >= 0) || (n == i && m >= 0)) {
-				ctx.font = 'bold 15px ubuntu'
-				ctx.fillStyle = "black";
-				ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4) - rect.height / 2)
-			
-			}
-			else {
-				ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4))
-			}
+			ctx.font = 'bold 15px ubuntu'	
+			ctx.fillText(`${e}`, i * rect.width + i + rect.width/2 + 10, max_height/2 + rect.height * (3/4))
 			ctx.fillStyle = 'black';
 		})
 
