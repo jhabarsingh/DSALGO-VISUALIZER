@@ -101,6 +101,22 @@
 			padding: 10px;
 		}
 
+		.bilok {
+			padding: 10px 20px;
+		}
+
+		.bilok > *:nth-child(1) {
+			background: yellow;
+			padding: 10px 20px;
+			color: black;
+		}
+
+		.bilok > *:nth-child(2) {
+			background: black;
+			padding: 10px 20px;
+			color: white;
+		}
+
 	</style>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -121,6 +137,14 @@
 			<option selected value="2000">2000ms</option>
 		</select>
 		<div>
+			<span class="bilok">
+				<span>
+					COUNT: 
+				</span>
+				<span class="bilok__value">
+					0
+				</span>
+			</span>
 			<button class="arr__visualize">Visualize</button>
 		</div>		
 	</div>
@@ -135,6 +159,7 @@
 	<script>
 
 // MAIN
+	counters = 0
 	arr =[];
 	max = 100;
 	time_delay = 1000;
@@ -177,6 +202,7 @@
 			async function get() {
 				await sleep(time_delay).then(() => sort(0, size - 1));
 				animate(-1, -1);
+				assign_block_value();
 			}
 			get();
 		})
@@ -226,11 +252,13 @@
 		let j = mid + 1;
 		let counter = 0;
 		while(i <= mid && j <= high) {
-			if(arr[i] < arr[j]) {
+			if(arr[i] <= arr[j]) {
 				temp[counter] = arr[i];
 				i++;
 			}
 			else {
+				counters += (mid - i + 1);
+				assign_block_value();
 				temp[counter] = arr[j];
 				j++;
 			}
@@ -249,6 +277,10 @@
 			arr[i] = temp[counter++];
 		}
 		
+	}
+
+	function assign_block_value() {
+		document.querySelector(".bilok__value").innerText = counters;
 	}
 
 	function create_copy_array(arr) {
