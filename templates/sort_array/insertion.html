@@ -167,11 +167,13 @@
 			if(localStorage.getItem("array_sort_time")) {
 				time_delay = +localStorage.getItem("array_sort_time");
 			}
+			document.querySelector(`[value="${time_delay}"]`).selected = true;
 	}
 
 	function add_listeners() {
 
 		document.querySelector(".arr__visualize").addEventListener("click", () => {
+			document.querySelector(".arr__visualize").disabled = true;
 			insertion_sort();
 		})
 
