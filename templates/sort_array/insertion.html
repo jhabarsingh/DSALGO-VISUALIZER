@@ -171,7 +171,7 @@
 	function add_listeners() {
 
 		document.querySelector(".arr__visualize").addEventListener("click", () => {
-			bubble_sort();
+			insertion_sort();
 		})
 
 		document.querySelector(".select__value").addEventListener("click", (e) => {
@@ -189,13 +189,18 @@
 	}
 
 
-	async function bubble_sort() {
+	async function insertion_sort() {
 		for(let i=1; i < size; i++) {
 			let pos = i;
-			let temp = pos;
-			while(pos > 0 && arr[pos] > arr[pos - 1]) {
-				i--;
+			let temp = arr[i];
+			while(pos > 0 && (arr[pos - 1] > temp)) {
+				arr[pos] = arr[pos - 1];
+				await sleep(time_delay).then(() => {
+					animate(i, pos);
+				})
+				pos--;
 			}
+			arr[pos] = temp;
 			await sleep(time_delay).then(() => {
 				animate(i, pos);
 			})
