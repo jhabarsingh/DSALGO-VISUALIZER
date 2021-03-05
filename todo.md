@@ -6,8 +6,6 @@
 5. counting money
 6. huffman coding
 
-### Sort
-1. heapify
 
 ### DP
 1. Travelling salesman
