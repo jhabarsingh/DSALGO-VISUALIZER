@@ -101,6 +101,7 @@
 		if(mask == ((1<<size) - 1)) {
 			return edge[path][0];
 		}
+		console.log(mask);
 		if(mem[mask][path] != -1) return mem[mask][path];
 		ans = Number.MAX_VALUE;
 		for(let i=0; i<size; i++) {
