@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>headingHuffman Coding</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		button {
+			padding: 10px;
+			margin: 5px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Huffman Coding</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<div>
+		<button class="compress">
+			Generate Huffman Code
+		</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let arr = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+	let fre = [5, 9, 12, 13, 16, 45, 50];
+	let code = ['', '', '', '', '', '', ''];
+	let obj = [];
+	let time_delay = 1000;
+	let time_delay_1 = 100;
+
+
+	init();
+// Utility
+	function init() {
+		for(let i=0; i<arr.length; i++) {
+			temp = [];
+			temp.push(arr[i]);
+			temp.push(fre[i]);
+			obj.push(temp);
+		}
+
+		DrawArr(obj, 0);
+		add_listeners();
+
+	}
+
+	async function drawRect(xpos, j, height, width, value, fre, change=false) {
+		pad = 40;
+		pad = (pad / 100) * height;
+		gap = 7;
+		gapX = 20;
+		ctx.beginPath();
+		ctx.fillStyle = "black";
+		if(change == true) ctx.fillStyle = "white";
+		ctx.fillRect(xpos * width + gapX * xpos, j * height + j * gap, width, height - pad);
+		
+		ctx.fillStyle = "white";
+		if(change == true) ctx.fillStyle = "black";
+		ctx.font = "bold 12px ubuntu"
+		ctx.fillText(value, xpos * width + gapX * xpos + width / 2 - 5, j * height + j * gap + (height - pad) / 2);
+		ctx.fillStyle = "red";	
+		if(change == true) ctx.fillStyle = "yellow";
+		ctx.fillRect(xpos * width + gapX * xpos, (1 + j) * height - pad + j * gap, width, pad);
+		
+		ctx.fillStyle = "yellow";
+		if(change == true) ctx.fillStyle = "red";
+		ctx.font = "bold 12px ubuntu"
+		ctx.fillText(fre, xpos * width + gapX * xpos + width / 2 - 5, (1 + j) * height - pad + j * gap + pad / 2);
+		ctx.closePath();
+	}
+
+	async function DrawArr(obj, xPos) {
+		width = 95;
+		height = 65;
+		for(let i=0; i<obj.length; i++) {
+			await sleep(time_delay_1).then(() => drawRect(xPos, i, height, width, obj[i][0], obj[i][1]));
+		}
+	}
+
+
+	function getCode(str, value) {
+		console.log(str);
+		for(let i = 0; i<str.length; i++) {
+			let pos = str.charCodeAt(i) - "a".charCodeAt(0);
+			code[pos] += value; 
+		}
+	}
+
+	function add_listeners() {
+		document.querySelector(".compress").addEventListener("click", () => {
+			huffman();
+		})
+	}
+
+	async function huffman() {
+		temp = obj;
+		counter = 1;
+		while(temp.length != 1) {
+			let a = temp[0];
+			temp.shift();
+			temp[0][1] += a[1];
+			
+			getCode(a[0], '0');
+			getCode(temp[0][0], '1');
+			temp[0][0] = a[0] + temp[0][0];
+			temp.sort((a, b) => a[1] - b[1]);
+			await sleep(time_delay).then(() => DrawArr(temp, counter));
+			counter++;
+		}
+
+		await sleep(time_delay).then(() => drawCode());
+	}
+
+	async function drawCode() {
+		width = 105;
+		height = 65;
+		xPos = arr.length;
+		for(let i=0; i<arr.length; i++) {
+			await sleep(time_delay_1).then(() => drawRect(xPos, i, height, width, arr[i], code[i], true));
+		}
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>

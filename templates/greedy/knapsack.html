@@ -145,7 +145,7 @@
 			ctx.strokeStyle = "white";
 			ctx.strokeRect(pw * (i + 1), ctx.canvas.height - 3 * height - 2, per_width, height)
 			ctx.font = "bolder 15px arial";
-			ctx.fillText((v[i] / w[i]).toPrecision(4), pw * (i + 1) + pw / 2 - 20, ctx.canvas.height - 3 * height / 2 - 45);
+			ctx.fillText((v[i] / w[i]).toPrecision(3), pw * (i + 1) + pw / 2 - 20, ctx.canvas.height - 3 * height / 2 - 45);
 			ctx.closePath();
 		}
 	}
@@ -163,7 +163,7 @@
 		let vw = [];
 
 		w.forEach((e, i) => {
-			vw.push((v[i] / w[i]).toPrecision(4));
+			vw.push((v[i] / w[i]).toPrecision(2));
 		})
 
 		vw.sort((x, y) => y - x);
