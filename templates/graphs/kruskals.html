@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Prims MSP Algorithm</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		.grid {
+			position: relative;
+			background: lightgreen;
+			margin: 10px auto;
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		p:nth-child(1) {
+			padding: 10px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			display: flex;
+			justify-content: space-around;
+			font-size: 20px;
+		}
+
+		p > span {
+			text-transform: uppercase;
+			color: gray;
+		}
+		.head__button {
+			padding: 5px 30px;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>
+		<span>Prims MSP Algorithm</span>
+		<span>
+			<button class="head__button graph">Visualize</button>
+		</span>	
+	</p>
+	
+	<canvas class='grid' width="1000", height="600">
+		
+
+	</canvas>
+
+	<script>
+
+// Main
+
+	arr = ['a', 'b', 'c', 'd', 'e'];
+	each = [];
+	visited = new Set();
+	for(let i=0; i<arr.length; i++) visited.add(i);
+	val = [1000, 1000, 1000, 1000, 1000];
+	size = arr.length;
+	edge = [];
+	mem = [];
+	dimension = 22;
+	rel = 15;
+	ctx = document.querySelector("canvas").getContext("2d");
+	time_delay = 2000;
+	dx = ctx.canvas.width / size;
+	dy = ctx.canvas.height / size;
+	create_edges();
+	create_graph();
+	init();
+	
+// Utility
+	
+	function init() {
+		for(let i = 0; i < (1<<size); i++) {
+			let temp = [];
+			for(let j = 0; j < size; j++) {
+				temp.push(-1);
+			}
+			mem.push(temp);
+		}
+
+		document.querySelector(".graph").addEventListener("click", () => {
+			document.querySelector(".graph").disabled = true;
+			mask = 1;
+			path = 0;
+			async function get() {
+				ans = await travellingSalesman(mask, path);
+				console.log(ans);
+			}	
+			get();
+		})
+	}
+
+
+	async function travellingSalesman(mask, path) {
+		if(mask == ((1<<size) - 1)) {
+			return edge[path][0];
+		}
+		if(mem[mask][path] != -1) return mem[mask][path];
+		ans = Number.MAX_VALUE;
+		console.log(mask, path);
+		for(let city=0; city<size; city++) {
+			if((mask&(1<<city)) == 0) {
+				console.log(mask|(1<<city), city);
+				let temp = edge[path][city] + await travellingSalesman(mask|(1<<city), city);
+				ans = (ans > temp) ? temp : ans;
+			} 
+		}
+
+		return mem[mask][path] = ans;
+	}
+
+	function createRect(i) {
+		width = 80;
+		height = 50;
+		start = 300;
+		ctx.fillStyle = "black";
+		ctx.fillRect(start + i * width + 10*i, ctx.canvas.height - height - 4, width, height);
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 18px sans-serif";
+		weight = val[i];
+		if(+weight == 1000) weight = "Inf";
+		ctx.fillText(weight, start + i * width + 10*i + width / 2 - 10, ctx.canvas.height - height + height / 2 + 4);
+	}	
+	
+	
+	function create_edges() {
+		count = 0;
+		limit = 20;
+		for(let i=0; i<size; i++) {
+			let temp = [];
+			for(let i=0; i<size; i++) {
+				temp.push(0);
+			}
+			edge.push(temp);
+		}
+
+		for(let i = 0; i< size; i++) {
+			each.push(Math.floor(Math.random() * (size - 1)) + 1)
+		}
+
+		for(let i=0; i< size; i++) {
+			if(count >= limit) break;
+			for(let j=i + 1; j< size; j++) {
+				if(count >= limit) break;
+				let p = Math.floor(Math.random() * 2 );
+				if(true) {
+					edge[i][j] = Math.floor(Math.random() * (100 - 1) +  1);
+					edge[j][i] = edge[i][j]
+					count ++;
+				} else {
+					edge[i][j] = 0;
+					edge[j][i] = 0;
+				}
+				
+			}	
+		}
+		if(size == 5) {
+			edge = [
+				[0, 17, 75, 14, 60],
+				[17, 0, 24, 64, 82],
+				[75, 24, 0, 8, 4],
+				[14, 64, 8, 0, 6],
+				[60, 82, 4, 6, 0],
+			]
+
+			each = [3, 1, 4, 1, 4]
+		}
+	}
+
+	function createLine(i, j, color="black") {
+		ctx.strokeStyle = color;
+		cor = []
+		let x = each[i] * dx + dimension / 2 + rel;
+		let y = i * dy + dimension / 2 + rel;
+		ctx.beginPath();
+		ctx.moveTo(x, y);
+		cor.push([x, y]);
+		ctx.lineWidth = 4;
+		x = each[j] * dx + dimension / 2 + rel;
+		y = j * dy + dimension / 2 + rel;
+		ctx.lineTo(x, y);
+		cor.push([x, y]);
+		ctx.stroke();
+		ctx.closePath();
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 25px ubuntu";
+		ctx.fillText(edge[i][j], (cor[0][0] + cor[1][0]) / 2, (cor[0][1] + cor[1][1]) / 2 - 4);
+	}
+
+	function createBox(i, color="red") {
+		ctx.fillStyle = color
+		ctx.moveTo(each[i] * dx, i* dy);
+		let x = each[i] * dx + (dimension / 2) + rel;
+		let y = i * dy + dimension / 2 + rel;
+		ctx.arc(x , y , dimension ,0 , Math.PI * 2);
+		ctx.fill();
+	}
+
+	function createText(i, color="white") {
+		ctx.moveTo(each[i] * dx, i* dy);
+		let x = each[i] * dx + (dimension / 2) + rel;
+		let y = i * dy + dimension / 2 + rel;
+		ctx.fillStyle = 'white';
+		ctx.font = 'bolder 25px ubuntu'
+		ctx.moveTo(each[i] * dx, i* dy);	
+		ctx.fillText(arr[i],x - 4, y + 4);
+	}
+
+	async function create_graph() {
+		ctx.fillStyle = "lightgreen";
+		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+		for(let i=0; i< size; i++) {
+			for(let j=i; j< size; j++) {
+				if(+edge[i][j] >= 1) {
+					createLine(i, j)
+				}
+			}	
+		}
+		for(let i=0; i< size; i++) {
+			createBox(i, "red");
+		}
+
+		for(let i=0; i< size; i++) {
+			createText(i, "white");
+		}
+		ctx.fillStyle = "lightgreen"
+	}
+
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
