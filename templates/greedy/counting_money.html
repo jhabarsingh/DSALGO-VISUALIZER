@@ -93,6 +93,7 @@
 
 	function add_listeners() {
 		document.querySelector(".count__money").addEventListener("click", () => {
+			document.querySelector(".count__money").disabled = true;
 			value = +document.querySelector(".value").value;	
 			if(value <= 0) {
 				alert("Invalid Number");
