@@ -90,9 +90,11 @@
 			document.querySelector(".graph").disabled = true;
 			mask = 1;
 			path = 0;
-			ans = travellingSalesman(mask, path);
-			console.log(ans);
-			document.querySelector(".graph").disabled = false;
+			async function get() {
+				ans = await travellingSalesman(mask, path);
+				console.log(ans);
+			}	
+			get();
 		})
 	}
 
@@ -101,17 +103,18 @@
 		if(mask == ((1<<size) - 1)) {
 			return edge[path][0];
 		}
-		console.log(mask);
 		if(mem[mask][path] != -1) return mem[mask][path];
 		ans = Number.MAX_VALUE;
-		for(let i=0; i<size; i++) {
-			if(mask & (1<<i) != 1) {
-				mem[mask][i] = edge[path][i] + travellingSalesman(mask|(1<<i), i);
-					ans = (ans > mem[mask][i]) ? mem[mask][i] : ans;
+		console.log(mask, path);
+		for(let city=0; city<size; city++) {
+			if((mask&(1<<city)) == 0) {
+				console.log(mask|(1<<city), city);
+				let temp = edge[path][city] + await travellingSalesman(mask|(1<<city), city);
+				ans = (ans > temp) ? temp : ans;
 			} 
 		}
 
-		return ans;
+		return mem[mask][path] = ans;
 	}
 
 	function createRect(i) {
