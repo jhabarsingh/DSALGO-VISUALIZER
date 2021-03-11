@@ -16,3 +16,5 @@
 6. Levenshtein
 7. Ladders Problem
 
+### Blog
+1. NP and NP Hard
