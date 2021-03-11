@@ -2,7 +2,6 @@
 1. prims
 2. kruskals
 3. fractional knapsack
-6. huffman coding
 
 
 ### DP
