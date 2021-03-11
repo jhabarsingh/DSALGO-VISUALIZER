@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Merge Intervals</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+		.controller > button {
+			padding: 10px 10px;
+			margin-top: 5px;
+		}
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Merge Intervals</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+	<div class="controller">
+		<button class="merge__intervals">
+			Merge Intervals
+		</button>
+	</div>
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 20;
+	let arr = [];
+	let time_delay = 1000;
+	let merged_arr = [];
+
+	init();
+// Utility
+	function init() {
+		generate_arr();
+		add_listeners()
+	}
+
+	function generate_arr() {
+		max = 100;
+		min = 0;
+		for(let i=0; i<size; i++) {
+			let a =  Math.floor(Math.random() * (max - min) + min);
+			let b =  a + Math.floor(Math.random() * (10 - min) + min);
+			obj = [];
+			obj.push(a);
+			obj.push(b);
+	
+			arr.push(obj);	
+		}
+		arr.sort((a, b) => a[0] - b[0]);
+		drawArr();
+	}
+
+	function add_listeners() {
+		document.querySelector(".merge__intervals").addEventListener("click", () => {
+			merge();
+		})
+	}
+
+	function drawLines(y, i, color="blue") {
+		let x1 = (arr[i][0] / 100) * (ctx.canvas.width);
+		let x2 = (arr[i][1] / 100) * (ctx.canvas.width);
+
+		if(color != "blue") {
+			x1 = (merged_arr[i][0] / 100) * (ctx.canvas.width);
+			x2 = (merged_arr[i][1] / 100) * (ctx.canvas.width);
+
+		}
+		ctx.beginPath();
+		ctx.strokeStyle = color;
+		ctx.lineWidth = 5;
+		ctx.moveTo(x1, y);
+		ctx.lineTo(x2, y);
+		ctx.stroke();
+		ctx.closePath();
+	}
+
+	function drawArr() {
+		height = 15;
+		for(let i =0; i<size; i++) {
+			y = (height) * (i + 1);
+			drawLines(y, i);
+		}
+	}
+
+	async function drawMergeArr() {
+		height = 15;
+		gap = 5;
+		for(let i =0; i<merged_arr.length; i++) {
+			y = (height) * (size + gap + i + 1);
+			await sleep(time_delay).then(() => drawLines(y, i, "red"));
+		}
+	}
+
+	function drawHorizontalLine(i) {
+		let x1 = (arr[i][0] / 100) * (ctx.canvas.width);
+		let x2 = (arr[i][1] / 100) * (ctx.canvas.width);
+		ctx.save();
+		ctx.beginPath();
+		ctx.strokeStyle = "black";
+		ctx.lineWidth = 1;
+		ctx.setLineDash([1, 5]);
+		ctx.moveTo(x1, 0);
+		ctx.lineTo(x1, ctx.canvas.height);
+		ctx.stroke();
+		ctx.strokeStyle = "black";
+		ctx.moveTo(x2, 0);
+		ctx.lineTo(x2, ctx.canvas.height);
+		ctx.stroke();
+		ctx.closePath();
+		ctx.restore();
+	}
+
+	async function merge() {
+		for(let i=0; i<size; i++) {
+			drawHorizontalLine(i);
+		}
+
+
+		for(let i=0; i<size; i++) {
+			if(i == 0) {
+				merged_arr.push(arr[i]);
+			}	
+			else {
+				x1 = arr[i][0];
+				x2 = arr[i][1];
+				top_x1 = merged_arr[merged_arr.length - 1][0];
+				top_x2 = merged_arr[merged_arr.length - 1][1];
+				if(x1 <= top_x2) {
+					merged_arr[merged_arr.length - 1][1] = (merged_arr[merged_arr.length - 1][1] > x2) ? merged_arr[merged_arr.length - 1][1] : x2;
+				}
+				else {
+					merged_arr.push(arr[i]);
+				}
+			}
+		}
+
+		drawMergeArr()
+	}
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
