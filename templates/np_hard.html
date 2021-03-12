@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>P, NP, NP-Hard and NP-Complete Problems</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			min-height: 100vh;
+			background: lightgreen;
+		}
+
+		.grid {
+
+		}
+
+		p:nth-child(1) {
+			padding: 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size:35px;
+			color: white;
+			font-weight: bolder;
+			text-shadow: -2px 5px 3px rgba(0, 0, 0, .2);
+			text-transform: uppercase;
+		}
+
+		.blog {
+			margin: 10px auto;
+			max-width: 800px;
+			/*background: white;*/
+			text-align: center;
+		}
+
+		.blog__heading {
+			text-align: left;
+			font-size: 28px;
+			text-transform: capitalize;
+			font-weight: bolder;
+			color: #444;
+			padding: 5px;
+		}
+		.blog .survey__image {
+			width: 700px;
+			margin: 15px auto;
+		}
+
+		.survey_explain{
+			text-align: justify;
+			margin: 30px auto;
+			padding: 5px;
+			font-size: 24px;
+			color: #555;
+			font-weight: normal;
+			line-height: 30px;
+		}
+
+		.each_header{
+			text-transform: capitalize;
+			font-size: 28px;
+		}
+
+		.o_notations {
+			margin: 20px auto;
+		}
+
+		.o_notations > div {
+			margin: 30px auto;
+		}
+
+		.o_notations > div > .head {
+			color: #444;
+			font-size: 30px;
+			font-weight: bolder;
+		}
+
+		.big__each__explaination {
+
+			font-size: 20px;
+		}
+		.doc {
+			font-size: 25px;
+			font-weight: normal;
+			padding: 20px 0px;
+		}
+
+		code > pre {
+			font-size: 15px;
+			background: black;
+			padding: 10px;
+			color: white;
+			border-radius: 10px;
+			box-shadow: 5px 5px 8px rgba(0, 0, 0, .9);
+		}
+
+		.list {
+			position: relative;
+			left: 30px;
+		}
+		
+		.image_ext {
+			position: relative;
+			display: flex;
+			justify-content: center;
+			padding: 10px 0px;
+		}
+
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p> P, NP, NP-Hard and NP-Complete Problems </p>
+	<div class='grid'>
+			<div class="blog">
+				<h3 class="blog__heading">Let's understand which problem comes under which category.</h3>	
+				<div class="blog_why">
+					<img class="survey__image" alt="survey" src="../images/np_hard.jpg">
+					<div class="survey_explain">
+						 
+						 <br />
+						<b>
+							P, NP, NP-Hard and NP-Complete are classes that any problem would fall under or would be classified as.
+						</b>.
+
+					</div>
+					<img class="survey__image" alt="time_space_complexity" src="../images/time_space_complexity.png">
+					<div class="survey_explain">
+						<b>Definition: </b> &nbsp; Time complexity of an algorithm quantifies the amount of time taken by an algorithm to run as a function of the length of the input. Similarly, Space complexity of an algorithm quantifies the amount of space or memory taken by an algorithm to run as a function of the length of the input.
+
+					</div>
+
+					<div class="survey_explain">
+						<b class="each_header">We Have three Asymptotic notations to calculate the time complexity</b>
+						<div class="o_notations">
+							<div class="big_θ_notation">
+								<b class="head">1. Big-θ (Big-Theta) notation</b>
+								<div class="big__each__explaination">
+									<p></p>
+									<p class="doc">
+										Let's look at a simple implementation of linear search:
+									</p>
+									<code>
+										<pre>
+var doLinearSearch = function(array, targetValue) {
+  for (var guess = 0; guess < array.length; guess++) {
+    if (array[guess] === targetValue) { 
+        return guess;  // found it!
+    }
+  }
+  return -1;  // didn't find it
+};
+										</pre>
+									</code>		
+									<p class="doc">
+										Let's denote the size of the array (array.length) by n nn. The maximum number of times that the for-loop can run is n nn, and this worst case occurs when the value being searched for is not present in the array.
+									</p>
+									<p class="doc">
+										Each time the for-loop iterates, it has to do several things:
+										<ul class="list">
+											<li>compare guess with array.length</li>
+											<li>compare array[guess] with targetValue</li>
+											<li>possibly return the value of guess</li>
+											<li>increment guess.</li>
+										</ul>
+									</p>
+									<p class="doc">
+										Each of these little computations takes a constant amount of time each time it executes. If the for-loop iterates <i>n</i> times, then the time for all <i>n</i> iterations is <i>c1*n</i>,
+										where <i>c1</i> is the sum of the times for the computations in one loop iteration. Now, we cannot say here what the value of <i>c1</i> is, because it depends on the speed of the computer, the programming language used, the compiler or interpreter that translates the source program into runnable code, and other factors.
+									</p>
+
+									<p class="doc">
+										This code has a little bit of extra overhead, for setting up the for-loop (including initializing guess to 0) and possibly returning -1 at the end. Let's call the time for this overhead <i>c2</i>,  which is also a constant. Therefore, the total time for linear search in the worst case is <i>c1*n + c2</i>
+									</p>
+
+									<p class="doc">
+										As we've argued, the constant factor <i>c1</i> and the low-order term <i>c2</i> don't tell us about the rate of growth of the running time. What's significant is that the worst-case running time of linear search grows like the array size <i>n</i>. The notation we use for this running time is <i>Θ(n)</i> . That's the Greek letter "theta," and we say "big-Theta of <i>n"</i> or just "Theta of n."
+									</p>
+
+									<p class="doc">
+										When we say that a particular running time is <i>Θ(n)</i>, we're saying that once <i>n</i> gets large enough, the running time is at least <i>k1*n</i> and at most <i>k2*n</i> for some constants <i>k1</i> and <i>k2</i>. Here's how to think of <i>Θ(n):</i> 
+									</p>
+									<p class="image_ext">
+									
+									<img src="../images/time_thetha.png" alt="theta" class="time_image">
+									
+									</p>
+									
+									<p class="doc">
+										For small values of n nn, we don't care how the running time compares with <i>k1*n</i> or <i>k2*n</i>.
+										But once <i>n</i> gets large enough—on or to the right of the dashed line the running time must be sandwiched between <i>k1*n</i> and <i>k2*n</i>.As long as these constants <i>k1</i> and <i>k2</i> exist, we say that the running time is <i>Θ(n)</i>.
+									</p>
+									
+									<p class="doc">
+										
+										We are not restricted to just <i>n</i> in big-Θ notation. We can use any function, such as <i>n <sup>2</sup> </i>, <i>nlog <sub>2</sub> n</i>, or any other function of <i>n</i>. Here's how to think of a running time that is <i>Θ(f(n))</i> for some funtion <i>f(n)</i>.
+									</p>
+
+									<p class="image_ext">
+										<img src="../images/time_thetha_1.png" alt="theta" class="time_image">
+									</p>									
+									<p class="doc">
+										Once <i>n</i> gets large enough, the running time is between <i>k1*f(n)</i> and <i>k2*f(n)</i>
+									</p>
+									<p class="doc">
+										In practice, we just drop constant factors and low-order terms. Another advantage of using big-Θ notation is that we don't have to worry about which time units we're using. For example, suppose that you calculate that a running time is <i>6n <sup>2</sup> + 100n + 300</i>  microseconds. Or maybe it's milliseconds. When you use big-Θ notation, you don't say. You also drop the factor 6 and the low-order terms <i>100n + 300</i> and you just say that the running time is <i>Θ(n <sup>2</sup> )</i>.
+									</p>
+									<p class="doc">
+										When we use big-Θ notation, we're saying that we have an <b>asymptotically tight bound</b> on the running time. "Asymptotically" because it matters for only large values of <i>n</i>."Tight bound" because we've nailed the running time to within a constant factor above and below.
+									</p>
+
+								</div>
+							</div>
+
+							<div class="big_o_notation">
+								<b class="head">2. Big-O (Big-Oh) Notation</b>
+								<div class="big__each__explaination">
+									<p></p>
+									<p class="doc">
+										We use big-Θ notation to asymptotically bound the growth of a running time to within constant factors above and below. Sometimes we want to bound from only above.
+									</p>
+									<p class="doc">
+										For example, although the worst-case running time of binary search is <br> <i>Θ(log<sub>2</sub>n)</i>, it would be incorrect to say that binary search runs in <i>Θ(log<sub>2</sub>n)</i> time in all cases. What if we find the target value upon the first guess? Then it runs in Θ(1) time.The running time of binary search is never worse than <br> <i>Θ(log<sub>2</sub>n)</i> but it's sometimes better.
+									</p>
+									<p class="doc">
+										It would be convenient to have a form of asymptotic notation that means "the running time grows at most this much, but it could grow more slowly." We use "big-O" notation for just such occasions.
+									</p>
+
+									<p class="doc">
+										If a running time is <i>O(f(n))</i>,  then for large enough <i>n</i> , the running time is at most <i>k*f(n)</i> for some constant k. Here's how to think of a running time that is <i>O(f(n))</i>.
+									</p>
+									
+									<p class="image_ext">
+										<img src="../images/big_oh.png" alt="theta" class="time_image">
+									</p>
+									<p class="doc">
+										We say that the running time is "big-O of <i>f(n)</i>" or just "O of <i>f(n)</i>". We use big-O notation for <b>asymptotic upper bounds</b>, since it bounds the growth of the running time from above for large enough input sizes. 
+									</p>
+									<p class="doc">
+										Now we have a way to characterize the running time of binary search in all cases. We can say that the running time of binary search is always <i>O(log<sub>2</sub>n)</i>. We can make a stronger statement about the worst-case running time: it's <i>Θ(log<sub>2</sub>n)</i>. But for a blanket statement that covers all cases, the strongest statement we can make is that binary search runs in <i>O(log<sub>2</sub>n)</i> time.
+									</p>
+
+									<p class="doc">
+										If you go back to the definition of big-Θ notation, you'll notice that it looks a lot like big-O notation, except that big-Θ notation bounds the running time from both above and below, rather than just from above. If we say that a running time is <i>Θ(f(n))</i> in a particular situation, then it's also <i>O(f(n))</i>. For example, we can say that because the worst-case running time of binary search is <i>Θ(f(n))</i>, it is also <i>O(f(n))</i>.
+									</p>
+									<p class="doc">
+										The converse is not necessarily true: as we've seen, we can say that binary search always runs in <i>Θ(log<sub>2</sub>n)</i> time but not that it always runs in <i>O(log<sub>2</sub>n)</i> time.
+									</p>
+
+									<p class="doc">
+										Because big-O notation gives only an asymptotic upper bound, and not an asymptotically tight bound, we can make statements that at first glance seem incorrect, but are technically correct. For example, it is absolutely correct to say that binary search runs in <i>O(n)</i> time. That's because the running time grows no faster than a constant times <i>n</i>. In fact, it grows slower.
+									</p>
+
+									<p class="doc">
+										Think of it this way. Suppose you have 10 dollars in your pocket. You go up to your friend and say, "I have an amount of money in my pocket, and I guarantee that it's no more than one million dollars." Your statement is absolutely true, though not terribly precise.
+									</p>
+
+									<p class="doc">
+										One million dollars is an upper bound on 10 dollars, just as <i>O(n)</i> is an upper bound on the running time of binary search. Other, imprecise, upper bounds on binary search would be <i>O(n<sup>2</sup>), O(n<sup>3</sup>)</i> and <i>O(2<sup>n</sup>)</i>. But none of <i>Θ(n), Θ(n<sup>2</sup>), Θ(n<sup>3</sup>)</i> ans <i>Θ(2<sup>n</sup>)</i> would be correct to describe the running time of binary search in any case.
+									</p>
+
+								</div>
+							</div>
+
+							<div class="big_om_notation">
+								<b class="head">3. Big-Ω (Big-Omega) notation</b>
+								<div class="big__each__explaination">
+									<p></p>
+									<p class="doc">
+										Sometimes, we want to say that an algorithm takes at least a certain amount of time, without providing an upper bound. We use big-Ω notation; that's the Greek letter "omega."
+									</p>
+
+									<p class="doc">
+										If a running time is <i>Ω(f(n))</i>, then for large enough <i>n</i>, the running time is at least <i>k*f(n)</i> for some constant <i>k</i>. Here's how to think of a running time that is  <i>Ω(f(n))</i>.
+ 									</p>
+
+									<p class="image_ext">
+										<img src="../images/big_ohm.png" alt="theta" class="time_image">
+									</p>
+
+									<p class="doc">
+										We say that the running time is "big-Ω of f(n)" We use big-Ω notation for asymptotic lower bounds, since it bounds the growth of the running time from below for large enough input sizes.
+									</p>
+
+									<p class="doc">
+										Just as <i>Θ(f(n))</i> automatically implies <i>O(f(n))</i>  it also automatically implies <i>Ω(f(n))</i>.So we can say that the worst-case running time of binary search is <i>Ω(log<sub>2</sub>n)</i>
+									</p>
+									<p class="doc">
+										We can also make correct, but imprecise, statements using big-Ω notation. For example, if you really do have a million dollars in your pocket, you can truthfully say "I have an amount of money in my pocket, and it's at least 10 dollars." That is correct, but certainly not very precise. Similarly, we can correctly but imprecisely say that the worst-case running time of binary search  is <i>Ω(1)</i>, because we know that it takes <b>at least</b> constant time.
+									</p>
+
+									<p class="doc">
+										Of course, typically, when we are talking about algorithms, we try to describe their running time as precisely as possible. We provide the examples of the imprecise statements here to help you better understand big-Ω, big-O and <br /> big-Θ.
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+
+	<script>
+
+// Main
+
+
+	</script>
+</body>
+</html>
