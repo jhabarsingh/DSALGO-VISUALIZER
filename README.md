@@ -159,6 +159,7 @@
      1. [Linear Probing](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table/closed_hashing/linear_probing.html)
      2. [Quadratic Probing](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table/closed_hashing/quadratic_probing.html)
      3. [Double Hashing](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/hashing_table/closed_hashing/double_hashing.html)
+
 <!--
 **SEGMENT TREE ALGORITHMS**
   1. Range Query 
@@ -194,6 +195,11 @@
   2. [GCD (Eucledian)](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/number_theory/gcd.html)
   3. [Extended Eucledian](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/number_theory/extended_eucledian.html)
   4. [Binary Exponentiation](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/number_theory/binary_exponentiation.html)
+
+**P, NP, NP-HARD, NP-COMPLETE**
+1. [NP-Hard](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/np_hard.html)
+2. [NP-Complete](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/np_hard.html)
+
 
 ## <a href="https://medium.com/mindsdb/contributing-to-an-open-source-project-how-to-get-started-6ba812301738">How To Contribure</a>
 > When I thought of commencing this project the first doubt that came to mind was that Should I use Javascript Framework (REACT) or Vanilla Js To create this project and finally I decided to use Vanilla Js and the reason I came to this conclusion was that I wanted to keep this project simple so that more and more people could contribute and learn from it.
