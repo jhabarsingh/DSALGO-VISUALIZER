@@ -1,10 +1,10 @@
-### Greedy  
+### Greedy  : MAY 9
 1. prims
 2. kruskals
 3. fractional knapsack
 
 
-### DP
+### DP : MAY 9
 1. Travelling salesman
 2. Cutting Rod
 3. Coin Change
