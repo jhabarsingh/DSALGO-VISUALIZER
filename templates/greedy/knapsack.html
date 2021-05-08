@@ -92,6 +92,7 @@
 				alert("keep weight greater than 0");
 			}
 			else {
+				document.querySelector(".calc").disabled = true;
 				knapsack();
 			}
 		})
@@ -162,11 +163,12 @@
 		
 		let vw = [];
 
-		w.forEach((e, i) => {
-			vw.push((v[i] / w[i]).toPrecision(2));
-		})
+		for(let i=0; i<w.length; i++) {
+			vw.push([+(v[i] / w[i]).toPrecision(2), i]);
+		}
+		console.log(vw);
 
-		vw.sort((x, y) => y - x);
+		vw.sort((x, y) => y[0] - x[0]);
 
 		for(let i=0; i< size; i++) {
 			ctx.beginPath();
@@ -176,9 +178,82 @@
 			ctx.strokeStyle = "white";
 			ctx.strokeRect(pw * (i + 1), gap, per_width, height)
 			ctx.font = "bolder 15px arial";
-			ctx.fillText(+vw[i], pw * (i + 1) + pw / 2 - 20, gap + height / 2);
+			ctx.fillText(+vw[i][0], pw * (i + 1) + pw / 2 - 20, gap + height / 2);
+			ctx.closePath();
+		}	
+
+		ctx.fillStyle = "red";
+		ctx.fillRect(0, gap + height, per_width, height);
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 15px arial";
+		ctx.fillText("Index", pw / 2 - 20, gap + height + height / 2);
+		ctx.strokeStyle = "white";
+		ctx.strokeRect(0, gap + height, per_width, height);
+
+		for(let i=0; i< size; i++) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			ctx.fillRect(pw * (i + 1), gap + height, per_width, height);
+			ctx.fillStyle = "white";
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(pw * (i + 1), gap + height, per_width, height)
+			ctx.font = "bolder 15px arial";
+			ctx.fillText(+vw[i][1], pw * (i + 1) + pw / 2 - 20, gap + height + height / 2);
 			ctx.closePath();
 		}
+
+
+		ctx.fillStyle = "red";
+		ctx.fillRect(0, gap + 2 * height, per_width - 8, height);
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 15px arial";
+		ctx.fillText("Index", pw / 2 - 20, gap + 2 * height + height / 2);
+		ctx.strokeStyle = "white";
+		ctx.strokeRect(0, gap + 2 * height , per_width - 8, height);
+
+		let i = 0;
+		let ans = 0;
+		while(i < +w.length && weight > 0) {
+			ctx.beginPath();
+			ctx.fillStyle = "black";
+			ctx.fillRect(pw * (i + 1), gap + 2 * height, per_width, height);
+			ctx.fillStyle = "white";
+			ctx.strokeStyle = "white";
+			ctx.strokeRect(pw * (i + 1), gap + 2 * height, per_width, height)
+			ctx.font = "bolder 15px arial";
+			if(+v[i] >= weight) {
+				ctx.fillText(+v[i], pw * (i + 1) + pw / 2 - 20, gap + 2 * height + height / 2);
+				weight -= +w[i];
+				ans += +v[i];
+			}
+			else {
+				ctx.fillText(+vw[i][0] * weight, pw * (i + 1) + pw / 2 - 20, gap + 2 * height + height / 2);
+				weight = 0;
+				ans += +vw[i][0];
+				break;
+			}			
+			ctx.closePath();
+			i++;
+		}
+
+		ctx.fillStyle = "red";
+		ctx.fillRect(0, gap + 3.3 * height, per_width, height);
+		ctx.fillStyle = "white";
+		ctx.font = "bolder 15px arial";
+		ctx.fillText("Max Value", pw / 2 - 20, gap + 3.3 * height + height / 2);
+		ctx.strokeStyle = "white";
+		ctx.strokeRect(0, gap + 3.3* height, per_width, height);
+
+
+		i = 0;
+		GAP = 12;
+		ctx.fillStyle = "black";
+		ctx.fillRect(pw * (i + 1) + GAP, gap + 3.3 * height, per_width, height);
+		ctx.fillStyle = "white";
+		ctx.strokeStyle = "white";
+		ctx.strokeRect(pw * (i + 1) + GAP, gap + 3.3 * height, per_width, height)
+		ctx.font = "bolder 15px arial";
+		ctx.fillText(ans, pw * (i + 1) + pw / 2 - 20 + GAP, gap + 3.3 * height + height / 2);
 	}
 
 	function sleep(ms) {
