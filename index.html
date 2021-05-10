@@ -351,7 +351,7 @@
      			sub_topics: [
      				"Travelling Salesman",
      				"0/1 knapsack",
-     				"unbounded 0/1 Knapsack",
+     				"unbounded Knapsack",
      				"subset sum problem",
      				"cutting_rod",
      				"coin_change_making",
@@ -438,15 +438,15 @@
 
               // Questions 
               
-//               {
-//                     heading: 'Questions',
-//                     image: 'images/question.jpeg',
-//                     link: 'templates/questions.html',
-//                     sub_topics: [
-//                          "Data Structure",
-//                          "Algorithm"
-//                     ]
-//                },
+              {
+                    heading: 'Questions',
+                    image: 'images/question.jpeg',
+                    link: 'templates/questions.html',
+                    sub_topics: [
+                         "Data Structure",
+                         "Algorithm"
+                    ]
+               },
      	]
 
          pop_up();
@@ -454,7 +454,12 @@
 // Utility
 
       	details.forEach((detail, index) => {
-     		add_card(detail, index);
+			let temp = window.localStorage.getItem("questions");
+			if(detail.heading == "Questions" && temp == null) {
+				// Do Nothing
+			}
+			else	
+			 add_card(detail, index);
      	}) 
      	
      	function add_card(details, index) {
