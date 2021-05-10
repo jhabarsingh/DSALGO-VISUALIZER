@@ -127,7 +127,7 @@
 <body>
      <div id='main'>
      	<div class="main__heading">
-			<b class='heading__text'>DSALGO</b>  &nbsp;&nbsp; <span>let's make ds algo fun</span>     		
+			<b class='heading__text title' >DSALGO</b>  &nbsp;&nbsp; <span>let's make ds algo fun</span>     		
      	</div>
      	<div class="section row"></div>
      	<div class="body__bin"></div>
@@ -139,7 +139,21 @@
 
      	let sec = document.querySelector('.section');
      	let heading = document.querySelector('.main__heading');
-     	let details = [
+     	let counter = 0;
+		 document.querySelector(".title").addEventListener("click", () => {
+			if(counter == 10) {
+				if(window.localStorage.getItem("questions")) {
+					window.localStorage.removeItem("questions");
+				}
+				else
+					window.localStorage.setItem("questions", true)
+				window.location.reload();
+			}
+			console.log(counter);
+			counter++;
+		 })
+		
+		 let details = [
      		{
      			heading: 'Time Complexity',
      			image: `images/time_complexity.png`,
