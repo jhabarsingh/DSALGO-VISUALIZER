@@ -5,12 +5,7 @@
 
 ### DP : MAY 9
 1. Travelling salesman
-2. Cutting Rod
-3. Coin Change
-4. LCS Problem
-5. Matrix chain
 6. Levenshtein
-7. Ladders Problem
 
 ### Graph
 1. Topological sort

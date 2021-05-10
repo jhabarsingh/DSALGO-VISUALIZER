@@ -138,7 +138,7 @@
   5.  [Cutting Rod](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/dynamic/cutting_rod.html)
   6.  [Coin Change](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/dynamic/coin_change_making.html)
   7.  [Longest Common Subsequence](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/dynamic/longest_common_sequence.html)
-  8.  [Matrix Chain Multipication ](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/dynamic/matrix_chain_multiplication.html)
+  <!-- 8.  [Matrix Chain Multipication ](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/dynamic/matrix_chain_multiplication.html) -->
   9.  [Levenshtein Distance ](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/dynamic/levenshtein.html)
   10. [Ladders Problem](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/dynamic/ladder.html)
 
