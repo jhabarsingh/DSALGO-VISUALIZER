@@ -177,8 +177,8 @@
 				ctx.strokeRect(0,  j * ph, 50, ph)
 				ctx.fillStyle = "white";
 				ctx.font = "bolder 15px arial";
-				ctx.fillText(v[j - 2] || 0, 0 + 15,  j * ph + ph / 2);
-				ctx.fillText(w[j - 2] || 0, 50	 + 15,  j * ph + ph / 2)
+				// ctx.fillText(v[j - 2] || 0, 0 + 15,  j * ph + ph / 2);
+				ctx.fillText(w[j - 2] || "", 50	 + 15,  j * ph + ph / 2)
 			}
 			for(let i=0; i< size + 1; i++) {
 				ctx.beginPath();
@@ -197,7 +197,7 @@
 				ctx.closePath();
 				if(j ==0 ) {
 					ctx.fillStyle = "white";
-					ctx.fillText(i, 100 + 	i * pw + pw / 2,  j * ph + ph / 2);
+					ctx.fillText(i == 0 ? "": v[i - 1], 100 + 	i * pw + pw / 2,  j * ph + ph / 2);
 				} 
 				else if(i == 0 || j == 1 ) {
 					ctx.fillStyle = "white";
