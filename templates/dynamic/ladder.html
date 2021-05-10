@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ladders Jump</title>
+	<style>
+		html, * {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			text-align: center;
+		}
+
+		.grid {
+			background: lightgreen;
+			margin: auto;
+		}
+
+		p:nth-child(1) {
+			padding: 10px 20px;
+			text-align: center;
+			font-family: ubuntu;
+			font-weight: bolder;
+			font-size: 25px;
+			text-transform: uppercase;
+			color: gray;
+		}
+
+        .calc {
+			padding: 10px 30px;
+		}
+
+        .message {
+            background-color: yellow;
+            padding: 10px 20px;
+            margin-right: 10px;
+        }
+
+	</style>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+	<p>Ladders Jump</p>
+	<canvas class='grid' width="1000" height="500">
+		
+	</canvas>
+    <div>
+        <span class="message">
+            jump 1, 2 steps
+        </span>
+		<button class="calc">
+			Visualize
+		</button>
+	</div>
+
+	<script>
+
+// Main
+	let ctx = document.querySelector("canvas").getContext("2d");
+	let size = 10;
+	let arr = [];
+	let time_delay = 1000;
+    let n = 10;
+    
+	init();
+// Utility
+
+
+
+    async function init() {
+        arr.push(1);
+        for(let i=1; i<=n; i++) {
+            if(i == 1) {
+                arr.push(arr[i - 1]);
+            }
+            else {
+                arr.push(arr[i - 1] + arr[i - 1]);
+            }
+        }
+
+        for(let i=0; i<n; i++) {
+            await sleep(time_delay).then(() => {
+                draw_ladders(i);
+            })
+        }
+        add_listeners();
+    }
+
+    function draw_ladders(val) {
+        ctx.fillStyle = "lightgreen";
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.fillStyle = "black";
+        pw = ctx.canvas.width / size;
+        ph = ctx.canvas.height / (n + 2);
+
+        let i = 0;
+        let m = val;
+        while(i != n) {
+            ctx.fillRect(i * pw, ctx.canvas.height - ph  * (i + 1), pw, ph  * (i + 1));
+            ctx.strokeStyle = "white";
+            ctx.strokeRect(i * pw, ctx.canvas.height - ph  * (i + 1), pw, ph  * (i + 1));
+            ctx.stroke();
+
+            if(i <= m) {
+                ctx.fillStyle = "white";
+                ctx.font = "bolder 12px arial"
+                ctx.fillText(arr[i], pw * i + pw / 2, ctx.canvas.height - (ph  * (i + 1) / 2))
+                ctx.fillStyle = "black";
+            }
+            i++;
+        }
+        RADIUS = 10;
+        ctx.moveTo(pw * m + pw / 2, ctx.canvas.height - ph * (m + 1) - ph / 2);
+        ctx.arc(pw * m + pw / 2, ctx.canvas.height - ph * (m + 1) - ph / 2, RADIUS, 0, 2 * Math.PI)
+        ctx.fill();
+    }
+
+    function add_listeners() {
+		document.querySelector(".calc").addEventListener("click", () => {
+			document.querySelector(".calc").disabled = true;
+            dp();
+		})
+	}
+
+    function dp() {
+
+    }
+
+	function sleep(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	</script>
+</body>
+</html>
