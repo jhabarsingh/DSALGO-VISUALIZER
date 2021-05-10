@@ -45,8 +45,8 @@
 		<span>Graph</span>
 		<span>
 			<button class="head__button graph">Original Graph</button>
-			<button class="head__button bfs">BFS</button>
-			<button class="head__button dfs">DFS</button>
+			<button class="head__button bfs">Detect Cycle</button>
+			<button class="head__button dfs" style="visibility: hidden;">DFS</button>
 		</span>	
 	</p>
 	
@@ -93,6 +93,8 @@
 		document.querySelector(".bfs").addEventListener("click", () => {
 			visited = [];
 			create_graph(edge);
+			document.querySelector(".graph").disabled = true;
+			document.querySelector(".bfs").disabled = true;
 			for(let i=0; i<size; i++) visited.push(false);
 			bfs(0, visited);
 			create_graph(bfs_edge, false);
@@ -156,6 +158,7 @@
 						createText(j);
 					})
 					await sleep(time_delay).then(() => {
+						document.querySelector(".graph").disabled = false;
 						alert("cycle is present");
 					})
 					return;
@@ -164,7 +167,9 @@
 
 		}
 		await sleep(time_delay).then(() => {
+			document.querySelector(".graph").disabled = false;
 			alert("cycle is not present");
+			return;
 		})
 	}
 	
