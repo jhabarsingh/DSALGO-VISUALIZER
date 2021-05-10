@@ -1,7 +1,6 @@
 ### Greedy  : MAY 9
 1. prims
 2. kruskals
-3. fractional knapsack
 
 
 ### DP : MAY 9
