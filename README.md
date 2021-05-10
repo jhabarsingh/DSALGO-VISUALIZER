@@ -123,12 +123,11 @@
   3. [Counting Inversion](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/divide_and_conquer/counting_inversion.html)
 
 **GREEDY PARADIGM**
-  1. [Prims](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/prims.html)
-  2. [Kruskals](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/kruskals.html)
-  3. [Fractional Knapsack](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/knapsack.html)
-  4. [Counting Money](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/counting_money.html)
-  5. [Job Scheduling](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/job_schedulling.html)
-  6. [Huffman Coding](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/huffman_coding.html)
+  1. [Kruskals](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/kruskals.html)
+  2. [Fractional Knapsack](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/knapsack.html)
+  3. [Counting Money](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/counting_money.html)
+  4. [Job Scheduling](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/job_schedulling.html)
+  5. [Huffman Coding](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/greedy/huffman_coding.html)
  
 **DYNAMIC PROGRAMMING PARADIGM**
   1.  [Travelling Salesman](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/dynamic/travelling_salesman.html)
