@@ -117,11 +117,6 @@
 		ctx.font = "bolder 15px arial";
 		ctx.fillText("Coins", pw / 2 - 20, ctx.canvas.height - height / 2 + 5);
 		
-		// ctx.fillStyle = "red";
-		// ctx.fillRect(0, ctx.canvas.height - 2 * height - 1, per_width, height);
-		// ctx.fillStyle = "white";
-		// ctx.font = "bolder 15px arial";
-		// ctx.fillText("Value", pw / 2 - 20, ctx.canvas.height - 2 * height / 2 - 20);
 
 		for(let i=0; i<size; i++) {
 			ctx.beginPath();
@@ -132,15 +127,6 @@
 			ctx.strokeRect(pw * (i + 1), ctx.canvas.height - height, per_width, height)
 			ctx.font = "bolder 15px arial";
 			ctx.fillText(w[i], pw * (i + 1) +  pw / 2 - 20, ctx.canvas.height - height / 2 + 5);
-			
-			// ctx.fillStyle = "black";
-			// ctx.fillRect(pw * (i + 1), ctx.canvas.height - 2 * height - 1, per_width, height);
-			// ctx.fillStyle = "white";
-			// ctx.strokeStyle = "white";
-			// ctx.strokeRect(pw * (i + 1), ctx.canvas.height - 2 * height - 1, per_width, height)
-			// ctx.font = "bolder 15px arial";
-			// ctx.fillText(v[i], pw * (i + 1) + pw / 2 - 20, ctx.canvas.height - 2 * height / 2 - 20);
-			// ctx.closePath();
 		}
 	}
 
