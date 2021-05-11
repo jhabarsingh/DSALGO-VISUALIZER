@@ -78,13 +78,10 @@
   4.  [Color Filling](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/color_filling.html)
   5.  [DFS Maze](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/create_dfs_maze.html)
   6.  [Cycle Detection (BFS / DFS)](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/detect_cycle.html)
-  7.  [Prims](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/prims.html)
   8.  [Kruskals](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/kruskals.html)
   9.  [Topological Sort](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/topological.html)
-  10. [Bellman Ford](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/bellman_ford.html)
   11. [Floyd Warshall](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/floyd_warshall.html)
   12. [Graph Coloring](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/graph_coloring.html)
-  13. [Snake And Ladders](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/snake_and_ladder.html)
   14. [Travelling Salesman](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/travelling_salesman.html)
   
  **SORTING ALGORITHMS**
