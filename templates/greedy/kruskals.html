@@ -44,7 +44,7 @@
 
 <body>
 	<p>
-		<span>Kruskals MSP Algorithm</span>
+		<span>Kruskals MST Algorithm</span>
 		<span>
 			<button class="head__button graph">Visualize</button>
 		</span>
@@ -81,7 +81,8 @@
 			}
 
 			find(node) {
-				while (node.parent != null) {
+				node = parent[node];
+				while (node.parent != node) {
 					node = node.parent;
 				}
 
@@ -91,7 +92,8 @@
 
 		parent = [];
 		for (let i = 0; i < size; i++) {
-			let temp = new DisjointSet(i, null)
+			let temp = new DisjointSet(i, null);
+			temp.parent = temp;
 			parent.push(temp);
 		}
 
@@ -150,7 +152,7 @@
 
 				let u = e[1];
 				let v = e[2];
-				if (parent[0].parent == null || parent[0].parent == null || parent[0].find(u) != parent[0].find(v)) {
+				if (parent[0].find(u) != parent[0].find(v)) {
 					newGraph.push(e);
 				}
 				if (u > v) {
@@ -221,6 +223,7 @@
 
 				}
 			}
+			
 			if (size == 5) {
 				edge = [
 					[0, 17, 75, 14, 60],
