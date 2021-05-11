@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Graph</title>
+	<title>Topological Sort</title>
 	<style>
-		html, * {
+		html,
+		* {
 			box-sizing: border-box;
 			margin: 0;
 			padding: 0;
@@ -27,298 +29,295 @@
 			font-size: 20px;
 		}
 
-		p > span {
+		p>span {
 			text-transform: uppercase;
 			color: gray;
 		}
+
 		.head__button {
 			padding: 5px 30px;
 		}
-
-
 	</style>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
+
 <body>
 	<p>
-		<span>Graph</span>
+		<span>Topological Sort</span>
 		<span>
-			<button class="head__button graph" style="visibility: hidden;">Original Graph</button>
-			<button class="head__button bfs" style="visibility: hidden;">BFS</button>
-			<button class="head__button dfs">Topological Sort</button>
-		</span>	
+			<button class="head__button graph">Visualize</button>
+		</span>
 	</p>
-	
-	<canvas class='grid' width="1000", height="600">
-		
+
+	<canvas class='grid' width="1000" , height="600">
+
 
 	</canvas>
 
 	<script>
 
-// Main
+		// Main
 
-	arr = ['a', 'b', 'c', 'd', 'e', 'f'];
-	each = []
-	size = arr.length;
-	edge = [];
-	bfs_edge = [];
-	dfs_edge = [];
-    queue = [];
-	dimension = 30;
-	rel = 15;
-	ctx = document.querySelector("canvas").getContext("2d");
-	time_delay = 1000;
-	dx = ctx.canvas.width / size;
-	dy = ctx.canvas.height / size;
-	ctx.save();
-	create_edges();
-	create_graph();
-	init();
-	
-// Utility
-	
-	function init() {
-		document.querySelector(".dfs").addEventListener("click", () => {
-			async function get() {
-				visited = [];
-				for(let i=0; i<size; i++) visited.push(false);
-				await dfs(0, visited);
-				create_dfs_graph();
+		arr = ['a', 'b', 'c', 'd', 'e'];
+		each = [];
+		visited = new Set();
+		for (let i = 0; i < arr.length; i++) visited.add(i);
+		val = [1000, 1000, 1000, 1000, 1000];
+		size = arr.length;
+		edge = [];
+		supporter = [];
+		mem = [];
+		dimension = 22;
+		rel = 15;
+		ctx = document.querySelector("canvas").getContext("2d");
+		time_delay = 1000;
+		dx = ctx.canvas.width / size;
+		dy = ctx.canvas.height / size;
+		create_edges();
+		create_graph();
+		init();
+
+		// Utility
+
+		function init() {
+			for (let i = 0; i < (1 << size); i++) {
+				let temp = [];
+				for (let j = 0; j < size; j++) {
+					temp.push(-1);
+				}
+				mem.push(temp);
 			}
-			get();
-		})
 
-		document.querySelector(".bfs").addEventListener("click", () => {
-			visited = [];
-			for(let i=0; i<size; i++) visited.push(false);
-			bfs(0, visited);
-			create_bfs_graph();
-		})
-
-		document.querySelector(".graph").addEventListener("click", () => {
-			create_graph();
-		})
-	}
-
-	async function  dfs(x, visited) {
-		if(visited[x]) return;
-		visited[x] = true;
-		for(let j=0; j<size; j++) {
-				if(!visited[j] && edge[x][j]) {
-					dfs_edge[x][j] = 1;
-					dfs_edge[j][x] = 1;	
-					dfs(j, visited);
+			document.querySelector(".graph").addEventListener("click", () => {
+				document.querySelector(".graph").disabled = true;
+				mask = 1;
+				path = 0;
+				async function get() {
+					topologicalSort();
 				}
+				get();
+			})
 		}
-	}
 
-	function bfs(x, visited) {
-		s = [];
-		s.push(x);
-		visited[x] = true;
-		while(s.length != 0) {
-			x = s.shift();
-			for(let j=0; j<size; j++) {
-				if(!visited[j] && edge[x][j]) {
-					bfs_edge[x][j]  = 1;
-					bfs_edge[j][x]  = 1;	
-					s.push(j);
-					visited[j] = true;
-				}
-			} 
-
-		}
-	}
-	
-	function create_edges() {
-		count = 0;
-		
-		for(let i=0; i<size; i++) {
-			let temp = [];
-			let dfs_temp = [];
-			let bfs_temp = [];
+		function independent(node) {
 			for(let i=0; i<size; i++) {
-				temp.push(0);
-				dfs_temp.push(0);
-				bfs_temp.push(0);
+				if(edge[node][i] != 0) return false;
 			}
-			edge.push(temp);
-			dfs_edge.push(dfs_temp);
-			bfs_edge.push(bfs_temp);
+			return true;
+
 		}
 
-		for(let i = 0; i< size; i++) {
-			each.push(Math.floor(Math.random() * (size - 1)) + 1)
-		}
+		async function topologicalSort() {
+			let set = [];
 
-		for(let i=0; i< size; i++) {
-			
-			for(let j=i; j< size; j++) {
-				let p = Math.floor(Math.random()*2 + 1) - 1;
-				edge[i][j] = p;
-				edge[j][i] = p;
-				count ++;
-			}	
-		}
-	}
-
-	function createLine(i, j, color="black") {
-		ctx.strokeStyle = color;
-		let x = each[i] * dx + dimension / 2 + rel;
-		let y = i * dy + dimension / 2 + rel;
-		ctx.beginPath();
-		ctx.moveTo(x, y);
-		ctx.lineWidth = 4;
-		x = each[j] * dx + dimension / 2 + rel;
-		y = j * dy + dimension / 2 + rel;
-		ctx.lineTo(x, y);
-		ctx.stroke();
-		ctx.closePath();
-	}
-
-	function createBox(i, color="red") {
-		ctx.fillStyle = color
-		ctx.moveTo(each[i] * dx, i* dy);
-		let x = each[i] * dx + (dimension / 2) + rel;
-		let y = i * dy + dimension / 2 + rel;
-		ctx.arc(x , y , dimension ,0 , Math.PI * 2);
-		ctx.fill();
-		// ctx.fillStyle = 'white';
-		// // ctx.font = 'bolder 25px ubuntu'
-		// ctx.moveTo(each[i] * dx, i* dy);	
-		// ctx.fillText(arr[i],x, y);
-	}
-
-	function createText(i, color="white") {
-		ctx.moveTo(each[i] * dx, i* dy);
-		let x = each[i] * dx + (dimension / 2) + rel;
-		let y = i * dy + dimension / 2 + rel;
-		ctx.fillStyle = 'white';
-		ctx.font = 'bolder 25px ubuntu'
-		ctx.moveTo(each[i] * dx, i* dy);	
-		ctx.fillText(arr[i],x, y);
-	}
-
-	async function create_graph() {
-		ctx.fillStyle = "lightgreen";
-		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-		for(let i=0; i< size; i++) {
-			for(let j=i; j< size; j++) {
-				if(+edge[i][j] == 1) {
-					createLine(i, j)
+			for(let i=0; i<size; i++) set.push(i);
+			let top = [];
+			while(set.length != 0) {
+				if(set.length == 1) {
+					top.push(set[0]);
+					for(let i=0; i<size; i++) {
+						for(let j=0; j<size; j++) {
+							edge[i][j] = 0;
+						}
+					}
+					
+					for(let i=0; i<size; i++) arr[i] = null;
+					await sleep(time_delay).then(() => {
+						create_graph();
+					})
+					createStack(top);
+					set.pop();
+					break;
 				}
-			}	
-		}
-		for(let i=0; i< size; i++) {
-			createBox(i, "red");
-		}
 
-		for(let i=0; i< size; i++) {
-			createText(i, "white");
-		}
-		ctx.fillStyle = "lightgreen"
-	}
-
-	async function create_dfs_graph() {
-		ctx.fillStyle = "lightgreen";
-		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-		for(let i=0; i< size; i++) {
-			for(let j=i; j< size; j++) {
-				if(+dfs_edge[i][j] == 1) {
-					ctx.strokeStyle = "black";
-					let x = each[i] * dx + dimension / 2 + rel;
-					let y = i * dy + dimension / 2 + rel;
-					ctx.beginPath();
-					ctx.moveTo(x, y);
-					ctx.lineWidth = 4;
-					x = each[j] * dx + dimension / 2 + rel;
-					y = j * dy + dimension / 2 + rel;
-					ctx.lineTo(x, y);
-					ctx.stroke();
-					ctx.closePath();
+				for(let i=0; i<set.length; i++) {
+					if(independent(i)) {
+						top.push(i);
+						set.splice(i, 1);
+						arr[i] = null;
+						for(let j=0; j<size; j++) {
+							edge[j][i] = 0;
+						}
+						await sleep(time_delay).then(() => {
+							create_graph();
+						})
+						createStack(top);
+						break;
+					}
 				}
-			}	
+				if(set.length == 0) break;
+			}
 		}
-		for(let i=0; i< size; i++) {
-			ctx.fillStyle = "red"
-			ctx.moveTo(each[i] * dx, i* dy);
-			let x = each[i] * dx + (dimension / 2) + rel;
+
+
+		function createRect(i) {0, 1, 2, 3, 40, 1, 2, 3, 4
+			width = 80;
+			height = 50;
+			start = 300;
+			ctx.fillStyle = "black";
+			ctx.fillRect(start + i * width + 10 * i, ctx.canvas.height - height - 4, width, height);
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 18px sans-serif";
+			weight = val[i];
+			if (+weight == 1000) weight = "Inf";
+			ctx.fillText(weight, start + i * width + 10 * i + width / 2 - 10, ctx.canvas.height - height + height / 2 + 4);
+		}
+
+
+		function create_edges() {
+			count = 0;
+			limit = 20;
+			for (let i = 0; i < size; i++) {
+				let temp = [];
+				for (let i = 0; i < size; i++) {
+					temp.push(0);
+				}
+				edge.push(temp);
+			}
+
+			for (let i = 0; i < size; i++) {
+				each.push(Math.floor(Math.random() * (size - 1)) + 1)
+			}
+
+			for (let i = 0; i < size; i++) {
+				if (count >= limit) break;
+				for (let j = i + 1; j < size; j++) {
+					if (count >= limit) break;
+					let p = Math.floor(Math.random() * 2);
+					if (true) {
+						edge[i][j] = Math.floor(Math.random() * (100 - 1) + 1);
+						edge[j][i] = edge[i][j]
+						count++;
+					} else {
+						edge[i][j] = 0;
+						edge[j][i] = 0;
+					}
+
+				}
+			}
+			if (size == 5) {
+				edge = [
+					[0, 17, 75, 0, 0],
+					[0, 0, 0, 12, 0],
+					[0, 0, 0, 12, 12],
+					[0, 0, 0, 0, 6],
+					[0, 0, 0, 0, 0],
+				]
+
+				each = [3, 1, 4, 1, 4]
+
+				for (let i = 0; i < size; i++) {
+					for (let j = i + 1; j < size; j++) {
+						if (edge[i][j]) {
+							temp = edge[i][j] = Math.floor(Math.random() * (50 - 1) + 1);
+							edge[i][j] = temp;
+						}
+					}
+				}
+			}
+		}
+
+		function createStack(arr) {
+			ctx.beginPath();
+			ctx.save();
+			ctx.fillStyle = "lightgreen";
+			let WIDTH = 100;
+			let HEIGHT = ctx.canvas.height;
+
+			ctx.fillRect(0, 0, WIDTH, HEIGHT);
+			let n = arr.length;
+
+			let height = 60;
+			for(let i=0; i<n; i++) {
+				ctx.fillStyle = "black";
+				ctx.fillRect(0, HEIGHT - (i + 1) * height, WIDTH, height);
+				ctx.fillStyle = "white";
+				ctx.strokeRect(0, HEIGHT - (i + 1) * height, WIDTH, height);
+				ctx.fillStyle = "white";
+				ctx.fillText(String.fromCharCode(arr[i] + 97), WIDTH / 2, HEIGHT - (i + 1) * height + height / 2)
+			}
+			ctx.restore();
+			ctx.closePath();
+		}
+
+		function createLine(i, j, color = "black") {
+			ctx.strokeStyle = color;
+			cor = []
+			let x = each[i] * dx + dimension / 2 + rel;
 			let y = i * dy + dimension / 2 + rel;
-			ctx.arc(x , y , dimension ,0 , Math.PI * 2);
-			ctx.fill();
-			ctx.fillStyle = 'white';
-			ctx.font = 'bolder 25px ubuntu'
-			ctx.moveTo(each[i] * dx, i* dy);	
-			ctx.fillText(arr[i],x, y);
+			let x1 = x;
+			let y1 = y;
+
+			ctx.beginPath();
+			ctx.moveTo(x, y);
+			cor.push([x, y]);
+			ctx.lineWidth = 4;
+			x = each[j] * dx + dimension / 2 + rel;
+			y = j * dy + dimension / 2 + rel;
+			ctx.strokeStyle = "black"
+			ctx.lineWidth = 10;
+			ctx.lineTo((x + x1) / 2, (y + y1) / 2);
+			ctx.stroke();
+
+			ctx.strokeStyle = "pink"
+			ctx.lineWidth = 3;
+			ctx.lineTo(x, y);
+			ctx.stroke();
+			cor.push([x, y]);
+			ctx.closePath();
+			ctx.fillStyle = "white";
+			ctx.font = "bolder 25px ubuntu";
 		
 		}
 
-		for(let i=0; i< size; i++) {
-			ctx.moveTo(each[i] * dx, i* dy);
+		function createBox(i, color = "red") {
+			ctx.fillStyle = color
+			ctx.moveTo(each[i] * dx, i * dy);
 			let x = each[i] * dx + (dimension / 2) + rel;
 			let y = i * dy + dimension / 2 + rel;
-			ctx.fillStyle = 'white';
-			ctx.font = 'bolder 25px ubuntu'
-			ctx.moveTo(each[i] * dx, i* dy);	
-			ctx.fillText(arr[i],x, y);
-	
-		}
-	}
-
-	async function create_bfs_graph() {
-		ctx.fillStyle = "lightgreen";
-		ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-		for(let i=0; i< size; i++) {
-			for(let j=i; j< size; j++) {
-				if(+bfs_edge[i][j] == 1) {
-					ctx.strokeStyle = "black";
-					let x = each[i] * dx + dimension / 2 + rel;
-					let y = i * dy + dimension / 2 + rel;
-					ctx.beginPath();
-					ctx.moveTo(x, y);
-					ctx.lineWidth = 4;
-					x = each[j] * dx + dimension / 2 + rel;
-					y = j * dy + dimension / 2 + rel;
-					ctx.lineTo(x, y);
-					ctx.stroke();
-					ctx.closePath();
-				}
-			}	
-		}
-		for(let i=0; i< size; i++) {
-			ctx.fillStyle = "red"
-			ctx.moveTo(each[i] * dx, i* dy);
-			let x = each[i] * dx + (dimension / 2) + rel;
-			let y = i * dy + dimension / 2 + rel;
-			ctx.arc(x , y , dimension ,0 , Math.PI * 2);
+			ctx.arc(x, y, dimension, 0, Math.PI * 2);
 			ctx.fill();
-			ctx.fillStyle = 'white';
-			ctx.font = 'bolder 25px ubuntu'
-			ctx.moveTo(each[i] * dx, i* dy);	
-			ctx.fillText(arr[i],x, y);
-		
 		}
 
-		for(let i=0; i< size; i++) {
-			ctx.moveTo(each[i] * dx, i* dy);
+		function createText(i, color = "white") {
+			ctx.moveTo(each[i] * dx, i * dy);
 			let x = each[i] * dx + (dimension / 2) + rel;
 			let y = i * dy + dimension / 2 + rel;
 			ctx.fillStyle = 'white';
 			ctx.font = 'bolder 25px ubuntu'
-			ctx.moveTo(each[i] * dx, i* dy);	
-			ctx.fillText(arr[i],x, y);
-	
+			ctx.moveTo(each[i] * dx, i * dy);
+			ctx.fillText(arr[i], x - 4, y + 4);
 		}
-	}
+
+		async function create_graph() {
+			ctx.fillStyle = "lightgreen";
+			ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+			for (let i = 0; i < size; i++) {
+				for (let j = 0; j < size; j++) {
+					if (+edge[i][j] >= 1) {
+						createLine(i, j)
+					}
+				}
+			}
+			for (let i = 0; i < size; i++) {
+				if(arr[i] != null)
+					createBox(i, "red");
+			}
+
+			for (let i = 0; i < size; i++) {
+				if(arr[i] != null)
+					createText(i, "white");
+			}
+			ctx.fillStyle = "lightgreen"
+		}
 
 
-
-	function sleep(ms) {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	}
+		function sleep(ms) {
+			return new Promise(resolve => setTimeout(resolve, ms));
+		}
 
 	</script>
 </body>
+
 </html>
