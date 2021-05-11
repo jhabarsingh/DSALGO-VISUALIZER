@@ -133,7 +133,7 @@
 
 				for(let i=0; i<set.length; i++) {
 					if(independent(i)) {
-						top.push(i);
+						top.push(set[i]);
 						set.splice(i, 1);
 						arr[i] = null;
 						for(let j=0; j<size; j++) {
