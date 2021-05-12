@@ -1190,7 +1190,21 @@
 			e.innerHTML = html
 			document.querySelector('.heading').appendChild(e);
 			let hl = document.querySelector('.heading__select')
+			let counter = 0;
 			frequency.forEach((elem) => {
+					if(counter == 0) {
+						let input = document.createElement('option');
+						input.classList.add('heading__select__option');
+						let a_tag = document.createElement('a');
+						a_tag.href = `#${elem.topic}`;
+						a_tag.innerText = "Select Topics";
+						input.appendChild(a_tag);
+						input.style.padding = '20px'
+						input.disabled = true;
+						input.selected = true;
+						hl.appendChild(input);
+						counter = 1;
+					}
 					let input = document.createElement('option');
 					input.classList.add('heading__select__option');
 					let a_tag = document.createElement('a');
