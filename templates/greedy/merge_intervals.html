@@ -81,6 +81,7 @@
 
 	function add_listeners() {
 		document.querySelector(".merge__intervals").addEventListener("click", () => {
+			document.querySelector(".merge__intervals").disabled = true;
 			merge();
 		})
 	}
