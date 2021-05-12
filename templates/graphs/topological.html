@@ -244,8 +244,8 @@
 		function createLine(i, j, color = "black") {
 			ctx.strokeStyle = color;
 			cor = []
-			let x = each[i] * dx + dimension / 2 + rel;
-			let y = i * dy + dimension / 2 + rel;
+			x = each[j] * dx + dimension / 2 + rel;
+			y = j * dy + dimension / 2 + rel;
 			let x1 = x;
 			let y1 = y;
 
@@ -253,13 +253,16 @@
 			ctx.moveTo(x, y);
 			cor.push([x, y]);
 			ctx.lineWidth = 4;
-			x = each[j] * dx + dimension / 2 + rel;
-			y = j * dy + dimension / 2 + rel;
+			
+			x = each[i] * dx + dimension / 2 + rel;
+			y = i * dy + dimension / 2 + rel;
+
 			ctx.strokeStyle = "black"
 			ctx.lineWidth = 10;
 			ctx.lineTo((x + x1) / 2, (y + y1) / 2);
 			ctx.stroke();
 
+			
 			ctx.strokeStyle = "pink"
 			ctx.lineWidth = 3;
 			ctx.lineTo(x, y);
