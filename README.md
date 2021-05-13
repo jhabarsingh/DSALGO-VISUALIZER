@@ -81,10 +81,11 @@
   8.  [Kruskals](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/kruskals.html)
   9.  [Topological Sort](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/topological.html)
   11. [Bridges](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/bridges.html)
-  12. [Kosarajus](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/kosarajus.html)
-  13. [Graph Coloring](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/graph_coloring.html)
-  14. [Travelling Salesman](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/travelling_salesman.html)
-  
+  12. [Graph Coloring](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/graph_coloring.html)
+  13. [Travelling Salesman](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/travelling_salesman.html)
+  <!-- 12. [Kosarajus](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/kosarajus.html)
+   -->
+   
  **SORTING ALGORITHMS**
   1. [Heap Sort](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/sort_algorithms/heap.html)
   2. [Bubble Sort](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/sort_algorithms/bubble.html)
