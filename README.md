@@ -80,8 +80,9 @@
   6.  [Cycle Detection (BFS / DFS)](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/detect_cycle.html)
   8.  [Kruskals](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/kruskals.html)
   9.  [Topological Sort](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/topological.html)
-  11. [Floyd Warshall](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/floyd_warshall.html)
-  12. [Graph Coloring](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/graph_coloring.html)
+  11. [BRIDGES](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/bridges.html)
+  12. [Articulation Points](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/articulation.html)
+  13. [Graph Coloring](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/graph_coloring.html)
   14. [Travelling Salesman](http://jhabarsinghbhati.me/DSALGO-VISUALIZER/templates/graphs/travelling_salesman.html)
   
  **SORTING ALGORITHMS**
