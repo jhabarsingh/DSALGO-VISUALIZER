@@ -89,10 +89,15 @@
             visited = [];
             let n = size;
             for(let i=0; i<n; i++) visited.push(0);
-    		for(let i=0; i<n; i++)	
-                if(!visited[i]) {
-                    bridges(visited, i, -1);
+    		async function get() {
+                for(let i=0; i<n; i++)	{
+                    if(!visited[i]) {
+                        await bridges(visited, i, -1);
+                    }
                 }
+            }
+
+            get();
     })
 
 		
@@ -136,7 +141,10 @@
                 else {
                     await bridges(visited, child, node);
 
+                    lows[node] = lows[node] > lows[child] ?  lows[child] : lows[node];
+
                     if(lows[child] > ins[node]) {
+                        console.log(child, node);
                         await sleep(time_delay).then(() => {
                             createLine(child, node, "white");
                             createBox(child);
@@ -147,8 +155,6 @@
                         
                     
                     }
-                    lows[node] = lows[node] > lows[child] ?  lows[child] : lows[node];
-
 
                 }
             }
