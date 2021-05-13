@@ -466,7 +466,8 @@
                },
      	]
 
-         pop_up();
+        if(!localStorage.getItem("counter"))
+			pop_up();
 
 // Utility
 
@@ -512,8 +513,15 @@
      	// POP UP
  
      	function pop_up() {
-               localStorage.setItem('first_time', 1)
-     		if(false && +localStorage.getItem('first_time') === 1) {
+			if(+localStorage.getItem("counter") == 1) return;
+
+			if(+localStorage.getItem("first_time") == 1){
+				localStorage.setItem("counter", 1);
+			}
+			else
+				localStorage.setItem('first_time', 1)
+			
+			if(true && +localStorage.getItem('first_time') == 1) {
      		    let cross;
 				let slider;
 				let info;
@@ -541,15 +549,38 @@
 
 				// POPUP Info
 
-				let html = `
+				let html =  () => {
+					let a = `
 
 					<div class="popup__heading">DSALGO</div>
-					<div class="popup__sub__heading">what is <b>DSALGO</b> ?</div>
-					<blockquote class="popup__sub__heading__details"> </blockquote>
-				
-				`
+					<img src="https://github.com/jhabarsingh/DSALGO-VISUALIZER/blob/main/logo/logo_2.png?raw=true" 
+						style="width:200px;"
+					/>
+					<div class="popup__sub__heading">
+						<b>Ds Algo visualizer </b> 
+						<br />
+						<code>
+							is made for students who want to learn Data structures and algorithms with Animations. This project includes all the important data structures that are being widely used.
+						</code>
+						<hr />
+						<h5> <b>Topics Covered</b> </h5>
+						<div>` 
+					
+					let b = "";
+					for(let i=0; i<details.length; i++) 
+							b += `<span class="badge badge-primary" style="margin:3px;">${details[i].heading}</span>`
+					
+					let c = `	</div>
+								</div>
+								
+								<blockquote class="popup__sub__heading__details"> </blockquote>
+							
+						`
+					return a + b + c;
+				}
+
 				info = document.createElement("div");
-				info.innerHTML = html;
+				info.innerHTML = html();
 				info.style.maxWidth = '600px';
 				info.style.textAlign = 'center';
 				info.style.margin = '30px'
